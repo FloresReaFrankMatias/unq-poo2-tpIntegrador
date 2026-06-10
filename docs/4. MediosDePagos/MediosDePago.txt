@@ -4,19 +4,21 @@ top to bottom direction
 skinparam classAttributeIconSize 0
 
 abstract class MedioPago <<Template Method>> {
++ procesarPago()
+# validarDatos()
+# reservarFondos()
+# ejecutarTransaccion()
+# notificarResultado()
 }
 
-class TarjetaCredito {
-}
+class TarjetaCredito
 
-class TransferenciaBancaria {
-}
+class TransferenciaBancaria
 
-class BilleteraVirtual {
-}
+class BilleteraVirtual
 
 class Pedido {
-    - medioPago : MedioPago
+- medioPago : MedioPago
 }
 
 MedioPago <|-- TarjetaCredito
