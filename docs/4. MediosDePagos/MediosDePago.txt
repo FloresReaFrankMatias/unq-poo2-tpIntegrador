@@ -4,18 +4,34 @@ top to bottom direction
 skinparam classAttributeIconSize 0
 
 abstract class MedioPago <<Template Method>> {
+- codigoTransaccion : String
+
+
 + procesarPago()
++ reembolsar(monto : double)
+
 # validarDatos()
 # reservarFondos()
 # ejecutarTransaccion()
 # notificarResultado()
+
+
 }
 
-class TarjetaCredito
+class TarjetaCredito {
+- numeroTarjeta : String
+- cvv : String
+- fechaVencimiento : String
+}
 
-class TransferenciaBancaria
+class TransferenciaBancaria {
+- cbu : String
+- alias : String
+}
 
-class BilleteraVirtual
+class BilleteraVirtual {
+- saldoDisponible : Double
+}
 
 class Pedido {
 - medioPago : MedioPago
@@ -28,3 +44,4 @@ MedioPago <|-- BilleteraVirtual
 Pedido --> MedioPago
 
 @enduml
+
