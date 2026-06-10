@@ -1,6 +1,8 @@
 package ar.edu.unq.poo2.pedido;
 
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
+
 import java.util.List;
 
 public class Pedido {
