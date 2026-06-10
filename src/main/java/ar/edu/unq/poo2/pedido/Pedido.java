@@ -15,11 +15,13 @@ public class Pedido {
     }
 
     public void agregarItem(Item item){
-        estadoActual.agregarItem(this, item);
+        estadoActual.verificarAgregarItem(this, item);
+        contenidoDePedido.add(item);
     }
 
     public void quitarItem(Item item){
-        estadoActual.agregarItem(this, item);
+        estadoActual.verificarAgregarItem(this, item);
+        contenidoDePedido.add(item);
     }
 
     public void confirmar(){

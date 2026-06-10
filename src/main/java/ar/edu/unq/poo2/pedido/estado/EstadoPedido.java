@@ -4,35 +4,35 @@ import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.Pedido;
 
 public abstract class EstadoPedido {
-    public void agregarItem(Pedido pedido, Item item){
-        operacionInvalida();
+    public void verificarAgregarItem(Pedido pedido, Item item){
+        lanzarOperacionInvalida();
     }
 
-    public void quitarItem(Pedido pedido, Item item){
-        operacionInvalida();
+    public void verificarQuitarItem(Pedido pedido, Item item){
+        lanzarOperacionInvalida();
     }
 
     public void confirmar(Pedido pedido){
-        operacionInvalida();
+        lanzarOperacionInvalida();
     }
 
     public void cancelar(Pedido pedido){
-        pedido.setEstadoActual(new Cancelado());
+        pedido.setEstadoActual(new EstadoCancelado());
     }
 
     public void preparar(Pedido pedido){
-        operacionInvalida();
+        lanzarOperacionInvalida();
     }
 
     public void enviar(Pedido pedido){
-        operacionInvalida();
+        lanzarOperacionInvalida();
     }
 
     public void entregar(Pedido pedido){
-        operacionInvalida();
+        lanzarOperacionInvalida();
     }
 
-    private void operacionInvalida(){
+    private void lanzarOperacionInvalida(){
         throw new OperacionInvalidaParaEstadoException();
     }
 }
