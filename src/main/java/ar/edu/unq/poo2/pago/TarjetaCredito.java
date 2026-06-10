@@ -1,10 +1,13 @@
 package ar.edu.unq.poo2.pago;
 
+import ar.edu.unq.poo2.pago.api.APITarjetaCredito;
+
 public class TarjetaCredito  extends MedioPago {
 	
 	private String numeroTarjeta;
 	private String cvv;
 	private String fechaVencimiento;
+	private APITarjetaCredito apiTarjeta;
 	
 	@Override
 	protected void validarDatos() {
@@ -15,17 +18,17 @@ public class TarjetaCredito  extends MedioPago {
 	
 	@Override
 	protected void reservarFondos() {
-		 // Simulación de preautorización
+	    // Delegar preautorización al servicio APITarjetaCredito
 	}
 	
 	@Override
 	protected void ejecutarTransaccion() {
-		// Realizar debito diferido
+	    // Delegar ejecución de la transacción al servicio APITarjetaCredito
 	}
 	
 	@Override
 	public void reembolsar(double monto) {
-		   // Reintegrar importe a la tarjeta
+	    // Solicitar reintegro mediante el servicio APITarjetaCredito
 	}
 	
 

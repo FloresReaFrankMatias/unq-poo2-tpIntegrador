@@ -1,9 +1,12 @@
 package ar.edu.unq.poo2.pago;
 
+import ar.edu.unq.poo2.pago.api.APITransferenciaBancaria;
+
 public class TransferenciaBancaria  extends MedioPago {
 	
 	private String cbu;
 	private String alias;
+	private APITransferenciaBancaria apiTransferencia;
 	
 	@Override
 	protected void validarDatos(){
@@ -15,18 +18,17 @@ public class TransferenciaBancaria  extends MedioPago {
 	
 	@Override
 	protected void reservarFondos() {
-		// No aplica 
+	    // No aplica para transferencias bancarias
 	}
 	
-	@Override 
+	@Override
 	protected void ejecutarTransaccion() {
-		// Simulación de transferencia
-		
+	    // Delegar ejecución de la transferencia al servicio APITransferenciaBancaria
 	}
 	
 	@Override
 	public void reembolsar(double monto) {
-	    // Realizar transferencia de devolución
+	    // Solicitar transferencia de devolución mediante APITransferenciaBancaria
 	}
 
 }

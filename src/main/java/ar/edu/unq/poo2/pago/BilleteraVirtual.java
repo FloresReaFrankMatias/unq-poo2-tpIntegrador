@@ -1,7 +1,11 @@
 package ar.edu.unq.poo2.pago;
 
+import ar.edu.unq.poo2.pago.api.APIBilleteraVirtual;
+
 public class BilleteraVirtual  extends MedioPago{
+	
 	private Double saldoDisponible;
+	private APIBilleteraVirtual apiBilletera;
 	
 	@Override
 	protected void validarDatos() {
@@ -12,23 +16,25 @@ public class BilleteraVirtual  extends MedioPago{
 	
 	@Override
 	protected void reservarFondos() {
-		// Bloquear saldo hasta confirmar la operacion
-		
+	    // Delegar bloqueo de saldo al servicio APIBilleteraVirtual
 	}
+
 	
-	@Override 
+	@Override
 	protected void ejecutarTransaccion() {
-		// Acreditar fondos al vendedor
+	    // Delegar acreditación de fondos al servicio APIBilleteraVirtual
 	}
 	
 	@Override
 	protected void notificarResultado() {
-		// Simulación de push y cashback
+	    // Delegar envío de notificación push al servicio APIBilleteraVirtual
+	    // Aplicar cashback si corresponde
 	}
+
 	
 	@Override
 	public void reembolsar(double monto) {
-		// Acreditar saldo al usuario
+	    // Solicitar acreditación del reintegro mediante APIBilleteraVirtual
 	}
 
 }
