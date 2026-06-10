@@ -1,7 +1,7 @@
 package ar.edu.unq.poo2.pago;
 
 public abstract class MedioPago {
-	// Registrar codigo de transaccion
+    private String codigoTransaccion;
 	
 		// Template Method
 	public void procesarPago(){
@@ -19,6 +19,14 @@ public abstract class MedioPago {
 	  // Hook Method
 	protected  void notificarResultado() {
 		
+	}
+	
+	public String getCodigoTransaccion() {
+	    return codigoTransaccion;
+	}
+
+	public void setCodigoTransaccion(String codigoTransaccion) {
+	    this.codigoTransaccion = codigoTransaccion;
 	}
 	
 
