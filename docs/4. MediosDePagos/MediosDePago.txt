@@ -17,47 +17,69 @@ abstract class MedioPago <<Template Method>> {
 
   
 
-    # notificarResultado()
+@startuml
+
+top to bottom direction
+skinparam classAttributeIconSize 0
+
+abstract class MedioPago <<Template Method>> {
+- codigoTransaccion : String
+
+```
++ procesarPago()
++ reembolsar(monto : double)
+
+--
+
+# validarDatos()
+# reservarFondos()
+# ejecutarTransaccion()
+
+--
+
+# notificarResultado()
+```
+
 }
 
 interface APITarjetaCredito {
-    + validarTarjeta(numeroTarjeta : String, cvv : String, fechaVencimiento : String) : boolean
-    + preAutorizarFondos()
-    + ejecutarTransaccion()
++ validarTarjeta(numeroTarjeta : String, cvv : String, fechaVencimiento : String) : boolean
++ preAutorizarFondos()
++ ejecutarTransaccion()
 }
 
 interface APITransferenciaBancaria {
-    + validarCuenta(cbu : String, alias : String) : boolean
-    + ejecutarTransferencia()
++ validarCuenta(cbu : String, alias : String) : boolean
++ ejecutarTransferencia()
 }
 
 interface APIBilleteraVirtual {
-    + validarSaldo() : boolean
-    + bloquearSaldo()
-    + acreditarFondos()
-    + enviarPush(mensaje : String)
++ validarSaldo() : boolean
++ bloquearSaldo()
++ acreditarFondos()
++ enviarPush(mensaje : String)
 }
 
 class TarjetaCredito {
-    - numeroTarjeta : String
-    - cvv : String
-    - fechaVencimiento : String
-    - apiTarjeta : APITarjetaCredito
+- numeroTarjeta : String
+- cvv : String
+- fechaVencimiento : String
+- apiTarjeta : APITarjetaCredito
 }
 
 class TransferenciaBancaria {
-    - cbu : String
-    - alias : String
-    - apiTransferencia : APITransferenciaBancaria
+- cbu : String
+- alias : String
+- apiTransferencia : APITransferenciaBancaria
 }
 
 class BilleteraVirtual {
-    - saldoDisponible : Double
-    - apiBilletera : APIBilleteraVirtual
+- saldoDisponible : Double
+- apiBilletera : APIBilleteraVirtual
 }
 
 class Pedido {
-    - medioPago : MedioPago
+- medioPago : MedioPago
 }
 
 MedioPago <|-- TarjetaCredito
@@ -69,5 +91,21 @@ Pedido --> MedioPago
 TarjetaCredito --> APITarjetaCredito
 TransferenciaBancaria --> APITransferenciaBancaria
 BilleteraVirtual --> APIBilleteraVirtual
+
+note right of TarjetaCredito
+Genera y registra
+cupón de pago
+end note
+
+note right of TransferenciaBancaria
+Genera y registra
+comprobante con
+número de operación
+end note
+
+note right of BilleteraVirtual
+Envía notificación
+push al usuario
+end note
 
 @enduml

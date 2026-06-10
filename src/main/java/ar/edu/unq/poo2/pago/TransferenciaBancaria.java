@@ -37,5 +37,4 @@ public class TransferenciaBancaria  extends MedioPago {
 
 	    // Generar y registrar comprobante con número de operación
 	}
-
 }
