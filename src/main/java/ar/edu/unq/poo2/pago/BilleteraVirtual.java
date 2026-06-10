@@ -5,7 +5,7 @@ public class BilleteraVirtual  extends MedioPago{
 	
 	@Override
 	protected void validarDatos() {
-		 if(saldoDisponible <= 0) {
+		if(saldoDisponible == null || saldoDisponible < 0) {
 	            throw new PagoInvalidoException("Saldo Insuficiente");
 	      }
 	}
@@ -23,8 +23,12 @@ public class BilleteraVirtual  extends MedioPago{
 	
 	@Override
 	protected void notificarResultado() {
-		// Enviar notificacion push
-		// Aplicar cashback si corresponde
+		// Simulación de push y cashback
+	}
+	
+	@Override
+	public void reembolsar(double monto) {
+		// Acreditar saldo al usuario
 	}
 
 }

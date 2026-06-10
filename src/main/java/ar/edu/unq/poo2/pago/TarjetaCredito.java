@@ -15,12 +15,17 @@ public class TarjetaCredito  extends MedioPago {
 	
 	@Override
 	protected void reservarFondos() {
-		// Solicitar preautorizacion al banco 
+		 // Simulación de preautorización
 	}
 	
 	@Override
 	protected void ejecutarTransaccion() {
 		// Realizar debito diferido
+	}
+	
+	@Override
+	public void reembolsar(double monto) {
+		   // Reintegrar importe a la tarjeta
 	}
 	
 

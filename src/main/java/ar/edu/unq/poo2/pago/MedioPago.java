@@ -21,15 +21,17 @@ public abstract class MedioPago {
 		
 	}
 	
+	// Reembolsos
+	public abstract void reembolsar(double monto);
+	
+	
 	public String getCodigoTransaccion() {
 	    return codigoTransaccion;
 	}
 
-	public void setCodigoTransaccion(String codigoTransaccion) {
+	protected void setCodigoTransaccion(String codigoTransaccion) {
 	    this.codigoTransaccion = codigoTransaccion;
 	}
-	
-
 	
 
 }

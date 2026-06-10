@@ -20,8 +20,13 @@ public class TransferenciaBancaria  extends MedioPago {
 	
 	@Override 
 	protected void ejecutarTransaccion() {
-		// Ejecutar transferencia
+		// Simulación de transferencia
 		
+	}
+	
+	@Override
+	public void reembolsar(double monto) {
+	    // Realizar transferencia de devolución
 	}
 
 }
