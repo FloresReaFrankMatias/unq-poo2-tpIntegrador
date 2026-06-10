@@ -8,9 +8,9 @@ public class TarjetaCredito  extends MedioPago {
 	
 	@Override
 	protected void validarDatos() {
-		// Validar numero de tarjeta
-		// Validar CVV
-		// Validar fecha de vencimiento
+		 if(numeroTarjeta == null || cvv == null ||   fechaVencimiento == null) {
+			        throw new PagoInvalidoException("Datos de tarjeta incompletos");
+		 }
 	}
 	
 	@Override

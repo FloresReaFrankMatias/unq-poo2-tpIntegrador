@@ -7,8 +7,10 @@ public class TransferenciaBancaria  extends MedioPago {
 	
 	@Override
 	protected void validarDatos(){
-		// Validar CBU/CVU
-		// Validar alias
+		 if(cbu == null && alias == null) {
+
+		        throw new PagoInvalidoException("Debe informar CBU o Alias");
+		 }
 	}
 	
 	@Override

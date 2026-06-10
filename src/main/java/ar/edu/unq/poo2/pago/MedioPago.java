@@ -1,7 +1,7 @@
 package ar.edu.unq.poo2.pago;
 
 public abstract class MedioPago {
-	
+	// Registrar codigo de transaccion
 	
 		// Template Method
 	public void procesarPago(){

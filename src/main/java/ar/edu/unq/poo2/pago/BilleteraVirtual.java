@@ -1,11 +1,13 @@
 package ar.edu.unq.poo2.pago;
 
 public class BilleteraVirtual  extends MedioPago{
-	private float saldoDisponible;
+	private Double saldoDisponible;
 	
 	@Override
 	protected void validarDatos() {
-		// Validar saldo suficiente
+		 if(saldoDisponible <= 0) {
+	            throw new PagoInvalidoException("Saldo Insuficiente");
+	      }
 	}
 	
 	@Override
