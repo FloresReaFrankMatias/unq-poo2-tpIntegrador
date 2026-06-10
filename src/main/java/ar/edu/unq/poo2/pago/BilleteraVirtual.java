@@ -25,16 +25,20 @@ public class BilleteraVirtual  extends MedioPago{
 	    // Delegar acreditación de fondos al servicio APIBilleteraVirtual
 	}
 	
-	@Override
-	protected void notificarResultado() {
-	    // Delegar envío de notificación push al servicio APIBilleteraVirtual
-	    // Aplicar cashback si corresponde
-	}
-
 	
 	@Override
 	public void reembolsar(double monto) {
 	    // Solicitar acreditación del reintegro mediante APIBilleteraVirtual
 	}
+
+	
+	@Override
+	protected void notificarResultado() {
+	    super.notificarResultado();
+
+	    // Enviar notificación push mediante APIBilleteraVirtual
+	}
+	
+
 
 }

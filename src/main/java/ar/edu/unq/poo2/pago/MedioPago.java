@@ -18,6 +18,7 @@ public abstract class MedioPago {
 	
 	  // Hook Method
 	protected  void notificarResultado() {
+		 // Registrar código de transacción
 		
 	}
 	

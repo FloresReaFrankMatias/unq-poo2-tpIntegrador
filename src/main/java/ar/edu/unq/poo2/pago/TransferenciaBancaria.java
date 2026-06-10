@@ -30,5 +30,12 @@ public class TransferenciaBancaria  extends MedioPago {
 	public void reembolsar(double monto) {
 	    // Solicitar transferencia de devolución mediante APITransferenciaBancaria
 	}
+	
+	@Override
+	protected void notificarResultado() {
+	    super.notificarResultado();
+
+	    // Generar y registrar comprobante con número de operación
+	}
 
 }

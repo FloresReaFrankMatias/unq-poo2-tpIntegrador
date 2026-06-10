@@ -31,5 +31,10 @@ public class TarjetaCredito  extends MedioPago {
 	    // Solicitar reintegro mediante el servicio APITarjetaCredito
 	}
 	
+	@Override
+	protected void notificarResultado() {
+	    super.notificarResultado();
 
+	    // Generar y registrar cupón de pago imprimible
+	}
 }
