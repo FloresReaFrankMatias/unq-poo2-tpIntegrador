@@ -4,37 +4,60 @@ top to bottom direction
 skinparam classAttributeIconSize 0
 
 abstract class MedioPago <<Template Method>> {
-- codigoTransaccion : String
+    - codigoTransaccion : String
 
+    + procesarPago()
+    + reembolsar(monto : double)
 
-+ procesarPago()
-+ reembolsar(monto : double)
+  
 
-# validarDatos()
-# reservarFondos()
-# ejecutarTransaccion()
-# notificarResultado()
+    # validarDatos()
+    # reservarFondos()
+    # ejecutarTransaccion()
 
+  
 
+    # notificarResultado()
+}
+
+interface APITarjetaCredito {
+    + validarTarjeta(numeroTarjeta : String, cvv : String, fechaVencimiento : String) : boolean
+    + preAutorizarFondos()
+    + ejecutarTransaccion()
+}
+
+interface APITransferenciaBancaria {
+    + validarCuenta(cbu : String, alias : String) : boolean
+    + ejecutarTransferencia()
+}
+
+interface APIBilleteraVirtual {
+    + validarSaldo() : boolean
+    + bloquearSaldo()
+    + acreditarFondos()
+    + enviarPush(mensaje : String)
 }
 
 class TarjetaCredito {
-- numeroTarjeta : String
-- cvv : String
-- fechaVencimiento : String
+    - numeroTarjeta : String
+    - cvv : String
+    - fechaVencimiento : String
+    - apiTarjeta : APITarjetaCredito
 }
 
 class TransferenciaBancaria {
-- cbu : String
-- alias : String
+    - cbu : String
+    - alias : String
+    - apiTransferencia : APITransferenciaBancaria
 }
 
 class BilleteraVirtual {
-- saldoDisponible : Double
+    - saldoDisponible : Double
+    - apiBilletera : APIBilleteraVirtual
 }
 
 class Pedido {
-- medioPago : MedioPago
+    - medioPago : MedioPago
 }
 
 MedioPago <|-- TarjetaCredito
@@ -43,5 +66,8 @@ MedioPago <|-- BilleteraVirtual
 
 Pedido --> MedioPago
 
-@enduml
+TarjetaCredito --> APITarjetaCredito
+TransferenciaBancaria --> APITransferenciaBancaria
+BilleteraVirtual --> APIBilleteraVirtual
 
+@enduml
