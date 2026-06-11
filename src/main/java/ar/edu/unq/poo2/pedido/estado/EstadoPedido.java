@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.pedido.estado;
 
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.pedido.Inventario;
 import ar.edu.unq.poo2.pedido.Pedido;
 
 public abstract class EstadoPedido {
@@ -12,11 +13,11 @@ public abstract class EstadoPedido {
         lanzarOperacionInvalida();
     }
 
-    public void confirmar(Pedido pedido){
+    public void confirmar(Pedido pedido, Inventario inventario){
         lanzarOperacionInvalida();
     }
 
-    public void cancelar(Pedido pedido){
+    public void cancelar(Pedido pedido, Inventario inventario){
         pedido.setEstadoActual(new EstadoCancelado());
     }
 

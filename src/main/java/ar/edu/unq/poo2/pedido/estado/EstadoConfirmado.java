@@ -1,5 +1,6 @@
 package ar.edu.unq.poo2.pedido.estado;
 
+import ar.edu.unq.poo2.pedido.Inventario;
 import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EstadoConfirmado extends EstadoPedido{
@@ -9,8 +10,8 @@ public class EstadoConfirmado extends EstadoPedido{
     }
 
     @Override
-    public void cancelar(Pedido pedido){
+    public void cancelar(Pedido pedido, Inventario inventario){
         // TODO: Reponer stock.
-        super.cancelar(pedido);
+        super.cancelar(pedido, inventario);
     }
 }

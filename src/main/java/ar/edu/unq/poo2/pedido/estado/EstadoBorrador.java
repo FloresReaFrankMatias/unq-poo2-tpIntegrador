@@ -1,11 +1,12 @@
 package ar.edu.unq.poo2.pedido.estado;
 
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.pedido.Inventario;
 import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EstadoBorrador extends EstadoPedido {
     @Override
-    public void confirmar(Pedido pedido){
+    public void confirmar(Pedido pedido, Inventario inventario){
         pedido.setEstadoActual(new EstadoConfirmado());
         // TODO: Decrementar stock.
     }

@@ -10,6 +10,10 @@ public class Pedido {
     List<Item> contenidoDePedido;
     // Envio envio;
 
+    public List<Item> getContenidoDePedido() {
+        return contenidoDePedido;
+    }
+
     public void setEstadoActual(EstadoPedido estadoPedido){
         estadoActual = estadoPedido;
     }
@@ -24,12 +28,12 @@ public class Pedido {
         contenidoDePedido.add(item);
     }
 
-    public void confirmar(){
-        estadoActual.confirmar(this);
+    public void confirmar(Inventario inventario){
+        estadoActual.confirmar(this, inventario);
     }
 
-    public void cancelar(){
-        estadoActual.cancelar(this);
+    public void cancelar(Inventario inventario){
+        estadoActual.cancelar(this, inventario);
     }
 
     public void preparar(){
