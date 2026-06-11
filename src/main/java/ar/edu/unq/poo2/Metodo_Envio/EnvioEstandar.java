@@ -22,9 +22,9 @@ public class EnvioEstandar implements MetodoDeEnvio {
 	}
 
 	@Override
-	public int calcularDiasDeEntrega(Pedido pedido) {
+	public int calcularDiasDeEntrega(Pedido pedido ) {
 		// TODO Auto-generated method stub
-		return 0;
+		return 7;
 	}
 
 }
