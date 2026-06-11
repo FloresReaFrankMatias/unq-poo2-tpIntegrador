@@ -13,11 +13,11 @@ public abstract class EstadoPedido {
         lanzarOperacionInvalida();
     }
 
-    public void confirmar(Pedido pedido, Inventario inventario){
+    public void confirmar(Pedido pedido){
         lanzarOperacionInvalida();
     }
 
-    public void cancelar(Pedido pedido, Inventario inventario){
+    public void cancelar(Pedido pedido){
         pedido.setEstadoActual(new EstadoCancelado());
     }
 

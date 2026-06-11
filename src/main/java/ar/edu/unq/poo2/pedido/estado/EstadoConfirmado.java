@@ -10,8 +10,8 @@ public class EstadoConfirmado extends EstadoPedido{
     }
 
     @Override
-    public void cancelar(Pedido pedido, Inventario inventario){
+    public void cancelar(Pedido pedido){
         // TODO: Reponer stock.
-        super.cancelar(pedido, inventario);
+        super.cancelar(pedido);
     }
 }

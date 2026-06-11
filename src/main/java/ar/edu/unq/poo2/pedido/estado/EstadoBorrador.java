@@ -6,7 +6,7 @@ import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EstadoBorrador extends EstadoPedido {
     @Override
-    public void confirmar(Pedido pedido, Inventario inventario){
+    public void confirmar(Pedido pedido){
         pedido.setEstadoActual(new EstadoConfirmado());
         // TODO: Decrementar stock.
     }
