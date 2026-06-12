@@ -1,38 +1,43 @@
 package ar.edu.unq.poo2.pedido;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Inventario {
     private final Map<String, Integer> stockDeInventario;
-
     public Inventario() {
         stockDeInventario = new HashMap<>();
     }
 
-    public void incrementarStock(String sku, Integer cantidadSolicitada){
-        modificarStock(sku, cantidadSolicitada, cantidadSolicitada);
+    public void decrementarStock(Map<String, Integer> articulos) {
+        validarDecrementoDeStock(articulos);
+        articulos.forEach((sku, cantidad)-> modificarStock(sku, -cantidad));
     }
 
-    public void decrementarStock(String sku, Integer cantidadSolicitada){
-        modificarStock(sku, cantidadSolicitada, -cantidadSolicitada);
+    public void incrementarStock(Map<String, Integer> articulos) {
+        validarCantidadesSolicitadas(articulos.values());
+        articulos.forEach(this::modificarStock);
     }
 
-    public void incrementarStock(String sku){
-        incrementarStock(sku, 1);
+    private void modificarStock(String sku, Integer cantidad) {
+        stockDeInventario.merge(sku, cantidad, Integer::sum);
     }
 
-    public void decrementarStock(String sku){
-        decrementarStock(sku, 1);
+    private void validarDecrementoDeStock(Map<String, Integer> articulos) {
+        validarCantidadesSolicitadas(articulos.values());
+        validarHayStocksSuficientes(articulos);
     }
 
-    private void modificarStock(String sku, Integer cantidadSolicitada, Integer diferencia) {
-        validarCantidadSolicitada(cantidadSolicitada);
-        Integer stockDisponible = stockDeInventario.getOrDefault(sku, 0);
-        if (diferencia < 0) { // seguramente se podría evitar el if.
-            validarHayCantidadSuficiente(Math.abs(diferencia), stockDisponible);
+    private void validarHayStocksSuficientes(Map<String, Integer> articulos){
+        articulos.forEach(this::validarHayStockSuficiente);
+    }
+
+    private void validarHayStockSuficiente(String sku, Integer cantidadSolicitada) {
+        if (cantidadSolicitada > getCantidadDisponible(sku)){
+            throw new RuntimeException();
         }
-        stockDeInventario.put(sku, stockDisponible + diferencia);
     }
 
     private void validarCantidadSolicitada(Integer cantidadSolicitada){
@@ -41,9 +46,11 @@ public class Inventario {
         }
     }
 
-    private void validarHayCantidadSuficiente(Integer cantidadSolicitada, Integer cantidadDisponible) {
-        if (cantidadSolicitada > cantidadDisponible){
-            throw new RuntimeException();
-        }
+    private void validarCantidadesSolicitadas(Collection<Integer> cantidades) {
+        cantidades.forEach(this::validarCantidadSolicitada);
+    }
+
+    private Integer getCantidadDisponible(String sku){
+        return stockDeInventario.getOrDefault(sku, 0);
     }
 }
