@@ -21,7 +21,7 @@ public class EstadoEnPreparacion extends EstadoReembolsador{
     @Override
     protected Map<String, Double> extrasAReembolsar(Pedido pedido) {
         Map <String, Double> extras = new HashMap<>();
-        // TODO: Agregar envio al diccionario de extras cuando se tenga su implementación.
+        extras.put("Envió", pedido.getEnvio().calcularCosto(pedido));
         return extras;
     }
 }

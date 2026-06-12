@@ -1,5 +1,6 @@
 package ar.edu.unq.poo2.pedido;
 
+import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.estado.GestorNotasDeCredito;
@@ -11,7 +12,7 @@ import java.util.Map;
 public class Pedido {
     private EstadoPedido estadoActual;
     private List<Item> contenidoDePedido;
-    // Envio envio;
+    private MetodoDeEnvio envio;
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
 
@@ -56,14 +57,6 @@ public class Pedido {
         gestorNotasDeCredito.hacerNotaDeCredito(getResumenDePedido());
     }
 
-    public Inventario getInventario() {
-        return inventario;
-    }
-
-    public void setEstadoActual(EstadoPedido estadoPedido){
-        estadoActual = estadoPedido;
-    }
-
     private Map<String, Double> getResumenDePedido(){
         Map<String, Double> resumen = new HashMap<>();
         contenidoDePedido.forEach(item -> agregarItemAResumen(item, resumen));
@@ -72,5 +65,17 @@ public class Pedido {
 
     private void agregarItemAResumen(Item item, Map<String, Double> resumen){
         item.getResumenDePrecio().forEach((nombre, precio) -> resumen.merge(nombre, precio, Double::sum));
+    }
+
+    public Inventario getInventario() {
+        return inventario;
+    }
+
+    public MetodoDeEnvio getEnvio() {
+        return envio;
+    }
+
+    public void setEstadoActual(EstadoPedido estadoPedido){
+        estadoActual = estadoPedido;
     }
 }
