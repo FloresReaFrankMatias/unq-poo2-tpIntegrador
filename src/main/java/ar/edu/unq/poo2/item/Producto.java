@@ -1,5 +1,8 @@
 package ar.edu.unq.poo2.item;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Producto implements Item {
 	private String sku; 
 	private String nombre;
@@ -54,4 +57,17 @@ public class Producto implements Item {
 		// lanza excepcion, no se pueden agregar items a un producto
 	}
 
+	@Override
+	public Map<String, Double> getResumenDePrecio(){
+		Map<String, Double> resumen = new HashMap<>();
+		resumen.put(nombre, getPrecioBaseCalculado());
+		return Map.of(this.getNombre(), this.getPrecioBaseCalculado());
+	}
+
+	@Override
+	public Map<String, Integer> getResumenDeSku() {
+		Map<String, Integer> resumen = new HashMap<>();
+		resumen.put(sku, 1);
+		return resumen;
+	}
 }

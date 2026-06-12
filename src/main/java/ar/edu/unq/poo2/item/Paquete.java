@@ -1,7 +1,9 @@
 package ar.edu.unq.poo2.item;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Paquete implements Item {
 	private String nombre;
@@ -39,7 +41,6 @@ public class Paquete implements Item {
 	}
 	@Override
 	public double getPrecioBaseCalculado() {
-		 
 		return this.getPrecioBase()* (1.0 - this.descuento);
 	}
 
@@ -64,4 +65,19 @@ public class Paquete implements Item {
 		}
 	}
 
+	@Override
+	public Map<String, Double> getResumenDePrecio(){
+		Map<String, Double> resumen = new HashMap<>();
+		resumen.put(nombre, getPrecioBaseCalculado());
+		return Map.of(this.getNombre(), this.getPrecioBaseCalculado());
+	}
+
+	@Override
+	public Map<String, Integer> getResumenDeSku() {
+		Map<String, Integer> resumen = new HashMap<>();
+		for (Item item : this.items) {
+			item.getResumenDeSku().forEach((sku, cantidad) -> resumen.merge(sku, cantidad, Integer::sum));
+		}
+		return resumen;
+	}
 }
