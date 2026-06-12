@@ -2,33 +2,38 @@ package ar.edu.unq.poo2.pedido;
 
 import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.estado.GestorNotasDeCredito;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Pedido {
     private EstadoPedido estadoActual;
-    private List<Item> contenidoDePedido;
+    private List<Item> contenido;
     private MetodoDeEnvio envio;
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
 
-    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito){
+    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio){
         this.inventario = inventario;
         this.gestorNotasDeCredito = gestorNotasDeCredito;
+        this.envio = envio;
+        this.estadoActual = new EstadoBorrador();
+        this.contenido = new ArrayList<>();
     }
 
     public void agregarItem(Item item){
         estadoActual.verificarAgregarItem(this, item);
-        contenidoDePedido.add(item);
+        contenido.add(item);
     }
 
     public void quitarItem(Item item){
         estadoActual.verificarQuitarItem(this, item);
-        contenidoDePedido.add(item);
+        contenido.add(item);
     }
 
     public void confirmar(Inventario inventario){
@@ -61,7 +66,7 @@ public class Pedido {
 
     private Map<String, Integer> getResumenDeSkus() {
         Map<String, Integer> resumen = new HashMap<>();
-        contenidoDePedido.forEach(item -> agregarItemAResumenDeSkus(item, resumen));
+        contenido.forEach(item -> agregarItemAResumenDeSkus(item, resumen));
         return resumen;
     }
 
@@ -77,7 +82,7 @@ public class Pedido {
 
     private Map<String, Double> getResumenDePrecios(){
         Map<String, Double> resumen = new HashMap<>();
-        contenidoDePedido.forEach(item -> agregarItemAResumenDePrecios(item, resumen));
+        contenido.forEach(item -> agregarItemAResumenDePrecios(item, resumen));
         return resumen;
     }
 

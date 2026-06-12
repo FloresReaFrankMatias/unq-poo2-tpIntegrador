@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Inventario {
     private final Map<String, Integer> stockDeInventario;
+    
     public Inventario() {
         stockDeInventario = new HashMap<>();
     }
