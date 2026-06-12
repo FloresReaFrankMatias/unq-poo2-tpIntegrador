@@ -50,8 +50,10 @@ public class Pedido {
         estadoActual.entregar(this);
     }
 
-    public GestorNotasDeCredito getGestorNotasDeCredito() {
-        return gestorNotasDeCredito;
+    public void generarNotaDeCredito(Map<String, Double> extras){
+        Map<String, Double> resumen = getResumenDePedido();
+        resumen.putAll(extras);
+        gestorNotasDeCredito.hacerNotaDeCredito(getResumenDePedido());
     }
 
     public Inventario getInventario() {
@@ -62,13 +64,13 @@ public class Pedido {
         estadoActual = estadoPedido;
     }
 
-    public Map<String, Double> getResumenDePedido(){
+    private Map<String, Double> getResumenDePedido(){
         Map<String, Double> resumen = new HashMap<>();
-        contenidoDePedido.forEach(item -> agregarResumenDeItem(item, resumen));
+        contenidoDePedido.forEach(item -> agregarItemAResumen(item, resumen));
         return resumen;
     }
 
-    private void agregarResumenDeItem(Item item, Map<String, Double> resumenHastaAhora){
-        resumenHastaAhora.merge(item.getNombre(), item.getPrecioBaseCalculado(), Double::sum);
+    private void agregarItemAResumen(Item item, Map<String, Double> resumen){
+        item.getResumenDePrecio().forEach((nombre, precio) -> resumen.merge(nombre, precio, Double::sum));
     }
 }
