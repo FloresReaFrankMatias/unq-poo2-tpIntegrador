@@ -5,7 +5,7 @@ import ar.edu.unq.poo2.pedido.Pedido;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EstadoReembolsador extends EstadoPedido{
+public abstract class EstadoReembolsador extends EstadoPedido{
     @Override
     public void cancelar(Pedido pedido){
         pedido.generarNotaDeCredito(extrasAReembolsar(pedido));
