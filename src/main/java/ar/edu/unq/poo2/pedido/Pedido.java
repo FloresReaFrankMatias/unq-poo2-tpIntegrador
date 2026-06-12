@@ -27,7 +27,7 @@ public class Pedido {
     }
 
     public void quitarItem(Item item){
-        estadoActual.verificarAgregarItem(this, item);
+        estadoActual.verificarQuitarItem(this, item);
         contenidoDePedido.add(item);
     }
 

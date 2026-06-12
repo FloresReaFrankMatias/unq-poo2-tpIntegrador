@@ -8,7 +8,7 @@ public class EstadoBorrador extends EstadoPedido {
     @Override
     public void confirmar(Pedido pedido){
         pedido.setEstadoActual(new EstadoConfirmado());
-        // TODO: Decrementar stock.
+        pedido.descontarStock();
     }
 
     @Override

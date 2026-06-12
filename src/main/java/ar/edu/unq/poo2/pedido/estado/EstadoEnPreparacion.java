@@ -14,7 +14,7 @@ public class EstadoEnPreparacion extends EstadoReembolsador{
 
     @Override
     public void cancelar(Pedido pedido){
-        // TODO: Reponer stock
+        pedido.reponerStock();
         super.cancelar(pedido);
     }
 
