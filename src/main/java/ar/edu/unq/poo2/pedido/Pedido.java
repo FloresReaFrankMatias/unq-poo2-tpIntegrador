@@ -4,7 +4,9 @@ import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.estado.GestorNotasDeCredito;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pedido {
     private EstadoPedido estadoActual;
@@ -56,11 +58,17 @@ public class Pedido {
         return inventario;
     }
 
-    public List<Item> getContenidoDePedido() {
-        return contenidoDePedido;
-    }
-
     public void setEstadoActual(EstadoPedido estadoPedido){
         estadoActual = estadoPedido;
+    }
+
+    public Map<String, Double> getResumenDePedido(){
+        Map<String, Double> resumen = new HashMap<>();
+        contenidoDePedido.forEach(item -> agregarResumenDeItem(item, resumen));
+        return resumen;
+    }
+
+    private void agregarResumenDeItem(Item item, Map<String, Double> resumenHastaAhora){
+        resumenHastaAhora.merge(item.getNombre(), item.getPrecioBaseCalculado(), Double::sum);
     }
 }

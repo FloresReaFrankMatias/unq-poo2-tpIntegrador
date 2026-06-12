@@ -8,8 +8,4 @@ public class NotaDeCredito {
     public NotaDeCredito(Map<String,Double> reembolsado){
         this.reembolsado = reembolsado;
     }
-
-    public Map<String, Double> getReembolsado() {
-        return reembolsado;
-    }
 }

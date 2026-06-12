@@ -10,13 +10,7 @@ import java.util.Set;
 public class GestorNotasDeCredito {
     private Set<NotaDeCredito> notas;
 
-    public void hacerNotaDeCredito(List<Item> items){
-        Map<String, Double> reembolsado = new HashMap<>();
-        items.forEach(item -> agregarDatosDeItem(item, reembolsado));
+    public void hacerNotaDeCredito(Map<String, Double> reembolsado){
         notas.add(new NotaDeCredito(reembolsado));
-    }
-
-    private void agregarDatosDeItem(Item item, Map<String,Double> reembolsadoHastaAhora){
-        reembolsadoHastaAhora.put(item.getNombre(), item.getPrecioBaseCalculado());
     }
 }
