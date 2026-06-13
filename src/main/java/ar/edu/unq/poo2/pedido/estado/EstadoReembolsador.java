@@ -9,7 +9,7 @@ public abstract class EstadoReembolsador extends EstadoPedido{
     @Override
     public void cancelar(Pedido pedido){
         pedido.generarNotaDeCredito(extrasAReembolsar(pedido));
-        super.cancelar(pedido);
+        pedido.setEstadoActual(new EstadoCancelado());
     }
 
     protected Map<String, Double> extrasAReembolsar(Pedido pedido) {

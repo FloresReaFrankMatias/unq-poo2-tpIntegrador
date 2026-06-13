@@ -11,6 +11,11 @@ public class EstadoBorrador extends EstadoPedido {
     }
 
     @Override
+    public void cancelar(Pedido pedido){
+        pedido.setEstadoActual(new EstadoCancelado());
+    }
+
+    @Override
     public void verificarAgregarItem(Pedido pedido, Item item){}
 
     @Override

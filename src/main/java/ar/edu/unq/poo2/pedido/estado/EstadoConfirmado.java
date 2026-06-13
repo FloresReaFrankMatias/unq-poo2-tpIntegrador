@@ -10,10 +10,10 @@ public class EstadoConfirmado extends EstadoPedido{
     public void preparar(Pedido pedido){
         pedido.setEstadoActual(new EstadoEnPreparacion());
     }
-
+    
     @Override
     public void cancelar(Pedido pedido){
         pedido.reponerStock();
-        super.cancelar(pedido);
+        pedido.setEstadoActual(new EstadoCancelado());
     }
 }
