@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class EstadoEnPreparacion extends EstadoReembolsador{
     @Override
+    public void preparar(Pedido pedido){}
+
+    @Override
     public void enviar(Pedido pedido){
         pedido.setEstadoActual(new EstadoEnviado());
     }

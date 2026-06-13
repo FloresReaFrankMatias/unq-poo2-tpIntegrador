@@ -4,7 +4,7 @@ import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
-import ar.edu.unq.poo2.pedido.estado.GestorNotasDeCredito;
+import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 
 import java.util.ArrayList;
 import java.util.HashMap;

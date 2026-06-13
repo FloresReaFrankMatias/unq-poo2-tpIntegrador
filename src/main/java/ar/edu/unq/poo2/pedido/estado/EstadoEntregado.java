@@ -4,5 +4,5 @@ import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EstadoEntregado extends EstadoPedido{
     @Override
-    public void cancelar(Pedido pedido){}
+    public void entregar(Pedido pedido){}
 }

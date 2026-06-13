@@ -4,6 +4,9 @@ import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EstadoConfirmado extends EstadoPedido{
     @Override
+    public void confirmar(Pedido pedido){}
+
+    @Override
     public void preparar(Pedido pedido){
         pedido.setEstadoActual(new EstadoEnPreparacion());
     }

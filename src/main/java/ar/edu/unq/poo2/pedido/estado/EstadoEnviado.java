@@ -7,4 +7,7 @@ public class EstadoEnviado extends EstadoReembolsador{
     public void entregar(Pedido pedido){
         pedido.setEstadoActual(new EstadoEntregado());
     }
+
+    @Override
+    public void enviar(Pedido pedido){};
 }
