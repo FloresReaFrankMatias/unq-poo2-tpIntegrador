@@ -6,10 +6,7 @@ import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Pedido {
     private EstadoPedido estadoActual;
@@ -33,14 +30,14 @@ public class Pedido {
 
     public void quitarItem(Item item){
         estadoActual.verificarQuitarItem(this, item);
-        contenido.add(item);
+        contenido.remove(item);
     }
 
-    public void confirmar(Inventario inventario){
+    public void confirmar(){
         estadoActual.confirmar(this);
     }
 
-    public void cancelar(Inventario inventario){
+    public void cancelar(){
         estadoActual.cancelar(this);
     }
 
@@ -90,8 +87,8 @@ public class Pedido {
         item.getResumenDePrecio().forEach((nombre, precio) -> resumen.merge(nombre, precio, Double::sum));
     }
 
-    public Inventario getInventario() {
-        return inventario;
+    public List<Item> getContenido() {
+        return Collections.unmodifiableList(this.contenido); //Es inmutable para evitar que cualquiera pueda agregar o quitar items de un pedido.
     }
 
     public MetodoDeEnvio getEnvio() {
