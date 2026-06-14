@@ -6,13 +6,15 @@ import java.util.List;
 public class Paquete implements Item {
 	private String nombre;
 	private double descuento;
+	private String descripcion;
 	private List<Item> items;
 	
 	
-	public Paquete(String nombre,double descuento) {
+	public Paquete(String nombre,double descuento,String descripcion) {
 		// TODO Auto-generated constructor stub
 		this.nombre = nombre;
 		this.descuento=descuento;
+		this.descripcion=descripcion;
 		this.items = new ArrayList<>();
 	}
 
@@ -25,18 +27,27 @@ public class Paquete implements Item {
 	@Override
 	public String getDescripcion() {
 		// TODO Auto-generated method stub
-		return "Paquete: " + this.nombre + "\n" +
-			   "Contiene: " + this.items.size() + " items" + "\n" + 
-		       "Descuento: " + (this.descuento * 100) + "%";
+		return this.descripcion;
+	}
+	
+	public List<Item> getItems() {
+		return items;
 	}
 
 	
 	public double getPrecioBase() {
 		// TODO Auto-generated method stub
 		return this.items.stream()
-				 .mapToDouble(item -> item.getPrecioBaseCalculado())
-				 .sum();
+				         .mapToDouble(item -> item.getPrecioBaseCalculado())
+				         .sum();
 	}
+	@Override
+	public int getPeso() {
+		return this.items.stream()
+				         .mapToInt(item -> item.getPeso())
+				         .sum();
+	}
+	
 	@Override
 	public double getPrecioBaseCalculado() {
 		 
