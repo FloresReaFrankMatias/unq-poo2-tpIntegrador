@@ -22,31 +22,34 @@ public class TarjetaCredito extends MedioPago {
 
 	@Override
 	protected void validarDatos() {
-		if (numeroTarjeta == null || cvv == null || fechaVencimiento == null) {
-			throw new PagoInvalidoException("Datos de tarjeta incompletos");
+
+		boolean esValida = apiTarjeta.validarTarjeta(
+				numeroTarjeta,
+				cvv,
+				fechaVencimiento);
+
+		if (!esValida) {
+			throw new PagoInvalidoException(
+					"La tarjeta de crédito no es válida");
 		}
 	}
 
 	@Override
 	protected void reservarFondos() {
-	    // Delegar preautorización al servicio APITarjetaCredito
+		apiTarjeta.preAutorizarFondos();
 	}
 
 	@Override
 	protected void ejecutarTransaccion() {
-	    // Delegar ejecución de la transacción al servicio APITarjetaCredito
-	}
-
-	@Override
-	public void reembolsar(double monto) {
-	    // Solicitar reintegro mediante el servicio APITarjetaCredito
+		apiTarjeta.ejecutarTransaccion();
 	}
 
 	@Override
 	protected void notificarResultado() {
-	    super.notificarResultado();
+		super.notificarResultado();
 
-	    // Generar y registrar cupón de pago imprimible
+		// Generar y registrar cupón de pago imprimible
+		// utilizando getCodigoTransaccion()
 	}
 
 	public String getNumeroTarjeta() {

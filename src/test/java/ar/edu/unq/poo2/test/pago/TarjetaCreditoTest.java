@@ -2,7 +2,10 @@ package ar.edu.unq.poo2.test.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,43 +37,35 @@ class TarjetaCreditoTest {
 		assertEquals("12/30", tarjeta.getFechaVencimiento());
 		assertEquals(apiTarjeta, tarjeta.getApiTarjeta());
 	}
-	
+
 	@Test
-	void unaTarjetaSinNumeroEsInvalida() {
+	void unaTarjetaValidaConsultaALaApi() {
 
-	    TarjetaCredito tarjetaInvalida =
-	            new TarjetaCredito(
-	                    null,
-	                    "123",
-	                    "12/30",
-	                    apiTarjeta);
+		when(apiTarjeta.validarTarjeta(
+				anyString(),
+				anyString(),
+				anyString()))
+				.thenReturn(true);
 
-	    assertThrows(PagoInvalidoException.class,() -> tarjetaInvalida.procesarPago());
+		tarjeta.procesarPago();
+
+		verify(apiTarjeta).validarTarjeta(
+				"123456789",
+				"123",
+				"12/30");
 	}
-	
+
 	@Test
-	void unaTarjetaSinCvvEsInvalida() {
+	void unaTarjetaInvalidaLanzaExcepcion() {
 
-	    TarjetaCredito tarjetaInvalida =
-	            new TarjetaCredito(
-	                    "123456789",
-	                    null,
-	                    "12/30",
-	                    apiTarjeta);
+		when(apiTarjeta.validarTarjeta(
+				anyString(),
+				anyString(),
+				anyString()))
+				.thenReturn(false);
 
-	    assertThrows(PagoInvalidoException.class,() -> tarjetaInvalida.procesarPago());
-	}
-	
-	@Test
-	void unaTarjetaSinFechaEsInvalida() {
-
-	    TarjetaCredito tarjetaInvalida =
-	            new TarjetaCredito(
-	                    "123456789",
-	                    "123",
-	                    null,
-	                    apiTarjeta);
-
-	    assertThrows(PagoInvalidoException.class,() -> tarjetaInvalida.procesarPago());
+		assertThrows(
+				PagoInvalidoException.class,
+				() -> tarjeta.procesarPago());
 	}
 }

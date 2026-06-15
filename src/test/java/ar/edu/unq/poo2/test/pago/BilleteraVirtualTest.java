@@ -2,7 +2,10 @@ package ar.edu.unq.poo2.test.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,37 +24,60 @@ class BilleteraVirtualTest {
 
         apiBilletera = mock(APIBilleteraVirtual.class);
 
-        billetera = new BilleteraVirtual(
-                1000.0,
-                apiBilletera);
+        billetera = new BilleteraVirtual(apiBilletera);
     }
-    
+
     @Test
     void unaBilleteraSeCreaConLosDatosEsperados() {
 
-        assertEquals(1000.0, billetera.getSaldoDisponible());
-        assertEquals(apiBilletera, billetera.getApiBilletera());
+        assertEquals(
+                apiBilletera,
+                billetera.getApiBilletera());
     }
-    
+
     @Test
-    void unaBilleteraSinSaldoEsInvalida() {
+    void unaBilleteraValidaConsultaALaApi() {
 
-        BilleteraVirtual billeteraInvalida =
-                new BilleteraVirtual(
-                        null,
-                        apiBilletera);
+        when(apiBilletera.validarSaldo())
+                .thenReturn(true);
 
-        assertThrows(PagoInvalidoException.class,() -> billeteraInvalida.procesarPago());
+        billetera.procesarPago();
+
+        verify(apiBilletera).validarSaldo();
     }
-    
+
     @Test
-    void unaBilleteraConSaldoNegativoEsInvalida() {
+    void unaBilleteraSinSaldoValidoLanzaExcepcion() {
 
-        BilleteraVirtual billeteraInvalida =
-                new BilleteraVirtual(
-                        -100.0,
-                        apiBilletera);
+        when(apiBilletera.validarSaldo())
+                .thenReturn(false);
 
-        assertThrows(PagoInvalidoException.class,() -> billeteraInvalida.procesarPago());
+        assertThrows(
+                PagoInvalidoException.class,
+                () -> billetera.procesarPago());
+    }
+
+    @Test
+    void unaBilleteraValidaBloqueaSaldoYAcreditaFondos() {
+
+        when(apiBilletera.validarSaldo())
+                .thenReturn(true);
+
+        billetera.procesarPago();
+
+        verify(apiBilletera).bloquearSaldo();
+        verify(apiBilletera).acreditarFondos();
+    }
+
+    @Test
+    void unaBilleteraValidaEnviaNotificacionPush() {
+
+        when(apiBilletera.validarSaldo())
+                .thenReturn(true);
+
+        billetera.procesarPago();
+
+        verify(apiBilletera)
+                .enviarPush(contains("Pago realizado"));
     }
 }

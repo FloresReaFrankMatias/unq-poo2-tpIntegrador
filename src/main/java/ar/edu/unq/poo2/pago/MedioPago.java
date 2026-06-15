@@ -1,8 +1,10 @@
 package ar.edu.unq.poo2.pago;
 
 public abstract class MedioPago {
-   
-	private String codigoTransaccion;
+
+    private static int ultimoCodigoTransaccion = 0;
+
+    private int codigoTransaccion;
 
     // Template Method
     public void procesarPago() {
@@ -14,23 +16,18 @@ public abstract class MedioPago {
 
     // Primitive Operations
     protected abstract void validarDatos();
+
     protected abstract void reservarFondos();
+
     protected abstract void ejecutarTransaccion();
 
     // Hook Method
     protected void notificarResultado() {
-        // Registrar código de transacción
+        ultimoCodigoTransaccion++;
+        codigoTransaccion = ultimoCodigoTransaccion;
     }
 
-    public abstract void reembolsar(double monto);
-
-    public String getCodigoTransaccion() {
+    public int getCodigoTransaccion() {
         return codigoTransaccion;
     }
-
-    protected void setCodigoTransaccion(String codigoTransaccion) {
-        this.codigoTransaccion = codigoTransaccion;
-    }
-
-
 }
