@@ -3,8 +3,7 @@ package ar.edu.unq.poo2.pedido.estado;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.isA;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.Pedido;
@@ -35,12 +34,20 @@ class EstadoBorradorTest{
 
     @Test
     void sePuedeTransicionarAEstadoConfirmadoDesdeEstadoBorrador(){
+        when(pedido.tieneItems()).thenReturn(true);
         estado.confirmar(pedido);
         verify(pedido).setEstadoActual(isA(EstadoConfirmado.class));
     }
 
     @Test
+    void noSePuedeTransicionarAEstadoConfirmadoDadoUnPedidoVacioDesdeEstadoBorrador(){
+        when(pedido.tieneItems()).thenReturn(false);
+        assertThrows(RuntimeException.class, () -> estado.confirmar(pedido));
+    }
+
+    @Test
     void transicionarAEstadoConfirmadoDesdeEstadoBorradorDescuentaStock(){
+        when(pedido.tieneItems()).thenReturn(true);
         estado.confirmar(pedido);
         verify(pedido).descontarStock();
     }

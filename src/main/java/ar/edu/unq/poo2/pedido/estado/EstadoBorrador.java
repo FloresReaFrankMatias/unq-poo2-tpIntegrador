@@ -6,6 +6,7 @@ import ar.edu.unq.poo2.pedido.Pedido;
 public class EstadoBorrador extends EstadoPedido {
     @Override
     public void confirmar(Pedido pedido){
+        validarPedidoTieneItems(pedido);
         pedido.setEstadoActual(new EstadoConfirmado());
         pedido.descontarStock();
     }
@@ -20,4 +21,10 @@ public class EstadoBorrador extends EstadoPedido {
 
     @Override
     public void verificarQuitarItem(Pedido pedido, Item item){}
+
+    public void validarPedidoTieneItems(Pedido pedido){
+        if (!pedido.tieneItems()){
+            throw new RuntimeException();
+        }
+    }
 }

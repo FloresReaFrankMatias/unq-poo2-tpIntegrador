@@ -87,8 +87,12 @@ public class Pedido {
         item.getResumenDePrecio().forEach((nombre, precio) -> resumen.merge(nombre, precio, Double::sum));
     }
 
+    public boolean tieneItems() {
+        return !contenido.isEmpty();
+    }
+
     public List<Item> getContenido() {
-        return Collections.unmodifiableList(this.contenido); //Es inmutable para evitar que cualquiera pueda agregar o quitar items de un pedido.
+        return Collections.unmodifiableList(contenido); //Es inmutable para evitar que cualquiera pueda agregar o quitar items de un pedido.
     }
 
     public MetodoDeEnvio getEnvio() {
