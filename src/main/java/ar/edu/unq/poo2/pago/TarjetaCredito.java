@@ -8,6 +8,7 @@ public class TarjetaCredito extends MedioPago {
 	private String cvv;
 	private String fechaVencimiento;
 	private APITarjetaCredito apiTarjeta;
+	private CuponPago cuponPago;
 
 	public TarjetaCredito(String numeroTarjeta,
 						  String cvv,
@@ -48,8 +49,7 @@ public class TarjetaCredito extends MedioPago {
 	protected void notificarResultado() {
 		super.notificarResultado();
 
-		// Generar y registrar cupón de pago imprimible
-		// utilizando getCodigoTransaccion()
+		cuponPago = new CuponPago(getCodigoTransaccion());
 	}
 
 	public String getNumeroTarjeta() {
@@ -66,5 +66,9 @@ public class TarjetaCredito extends MedioPago {
 
 	public APITarjetaCredito getApiTarjeta() {
 		return apiTarjeta;
+	}
+	
+	public CuponPago getCuponPago() {
+		return cuponPago;
 	}
 }
