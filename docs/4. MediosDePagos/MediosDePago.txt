@@ -62,20 +62,66 @@ interface APIBilleteraVirtual {
 
 class TarjetaCredito {
 - numeroTarjeta : String
+@startuml
+
+skinparam classAttributeIconSize 0
+
+abstract class MedioPago {
+- ultimoCodigoTransaccion : int
+- codigoTransaccion : int
++ procesarPago()
+# validarDatos()
+# reservarFondos()
+# ejecutarTransaccion()
+# notificarResultado()
++ getCodigoTransaccion()
+}
+
+interface APITarjetaCredito {
++ validarTarjeta(numeroTarjeta, cvv, fechaVencimiento)
++ preAutorizarFondos()
++ ejecutarTransaccion()
+}
+
+interface APITransferenciaBancaria {
++ validarCuenta(cbu, alias)
++ ejecutarTransferencia()
+}
+
+interface APIBilleteraVirtual {
++ validarSaldo()
++ bloquearSaldo()
++ acreditarFondos()
++ enviarPush(mensaje)
+}
+
+class TarjetaCredito {
+- numeroTarjeta : String
 - cvv : String
 - fechaVencimiento : String
 - apiTarjeta : APITarjetaCredito
+- cuponPago : CuponPago
 }
 
 class TransferenciaBancaria {
 - cbu : String
 - alias : String
 - apiTransferencia : APITransferenciaBancaria
+- comprobante : ComprobanteTransferencia
 }
 
 class BilleteraVirtual {
-- saldoDisponible : Double
 - apiBilletera : APIBilleteraVirtual
+}
+
+class CuponPago {
+- codigoTransaccion : int
++ imprimir()
+}
+
+class ComprobanteTransferencia {
+- numeroOperacion : int
++ imprimir()
 }
 
 class Pedido {
@@ -92,20 +138,7 @@ TarjetaCredito --> APITarjetaCredito
 TransferenciaBancaria --> APITransferenciaBancaria
 BilleteraVirtual --> APIBilleteraVirtual
 
-note right of TarjetaCredito
-Genera y registra
-cupón de pago
-end note
-
-note right of TransferenciaBancaria
-Genera y registra
-comprobante con
-número de operación
-end note
-
-note right of BilleteraVirtual
-Envía notificación
-push al usuario
-end note
+TarjetaCredito --> CuponPago
+TransferenciaBancaria --> ComprobanteTransferencia
 
 @enduml
