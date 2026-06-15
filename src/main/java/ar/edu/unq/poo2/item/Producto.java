@@ -3,7 +3,7 @@ package ar.edu.unq.poo2.item;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Producto implements Item {
+public class Producto extends Item {
 	private String sku; 
 	private String nombre;
 	private int peso;
@@ -25,14 +25,11 @@ public class Producto implements Item {
 
 	@Override
 	public String getNombre() {
-		// TODO Auto-generated method stub
 		return this.nombre;
 	}
 
 	@Override
 	public String getDescripcion() {
-		// TODO Auto-generated method stub
-		
 		return   "SKU: " + this.sku + "\n" + 
 		         "Marca: " + this.marca + "\n"  +
 		         "Categoria: " + this.categoria  + "\n" + 
@@ -42,7 +39,6 @@ public class Producto implements Item {
 
 	@Override
 	public double getPrecioBaseCalculado() {
-		// TODO Auto-generated method stub
 		return this.precioBase * (1.0  - this.descuento);
 	}
 
@@ -55,13 +51,6 @@ public class Producto implements Item {
 	@Override
 	public void remove(Item item) {
 		// lanza excepcion, no se pueden agregar items a un producto
-	}
-
-	@Override
-	public Map<String, Double> getResumenDePrecio(){
-		Map<String, Double> resumen = new HashMap<>();
-		resumen.put(nombre, getPrecioBaseCalculado());
-		return Map.of(this.getNombre(), this.getPrecioBaseCalculado());
 	}
 
 	@Override
