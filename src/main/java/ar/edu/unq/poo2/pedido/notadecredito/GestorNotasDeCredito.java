@@ -13,17 +13,10 @@ public class GestorNotasDeCredito {
     }
 
     public void hacerNotaDeCredito(Map<String, Double> reembolsado){
-        validarReembolso(reembolsado);
         notas.add(new NotaDeCredito(reembolsado));
     }
 
     public Set<NotaDeCredito> getNotas(){
         return Collections.unmodifiableSet(notas);
-    }
-
-    private void validarReembolso(Map<String, Double> reembolsado){
-        if (reembolsado.isEmpty()){
-            throw new RuntimeException();
-        }
     }
 }
