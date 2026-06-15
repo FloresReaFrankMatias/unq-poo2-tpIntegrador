@@ -7,7 +7,8 @@ public class TransferenciaBancaria extends MedioPago {
 	private String cbu;
 	private String alias;
 	private APITransferenciaBancaria apiTransferencia;
-
+	private ComprobanteTransferencia comprobante;
+	
 	public TransferenciaBancaria(String cbu,
 								 String alias,
 								 APITransferenciaBancaria apiTransferencia) {
@@ -45,10 +46,8 @@ public class TransferenciaBancaria extends MedioPago {
 	protected void notificarResultado() {
 		super.notificarResultado();
 
-		// Generar y registrar comprobante con número de operación
-		// utilizando getCodigoTransaccion()
+		comprobante =new ComprobanteTransferencia(getCodigoTransaccion());
 	}
-
 	public String getCbu() {
 		return cbu;
 	}
@@ -59,5 +58,9 @@ public class TransferenciaBancaria extends MedioPago {
 
 	public APITransferenciaBancaria getApiTransferencia() {
 		return apiTransferencia;
+	}
+	
+	public ComprobanteTransferencia getComprobante() {
+		return comprobante;
 	}
 }
