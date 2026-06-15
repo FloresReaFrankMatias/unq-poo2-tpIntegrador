@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.test.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
@@ -49,10 +50,7 @@ class TarjetaCreditoTest {
 
 		tarjeta.procesarPago();
 
-		verify(apiTarjeta).validarTarjeta(
-				"123456789",
-				"123",
-				"12/30");
+		verify(apiTarjeta).validarTarjeta("123456789","123","12/30");
 	}
 
 	@Test
@@ -64,8 +62,20 @@ class TarjetaCreditoTest {
 				anyString()))
 				.thenReturn(false);
 
-		assertThrows(
-				PagoInvalidoException.class,
-				() -> tarjeta.procesarPago());
+		assertThrows(PagoInvalidoException.class,() -> tarjeta.procesarPago());
+	}
+	
+	@Test
+	void unaTarjetaValidaGeneraUnCuponDePago() {
+
+	    when(apiTarjeta.validarTarjeta(
+	            anyString(),
+	            anyString(),
+	            anyString()))
+	            .thenReturn(true);
+
+	    tarjeta.procesarPago();
+
+	    assertNotNull( tarjeta.getCuponPago());
 	}
 }

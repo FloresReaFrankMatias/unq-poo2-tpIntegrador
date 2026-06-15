@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.test.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isNull;
@@ -78,5 +79,18 @@ class TransferenciaBancariaTest {
 
         verify(apiTransferencia)
                 .ejecutarTransferencia();
+    }
+    @Test
+    void unaTransferenciaValidaGeneraUnComprobante() {
+
+        when(apiTransferencia.validarCuenta(
+                anyString(),
+                isNull()))
+                .thenReturn(true);
+
+        transferencia.procesarPago();
+
+        assertNotNull(
+                transferencia.getComprobante());
     }
 }
