@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.pago;
+package ar.edu.unq.poo2.pago.comporbante;
 
 public class ComprobanteTransferencia {
 

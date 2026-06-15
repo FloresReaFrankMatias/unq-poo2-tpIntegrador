@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.pago;
 
 import ar.edu.unq.poo2.pago.api.APITransferenciaBancaria;
+import ar.edu.unq.poo2.pago.comporbante.ComprobanteTransferencia;
 
 public class TransferenciaBancaria extends MedioPago {
 
