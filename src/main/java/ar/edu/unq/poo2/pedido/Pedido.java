@@ -5,6 +5,7 @@ import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 
 import java.util.*;
 
@@ -14,11 +15,13 @@ public class Pedido {
     private MetodoDeEnvio envio;
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
+    private final Set<ObservadorPedido> observadores;
 
-    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio){
+    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio, Set<ObservadorPedido> observadores){
         this.inventario = inventario;
         this.gestorNotasDeCredito = gestorNotasDeCredito;
         this.envio = envio;
+        this.observadores = observadores;
         this.estadoActual = new EstadoBorrador();
         this.contenido = new ArrayList<>();
     }
@@ -35,22 +38,31 @@ public class Pedido {
 
     public void confirmar(){
         estadoActual.confirmar(this);
+        notificarObservadores();
     }
 
     public void cancelar(){
         estadoActual.cancelar(this);
+        notificarObservadores();
     }
 
     public void preparar(){
         estadoActual.preparar(this);
+        notificarObservadores();
     }
 
     public void enviar(){
         estadoActual.enviar(this);
+        notificarObservadores();
     }
 
     public void entregar(){
         estadoActual.entregar(this);
+        notificarObservadores();
+    }
+
+    private void notificarObservadores() {
+        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
     }
 
     public void descontarStock() {

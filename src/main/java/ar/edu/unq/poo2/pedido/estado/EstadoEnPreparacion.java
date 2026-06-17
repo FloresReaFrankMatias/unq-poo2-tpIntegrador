@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.pedido.estado;
 
 import ar.edu.unq.poo2.pedido.Pedido;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -25,5 +26,10 @@ public class EstadoEnPreparacion extends EstadoReembolsador{
         Map <String, Double> extras = new HashMap<>();
         extras.put("Envió", pedido.getEnvio().calcularCosto(pedido));
         return extras;
+    }
+
+    @Override
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
+        observador.alPreparar(pedido);
     }
 }
