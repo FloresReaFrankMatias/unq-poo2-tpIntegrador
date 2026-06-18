@@ -20,10 +20,6 @@ public class Venta {
                 .toList();
     }
 
-    public LocalDate getFechaDeVenta() {
-        return fechaDeVenta;
-    }
-
     public List<RegistroDeItem> getRegistroDeItems() {
         return registroDeItems;
     }
