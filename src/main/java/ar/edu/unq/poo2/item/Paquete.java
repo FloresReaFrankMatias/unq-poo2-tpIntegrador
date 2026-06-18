@@ -8,12 +8,14 @@ import java.util.Map;
 public class Paquete extends Item {
 	private String nombre;
 	private double descuento;
+	private String descripcion;
 	private List<Item> items;
 	
 	
-	public Paquete(String nombre,double descuento) {
+	public Paquete(String nombre,double descuento, String descripcion) {
 		this.nombre = nombre;
-		this.descuento=descuento;
+		this.descuento= descuento;
+		this.descripcion= descripcion;
 		this.items = new ArrayList<>();
 	}
 
@@ -24,17 +26,26 @@ public class Paquete extends Item {
 
 	@Override
 	public String getDescripcion() {
-		return "Paquete: " + this.nombre + "\n" +
-			   "Contiene: " + this.items.size() + " items" + "\n" + 
-		       "Descuento: " + (this.descuento * 100) + "%";
+		return this.descripcion;
+	}
+
+	public List<Item> getItems() {
+		return items;
 	}
 
 	
 	public double getPrecioBase() {
 		return this.items.stream()
-				 .mapToDouble(item -> item.getPrecioBaseCalculado())
-				 .sum();
+				         .mapToDouble(item -> item.getPrecioBaseCalculado())
+				         .sum();
 	}
+	@Override
+	public int getPeso() {
+		return this.items.stream()
+				         .mapToInt(item -> item.getPeso())
+				         .sum();
+	}
+
 	@Override
 	public double getPrecioBaseCalculado() {
 		return this.getPrecioBase()* (1.0 - this.descuento);

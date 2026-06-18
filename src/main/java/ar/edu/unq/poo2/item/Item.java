@@ -9,6 +9,7 @@ public abstract class Item {
 
 	public abstract String getNombre();
 	public abstract String getDescripcion();
+    public abstract int getPeso();
 	public abstract double getPrecioBaseCalculado();
 	public abstract void add(Item item);
 	public abstract void remove(Item item);
