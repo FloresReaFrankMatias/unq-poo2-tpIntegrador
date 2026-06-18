@@ -17,7 +17,7 @@ public abstract class EstadoPedido {
     }
 
     public void cancelar(Pedido pedido){
-        //pedido.setEstadoActual(new EstadoCancelado());
+        lanzarOperacionInvalida();
     }
 
     public void preparar(Pedido pedido){
