@@ -1,0 +1,34 @@
+@startuml
+skinparam classAttributeIconSize 0
+top to bottom direction
+
+interface MetodoEnvio <<Strategy>>
+
+class EnvioEstandar
+
+class EnvioExpress
+
+class RetiroSucursal
+
+class Pedido {
+  - metodoEnvio : MetodoEnvio
+}
+
+class Direccion
+
+class Sucursal
+
+class CorreoArgentina
+
+MetodoEnvio <|.. EnvioEstandar
+MetodoEnvio <|.. EnvioExpress
+MetodoEnvio <|.. RetiroSucursal
+
+Pedido --> MetodoEnvio
+
+EnvioEstandar --> Direccion
+EnvioEstandar --> CorreoArgentina
+
+RetiroSucursal --> Sucursal
+
+@enduml
