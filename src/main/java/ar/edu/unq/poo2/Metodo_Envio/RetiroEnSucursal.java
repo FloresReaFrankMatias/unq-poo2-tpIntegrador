@@ -1,5 +1,7 @@
 package ar.edu.unq.poo2.Metodo_Envio;
 
+import ar.edu.unq.poo2.pedido.Pedido;
+
 public class RetiroEnSucursal implements MetodoDeEnvio {
 	private Sucursal sucursal;
 	public RetiroEnSucursal(Sucursal sucursal) {

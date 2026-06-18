@@ -1,5 +1,7 @@
 package ar.edu.unq.poo2.Metodo_Envio;
 
+import ar.edu.unq.poo2.pedido.Pedido;
+
 public class EnvioExpress implements MetodoDeEnvio {
 	private  LibEnvioExpress envioExpress;
 
