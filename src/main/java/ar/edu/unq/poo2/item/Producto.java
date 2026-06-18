@@ -1,9 +1,10 @@
 package ar.edu.unq.poo2.item;
 
 import java.util.HashMap;
+import java.util.Map;
 
-public class Producto implements Item {
-	private String sku; 
+public class Producto extends Item {
+	private String sku;
 	private String nombre;
 	private String descripcion;
 	private int peso;
@@ -11,8 +12,8 @@ public class Producto implements Item {
 	private Categoria categoria;
 	private double precioBase;
 	private double descuento;
-	private HashMap<String, Object> atributosDinamicos; 
-	
+	private HashMap<String, Object> atributosDinamicos;
+
 
 	public Producto(String sku, String nombre,String descripcion, int peso, String marca, Categoria categoria, double precioBase, double descuento) {
 		super();
@@ -26,58 +27,54 @@ public class Producto implements Item {
 		this.descuento = descuento;
 		this.atributosDinamicos = new HashMap<>();
 	}
+
 	@Override
 	public String getNombre() {
-		// TODO Auto-generated method stub
 		return this.nombre;
 	}
 
 	@Override
 	public String getDescripcion() {
-		// TODO Auto-generated method stub
-		return   this.descripcion;	
+		return this.descripcion;
 	}
-	
+
 	public void setAtributoDinamico(String nombre, Object valor) {
         this.atributosDinamicos.put(nombre, valor);
     }
-	
+
 	public Object getAtributoDinamico(String nombre) {
         return this.atributosDinamicos.get(nombre);
-    } 
+    }
 
 	public int getPeso() {
 		return this.peso;
 	}
-	
-	
 
-	
+
 	public boolean validacionDeAtributos() {
 		return this.validacionAtributosFijos() &&
 			   this.validacionAtributosDinamicos();
 	}
-	public boolean validacionAtributosFijos() { 
+	public boolean validacionAtributosFijos() {
 		return this.sku != null && !this.sku.isEmpty() &&
 				this.nombre != null && !this.nombre.isEmpty();
 	}
 	public boolean validacionAtributosDinamicos() {
 		return this.atributosDinamicos.entrySet().stream()
-		                              .allMatch(entry -> entry.getValue() != null && 
+		                              .allMatch(entry -> entry.getValue() != null &&
 		                               !entry.getValue()
 		                               .toString()
 		                               .trim()
 		                               .isEmpty());
 		}
-	
-	
-	
+
+
+
 	@Override
 	public double getPrecioBaseCalculado() {
-		// TODO Auto-generated method stub
 		return this.precioBase * (1.0  - this.descuento);
 	}
-	
+
 	@Override
 	public void add(Item item) {
 		// lanza excepcion, no se pueden agregar items a un producto
@@ -89,4 +86,10 @@ public class Producto implements Item {
 		// lanza excepcion, no se pueden agregar items a un producto
 	}
 
+	@Override
+	public Map<String, Integer> getResumenDeSku() {
+		Map<String, Integer> resumen = new HashMap<>();
+		resumen.put(sku, 1);
+		return resumen;
+	}
 }
