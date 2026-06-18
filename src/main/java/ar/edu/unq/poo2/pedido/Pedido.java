@@ -2,7 +2,9 @@ package ar.edu.unq.poo2.pedido;
 
 import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
+import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 
@@ -14,6 +16,7 @@ public class Pedido {
     private MetodoDeEnvio envio;
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
+    private MedioPago medioPago;
 
     public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio){
         this.inventario = inventario;
@@ -101,5 +104,13 @@ public class Pedido {
 
     public void setEstadoActual(EstadoPedido estadoPedido){
         estadoActual = estadoPedido;
+    }
+
+    public MedioPago getMedioPago() {
+        return medioPago;
+    }
+
+    public void setMedioPago(MedioPago medioPago) {
+        this.medioPago = medioPago;
     }
 }
