@@ -26,15 +26,14 @@ public class ReporteDeProductosMasVendidos implements Reporte {
     }
 
     private void analizarVenta(Venta venta, Map<String, LineaDeReporte> analizados){
-        venta.getRegistroDeItems().forEach(registroDeItem -> procesarLinea(registroDeItem, analizados));
+        venta.getRegistroDeItems().forEach(registroDeItem -> armarLinea(registroDeItem, analizados));
     }
 
-    private void procesarLinea(RegistroDeItem registro, Map<String, LineaDeReporte> analizados) {
+    private void armarLinea(RegistroDeItem registro, Map<String, LineaDeReporte> analizados) {
         String nombreItemVendido = registro.getNombreItem();
         analizados.putIfAbsent(nombreItemVendido, new LineaDeReporte(nombreItemVendido));
         analizados.get(nombreItemVendido).acumular(registro.getPrecio());
     }
-
 
     private List<LineaDeReporte> analizadosOrdenados(Map<String, LineaDeReporte> analizados){
         return analizados.values().stream()
