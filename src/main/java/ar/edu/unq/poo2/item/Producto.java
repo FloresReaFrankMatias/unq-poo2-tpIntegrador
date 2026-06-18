@@ -1,6 +1,9 @@
 package ar.edu.unq.poo2.item;
 
+import ar.edu.unq.poo2.venta.RegistroDeItem;
+
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Producto extends Item {
@@ -58,5 +61,11 @@ public class Producto extends Item {
 		Map<String, Integer> resumen = new HashMap<>();
 		resumen.put(sku, 1);
 		return resumen;
+	}
+
+	@Override
+	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {
+		double precio = this.getPrecioBaseCalculado() * multiplicadorDescuento;
+		return List.of(new RegistroDeItem(this, precio));
 	}
 }
