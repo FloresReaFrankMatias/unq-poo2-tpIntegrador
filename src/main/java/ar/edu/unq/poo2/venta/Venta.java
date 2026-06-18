@@ -16,19 +16,19 @@ public class Venta {
 
     private List<RegistroDeItem> convertirARegistros(List<Item> contenido){
         return contenido.stream()
-                .flatMap(itemVendido -> itemVendido.getRegistroDeItem(1).stream())
+                .flatMap(itemVendido -> itemVendido.getRegistroDeItem(1.0).stream())
                 .toList();
     }
 
     public LocalDate getFechaDeVenta() {
-        return this.fechaDeVenta;
+        return fechaDeVenta;
     }
 
     public List<RegistroDeItem> getRegistroDeItems() {
-        return this.registroDeItems;
+        return registroDeItems;
     }
 
     public boolean ocurrioEntre(LocalDate inicio, LocalDate fin) {
-        return !this.fechaDeVenta.isBefore(inicio) && !this.fechaDeVenta.isAfter(fin);
+        return !fechaDeVenta.isBefore(inicio) && !fechaDeVenta.isAfter(fin);
     }
 }

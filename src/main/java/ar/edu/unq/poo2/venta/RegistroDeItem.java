@@ -12,14 +12,14 @@ public class RegistroDeItem {
     }
 
     public String getNombreItem() {
-        return this.item.getNombre();
+        return item.getNombre();
     }
 
     public Item getItem() {
-        return this.item;
+        return item;
     }
 
     public Double getPrecio() {
-        return this.precio;
+        return precio;
     }
 }

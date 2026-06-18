@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HistorialDeVentas {
-    List<Venta> ventasRegistradas = new ArrayList<>();
+    private List<Venta> ventasRegistradas = new ArrayList<>();
 
     public void registrarVenta(List<Item> contenido, LocalDate fechaDeVenta){
         ventasRegistradas.add(new Venta(contenido, fechaDeVenta));

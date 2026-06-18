@@ -12,7 +12,12 @@ import java.util.List;
 import java.util.Map;
 
 public class ReporteDeProductosMasVendidos implements Reporte {
-    private List<LineaDeReporte> lineasProcesadas;
+    private final List<LineaDeReporte> lineasProcesadas;
+
+    @Override
+    public void aceptar(FormatoVisitante visitante) {
+        visitante.visitar(this);
+    }
 
     public ReporteDeProductosMasVendidos(LocalDate inicio, LocalDate fin, HistorialDeVentas historial) {
         this.lineasProcesadas = armarReporte(inicio, fin, historial);
@@ -47,10 +52,5 @@ public class ReporteDeProductosMasVendidos implements Reporte {
 
     public List<LineaDeReporte> getLineasProcesadas() {
         return lineasProcesadas;
-    }
-
-    @Override
-    public void aceptar(FormatoVisitante visitante) {
-        visitante.aceptar(this);
     }
 }

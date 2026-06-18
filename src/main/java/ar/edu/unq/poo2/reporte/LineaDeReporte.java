@@ -12,15 +12,19 @@ public class LineaDeReporte {
     }
 
     public void acumular(double precioCobrado) {
-        this.cantidadVendida++;
-        this.dineroAcumulado+= precioCobrado;
+        cantidadVendida++;
+        dineroAcumulado+= precioCobrado;
     }
 
-    public double getPrecioPromedio() {
-        return cantidadVendida != 0 ? dineroAcumulado/cantidadVendida : 0;
+    public String getNombreItem() {
+        return nombreItem;
     }
 
     public int getCantidadVendida() {
         return cantidadVendida;
+    }
+
+    public double getPrecioPromedio() {
+        return cantidadVendida != 0 ? dineroAcumulado/cantidadVendida : 0;
     }
 }
