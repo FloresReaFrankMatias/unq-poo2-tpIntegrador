@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Paquete extends Item {
 	private String nombre;
@@ -77,4 +78,18 @@ public class Paquete extends Item {
 		}
 		return resumen;
 	}
-}
+	@Override
+	public Categoria getCategoria() {
+		//se qeuda con la categoria predominante del paquete
+        return items.stream()
+                    .map(Item::getCategoria)
+                    .collect(Collectors.groupingBy(categoria -> categoria, Collectors.counting()))
+                    .entrySet().stream()
+                    .max(Map.Entry.comparingByValue())
+                    .map(Map.Entry::getKey)
+                    .orElse(null); 
+    }
+    
+	}
+	
+

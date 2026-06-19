@@ -22,7 +22,7 @@ public class Producto extends Item {
 		this.descripcion= descripcion;
 		this.peso = peso;
 		this.marca = marca;
-		this.categoria = categoria;
+		this.setCategoria(categoria);
 		this.precioBase = precioBase;
 		this.descuento = descuento;
 		this.atributosDinamicos = new HashMap<>();
@@ -91,5 +91,13 @@ public class Producto extends Item {
 		Map<String, Integer> resumen = new HashMap<>();
 		resumen.put(sku, 1);
 		return resumen;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
 	}
 }
