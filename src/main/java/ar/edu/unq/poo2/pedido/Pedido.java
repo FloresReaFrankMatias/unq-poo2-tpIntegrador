@@ -118,5 +118,15 @@ public class Pedido {
     public double getPesoTotal() {
 		return contenido.stream().mapToInt(Item::getPeso).sum();
 	}
+    public Direccion getDireccionEntrega() {
+		return cliente.getDireccion();
+		}
+
+	public Double valorTotalPedido() {
+		// TODO Auto-generated method stub
+		return contenido.stream() 
+				        .mapToDouble(Item::getPrecioBaseCalculado)
+				        .sum();
+	}
     
 }
