@@ -10,12 +10,20 @@ public class Cliente {
 	public Cliente(String mail, Direccion direccion) {
 		super();
 		// TODO Auto-generated constructor stub
-		this.mail = mail;
+		this.setMail(mail);
 		this.direccion = direccion;
 	}
 	
 	public Direccion getDireccion() {
 		return direccion;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 }
