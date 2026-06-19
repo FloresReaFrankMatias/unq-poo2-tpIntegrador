@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.test.pago;
+package ar.edu.unq.poo2.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

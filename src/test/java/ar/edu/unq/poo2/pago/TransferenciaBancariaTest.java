@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.test.pago;
+package ar.edu.unq.poo2.pago;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -12,8 +12,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.pago.PagoInvalidoException;
-import ar.edu.unq.poo2.pago.TransferenciaBancaria;
 import ar.edu.unq.poo2.pago.api.APITransferenciaBancaria;
 
 class TransferenciaBancariaTest {

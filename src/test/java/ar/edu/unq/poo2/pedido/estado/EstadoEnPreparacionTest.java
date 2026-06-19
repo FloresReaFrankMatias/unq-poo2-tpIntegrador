@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.Pedido;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -79,5 +80,12 @@ class EstadoEnPreparacionTest{
     @Test
     void noSePuedeTransicionarAEstadoEntregadoDesdeEstadoEnPreparacion(){
         assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.entregar(pedido));
+    }
+
+    @Test
+    void alNotificarTransicionSeLlamaAAlPrepararDelObservadorDado() {
+        ObservadorPedido observadorMock = mock(ObservadorPedido.class);
+        estado.notificarTransicion(pedido, observadorMock);
+        verify(observadorMock).alPreparar(pedido);
     }
 }

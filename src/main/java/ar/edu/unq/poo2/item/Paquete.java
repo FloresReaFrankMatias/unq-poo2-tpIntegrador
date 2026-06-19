@@ -1,5 +1,7 @@
 package ar.edu.unq.poo2.item;
 
+import ar.edu.unq.poo2.venta.RegistroDeItem;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -93,3 +95,16 @@ public class Paquete extends Item {
 	}
 	
 
+
+	@Override
+	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {
+		double precioEfectivoPaquete = this.getPrecioBaseCalculado() * multiplicadorDescuento;
+		double nuevoMultiplicador = multiplicadorDescuento * (1.0 - this.descuento);
+
+		List<RegistroDeItem> registros = new ArrayList<>();
+		registros.add(new RegistroDeItem(this, precioEfectivoPaquete));
+		this.items.forEach(item -> registros.addAll(item.getRegistroDeItem(nuevoMultiplicador)));
+
+		return registros;
+	}
+}
