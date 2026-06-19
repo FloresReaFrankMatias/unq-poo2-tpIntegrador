@@ -45,7 +45,7 @@ class EstadoConfirmadoTest{
     }
 
     @Test
-    void transicionarAEstadoCanceladoDesdeEstadoBorradorReponeStock(){
+    void transicionarAEstadoCanceladoDesdeEstadoConfirmadoReponeStock(){
         estado.cancelar(pedido);
         verify(pedido).reponerStock();
     }

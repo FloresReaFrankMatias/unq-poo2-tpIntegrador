@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Paquete implements Item {
+public class Paquete extends Item {
 	private String nombre;
 	private double descuento;
 	private String descripcion;

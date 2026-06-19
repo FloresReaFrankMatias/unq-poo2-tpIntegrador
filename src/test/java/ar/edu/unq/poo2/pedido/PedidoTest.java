@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,7 +31,7 @@ public class PedidoTest {
         envioMock = mock(MetodoDeEnvio.class);
         inventarioMock = mock(Inventario.class);
         gestorMock = mock(GestorNotasDeCredito.class);
-        pedido = new Pedido(inventarioMock, gestorMock, envioMock);
+        pedido = new Pedido(inventarioMock, gestorMock, envioMock, new HashSet<>());
         pedido.setEstadoActual(estadoMock);
     }
 
