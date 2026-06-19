@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.Pedido;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,5 +56,12 @@ class EstadoEntregadoTest{
     void intentarTransicionarAEstadoEntregadoDesdeEstadoEntregadoNoCambiaEstadoActual(){
         estado.entregar(pedido);
         verify(pedido, never()).setEstadoActual(any());
+    }
+
+    @Test
+    void alNotificarTransicionSeLlamaAAlEntregarDelObservadorDado() {
+        ObservadorPedido observadorMock = mock(ObservadorPedido.class);
+        estado.notificarTransicion(pedido, observadorMock);
+        verify(observadorMock).alEntregar(pedido);
     }
 }

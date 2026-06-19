@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.Pedido;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -55,5 +56,12 @@ class EstadoCanceladoTest{
     @Test
     void noSePuedeTransicionarAEstadoEntregadoDesdeEstadoCancelado(){
         assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.entregar(pedido));
+    }
+
+    @Test
+    void alNotificarTransicionSeLlamaAAlCancelarDelObservadorDado() {
+        ObservadorPedido observadorMock = mock(ObservadorPedido.class);
+        estado.notificarTransicion(pedido, observadorMock);
+        verify(observadorMock).alCancelar(pedido);
     }
 }
