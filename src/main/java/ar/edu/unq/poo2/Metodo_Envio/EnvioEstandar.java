@@ -20,7 +20,7 @@ public class EnvioEstandar implements MetodoDeEnvio {
         return correo.estimarEnvio(pesoTotal, destino);
 		
 		
-		return 0;
+		
 	}
 
 	@Override

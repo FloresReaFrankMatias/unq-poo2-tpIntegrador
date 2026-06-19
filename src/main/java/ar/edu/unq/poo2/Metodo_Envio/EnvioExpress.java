@@ -19,7 +19,7 @@ public class EnvioExpress implements MetodoDeEnvio {
 	public double calcularCosto(Pedido pedido) {
 		// TODO Auto-generated method stub
 		return envioExpress.calcularCosto(
-                pedido.totalProductos());
+                pedido.valorTotalPedido());
 	}
 
 }
