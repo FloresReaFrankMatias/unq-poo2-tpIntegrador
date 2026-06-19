@@ -1,10 +1,8 @@
-package ar.edu.unq.poo2.test.pago;
+package ar.edu.unq.poo2.pago;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
-
-import ar.edu.unq.poo2.pago.MedioPago;
 
 class MedioPagoTest {
 
