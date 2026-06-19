@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.pedido.estado;
+package ar.edu.unq.poo2.pedido.notaDeCredito;
 
 import ar.edu.unq.poo2.pedido.notadecredito.NotaDeCredito;
 import org.junit.jupiter.api.Test;

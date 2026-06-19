@@ -4,12 +4,11 @@ import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
+import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -22,6 +21,7 @@ public class PedidoTest {
     GestorNotasDeCredito gestorMock;
     Item itemMockUno;
     Item itemMockDos;
+    ObservadorPedido observadorMock;
 
     @BeforeEach
     void setUp(){
@@ -31,8 +31,21 @@ public class PedidoTest {
         envioMock = mock(MetodoDeEnvio.class);
         inventarioMock = mock(Inventario.class);
         gestorMock = mock(GestorNotasDeCredito.class);
-        pedido = new Pedido(inventarioMock, gestorMock, envioMock, new HashSet<>());
+        observadorMock = mock(ObservadorPedido.class);
+        pedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
         pedido.setEstadoActual(estadoMock);
+    }
+
+    @Test
+    void unPedidoSeCreaEnEstadoBorrador() {
+        Pedido nuevoPedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
+        assertDoesNotThrow(() -> nuevoPedido.agregarItem(itemMockUno));
+    }
+
+    @Test
+    void unPedidoSeCreaConContenidoVacio() {
+        Pedido nuevoPedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
+        assertFalse(nuevoPedido.tieneItems());
     }
 
     @Test
@@ -55,9 +68,21 @@ public class PedidoTest {
     }
 
     @Test
+    void alConfirmarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
+        pedido.confirmar();
+        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+    }
+
+    @Test
     void unPedidoDelegaLaAccionASuEstadoAlIntentarCancelarlo(){
         pedido.cancelar();
         verify(estadoMock).cancelar(pedido);
+    }
+
+    @Test
+    void alCancelarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
+        pedido.cancelar();
+        verify(estadoMock).notificarTransicion(pedido, observadorMock);
     }
 
     @Test
@@ -67,15 +92,33 @@ public class PedidoTest {
     }
 
     @Test
+    void alPrepararSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
+        pedido.preparar();
+        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+    }
+
+    @Test
     void unPedidoDelegaLaAccionASuEstadoAlIntentarEnviarlo(){
         pedido.enviar();
         verify(estadoMock).enviar(pedido);
     }
 
     @Test
+    void alEnviarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
+        pedido.enviar();
+        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+    }
+
+    @Test
     void unPedidoDelegaLaAccionASuEstadoAlIntentarEntregarlo(){
         pedido.entregar();
         verify(estadoMock).entregar(pedido);
+    }
+
+    @Test
+    void alEntregarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
+        pedido.entregar();
+        verify(estadoMock).notificarTransicion(pedido, observadorMock);
     }
 
     @Test
@@ -146,5 +189,13 @@ public class PedidoTest {
         when(itemMockUno.getResumenDePrecio()).thenReturn(resumenEsperadoItem);
         pedido.generarNotaDeCredito(extras);
         verify(gestorMock).hacerNotaDeCredito(resumenEsperadoCombinado);
+    }
+
+    @Test
+    void unPedidoDevuelveSuContenidoInmutableCuandoSeLoPiden() {
+        pedido.agregarItem(itemMockUno);
+        List<Item> contenido = pedido.getContenido();
+        assertThrows(UnsupportedOperationException.class, () -> contenido.add(itemMockDos));
+        assertThrows(UnsupportedOperationException.class, () -> contenido.remove(itemMockUno));
     }
 }
