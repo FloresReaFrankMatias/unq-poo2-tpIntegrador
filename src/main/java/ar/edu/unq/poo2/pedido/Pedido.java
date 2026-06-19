@@ -1,5 +1,6 @@
 package ar.edu.unq.poo2.pedido;
 
+import ar.edu.unq.poo2.Metodo_Envio.Direccion;
 import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pago.MedioPago;
@@ -17,6 +18,7 @@ public class Pedido {
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
     private MedioPago medioPago;
+    private Cliente cliente;
 
     public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio){
         this.inventario = inventario;
@@ -113,4 +115,8 @@ public class Pedido {
     public void setMedioPago(MedioPago medioPago) {
         this.medioPago = medioPago;
     }
+    public double getPesoTotal() {
+		return contenido.stream().mapToInt(Item::getPeso).sum();
+	}
+    
 }
