@@ -1,8 +1,9 @@
 package ar.edu.unq.poo2.item;
 
-import ar.edu.unq.poo2.venta.RegistroDeItem;
 import java.util.List;
 import java.util.Map;
+
+import ar.edu.unq.poo2.venta.RegistroDeItem;
 
 public abstract class Item {
 	public Map<String, Double> getResumenDePrecio(){
@@ -17,4 +18,5 @@ public abstract class Item {
 	public abstract void remove(Item item);
 	public abstract List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento);
 	public abstract Map<String, Integer> getResumenDeSku();
+	public abstract Categoria getCategoria();
 }

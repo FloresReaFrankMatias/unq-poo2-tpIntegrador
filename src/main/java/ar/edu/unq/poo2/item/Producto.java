@@ -77,6 +77,11 @@ public class Producto extends Item {
 	public double getPrecioBaseCalculado() {
 		return this.precioBase * (1.0  - this.descuento);
 	}
+	
+	@Override
+	public Categoria getCategoria() {
+	    return categoria;
+	}
 
 	@Override
 	public void add(Item item) {
@@ -101,4 +106,6 @@ public class Producto extends Item {
 		double precio = this.getPrecioBaseCalculado() * multiplicadorDescuento;
 		return List.of(new RegistroDeItem(this, precio));
 	}
+	
+	
 }

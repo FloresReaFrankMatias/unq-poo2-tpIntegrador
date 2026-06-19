@@ -52,6 +52,21 @@ public class Paquete extends Item {
 	public double getPrecioBaseCalculado() {
 		return this.getPrecioBase()* (1.0 - this.descuento);
 	}
+	
+	@Override
+	public Categoria getCategoria() {
+
+		Categoria categoria = items.get(0).getCategoria();
+
+		    for (Item item : items) {
+
+		        if (!item.getCategoria().equals(categoria)) {
+		            return Categoria.OTROS;
+		        }
+		    }
+
+		    return categoria;
+	}
 
 	@Override
 	public void add(Item item) {
