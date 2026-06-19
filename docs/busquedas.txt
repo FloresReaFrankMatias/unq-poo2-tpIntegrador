@@ -1,0 +1,70 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class Catalogo {
+    - items : List<Item>
+
+    + agregarItem(item : Item)
+    + quitarItem(item : Item)
+    + buscar(criterio : CriterioBusqueda) : List<Item>
+}
+
+interface CriterioBusqueda {
+    + cumple(item : Item) : boolean
+}
+
+class PorNombre {
+    - texto : String
+}
+
+class PorPrecioMaximo {
+    - precioMaximo : double
+}
+
+class PorCategoria {
+    - categoria : Categoria
+}
+
+class PorDisponibilidad {
+    - consulta : ConsultaDisponibilidadInventario
+}
+
+class ConsultaDisponibilidadInventario {
+    - inventario : Inventario
+
+    + estaDisponible(item : Item) : boolean
+}
+
+class And {
+    - criterios : List<CriterioBusqueda>
+}
+
+class Or {
+    - criterios : List<CriterioBusqueda>
+}
+
+class Not {
+    - criterio : CriterioBusqueda
+}
+
+Catalogo *-- Item
+Catalogo ..> CriterioBusqueda
+
+CriterioBusqueda <|.. PorNombre
+CriterioBusqueda <|.. PorPrecioMaximo
+CriterioBusqueda <|.. PorCategoria
+CriterioBusqueda <|.. PorDisponibilidad
+
+CriterioBusqueda <|.. And
+CriterioBusqueda <|.. Or
+CriterioBusqueda <|.. Not
+
+And *-- CriterioBusqueda
+Or *-- CriterioBusqueda
+Not *-- CriterioBusqueda
+
+PorDisponibilidad --> ConsultaDisponibilidadInventario
+ConsultaDisponibilidadInventario --> Inventario
+
+@enduml
