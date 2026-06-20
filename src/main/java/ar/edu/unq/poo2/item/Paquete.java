@@ -56,18 +56,16 @@ public class Paquete extends Item {
 	@Override
 	public Categoria getCategoria() {
 
-		Categoria categoria = items.get(0).getCategoria();
+	    Categoria categoriaComun = items.get(0).getCategoria();
 
-		    for (Item item : items) {
+	    if (todosLosItemsSonDeLaMismaCategoria(categoriaComun)) {
+	        return categoriaComun;
+	    }
 
-		        if (!item.getCategoria().equals(categoria)) {
-		            return Categoria.OTROS;
-		        }
-		    }
-
-		    return categoria;
+	    return Categoria.OTROS;
 	}
 
+	
 	@Override
 	public void add(Item item) {
 		this.items.add(item);
@@ -125,4 +123,17 @@ public class Paquete extends Item {
 	                     .anyMatch(item ->
 	                             item.coincideNombre(textoBuscado));
 	}
+	
+	private boolean todosLosItemsSonDeLaMismaCategoria(Categoria categoriaComun) {
+
+	    for (Item item : items) {
+
+	        if (!item.getCategoria().equals(categoriaComun)) {
+	            return false;
+	        }
+	    }
+
+	    return true;
+	}
+
 }
