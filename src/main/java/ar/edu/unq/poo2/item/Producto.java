@@ -35,6 +35,12 @@ public class Producto extends Item {
 	public String getNombre() {
 		return this.nombre;
 	}
+	
+	@Override
+	public boolean coincideNombre(String textoBuscado) {
+
+		return this.getNombre().toLowerCase().contains(textoBuscado.toLowerCase());
+	}
 
 	@Override
 	public String getDescripcion() {

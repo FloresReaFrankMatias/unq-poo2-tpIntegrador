@@ -19,4 +19,5 @@ public abstract class Item {
 	public abstract List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento);
 	public abstract Map<String, Integer> getResumenDeSku();
 	public abstract Categoria getCategoria();
+	public abstract boolean coincideNombre(String textoBuscado);
 }

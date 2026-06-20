@@ -85,7 +85,7 @@ public class Paquete extends Item {
 			throw new RuntimeException("El item no se encuentra en el paquete");
 		}
 	}
-
+	
 	@Override
 	public Map<String, Integer> getResumenDeSku() {
 		Map<String, Integer> resumen = new HashMap<>();
@@ -105,5 +105,24 @@ public class Paquete extends Item {
 		this.items.forEach(item -> registros.addAll(item.getRegistroDeItem(nuevoMultiplicador)));
 
 		return registros;
+	}
+	
+	@Override
+	public boolean coincideNombre(String textoBuscado) {
+
+	    return coincideConNombreDePaquete(textoBuscado)
+	        || coincideConNombreDeAlgunItem(textoBuscado);
+	}
+	
+	private boolean coincideConNombreDePaquete(String textoBuscado) {
+
+	    return this.getNombre().toLowerCase().contains(textoBuscado.toLowerCase());
+	}
+	
+	private boolean coincideConNombreDeAlgunItem(String textoBuscado) {
+
+	    return this.items.stream()
+	                     .anyMatch(item ->
+	                             item.coincideNombre(textoBuscado));
 	}
 }
