@@ -18,6 +18,6 @@ public class EnvioExpress implements MetodoDeEnvio {
 	@Override
 	public double calcularCosto(Pedido pedido) {
 		return envioExpress.calcularCosto(
-                pedido.valorTotalPedido());
+                pedido.getValorTotal());
 	}
 }
