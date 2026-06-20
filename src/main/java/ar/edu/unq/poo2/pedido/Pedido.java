@@ -12,15 +12,13 @@ import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 import java.util.*;
 
 public class Pedido {
-    private EstadoPedido estadoActual;
-    private List<Item> contenido;
+    private EstadoPedido estadoActual = new EstadoBorrador();
+    private ContenidoPedido contenido = new ContenidoPedido();
     private MetodoDeEnvio envio;
     private final Inventario inventario;
     private final GestorNotasDeCredito gestorNotasDeCredito;
     private MedioPago medioPago;
-
     private Cliente cliente;
-
     private final Set<ObservadorPedido> observadores;
 
     public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio, Set<ObservadorPedido> observadores){
@@ -28,18 +26,16 @@ public class Pedido {
         this.gestorNotasDeCredito = gestorNotasDeCredito;
         this.envio = envio;
         this.observadores = observadores;
-        this.estadoActual = new EstadoBorrador();
-        this.contenido = new ArrayList<>();
     }
 
     public void agregarItem(Item item){
         estadoActual.verificarAgregarItem(this, item);
-        contenido.add(item);
+        contenido.agregarItem(item);
     }
 
     public void quitarItem(Item item){
         estadoActual.verificarQuitarItem(this, item);
-        contenido.remove(item);
+        contenido.quitarItem(item);
     }
 
     public void confirmar(){
@@ -72,45 +68,25 @@ public class Pedido {
     }
 
     public void descontarStock() {
-        this.inventario.decrementarStock(this.getResumenDeSkus());
+        this.inventario.decrementarStock(contenido.getResumenDeSkus());
     }
 
     public void reponerStock() {
-        this.inventario.incrementarStock(this.getResumenDeSkus());
-    }
-
-    private Map<String, Integer> getResumenDeSkus() {
-        Map<String, Integer> resumen = new HashMap<>();
-        contenido.forEach(item -> agregarItemAResumenDeSkus(item, resumen));
-        return resumen;
-    }
-
-    private void agregarItemAResumenDeSkus(Item item, Map<String, Integer> resumen){
-        item.getResumenDeSku().forEach((sku, cantidad) -> resumen.merge(sku, cantidad, Integer::sum));
+        this.inventario.incrementarStock(contenido.getResumenDeSkus());
     }
 
     public void generarNotaDeCredito(Map<String, Double> extras){
-        Map<String, Double> resumen = getResumenDePrecios();
+        Map<String, Double> resumen = contenido.getResumenDePrecios();
         resumen.putAll(extras);
         gestorNotasDeCredito.hacerNotaDeCredito(resumen);
     }
 
-    private Map<String, Double> getResumenDePrecios(){
-        Map<String, Double> resumen = new HashMap<>();
-        contenido.forEach(item -> agregarItemAResumenDePrecios(item, resumen));
-        return resumen;
-    }
-
-    private void agregarItemAResumenDePrecios(Item item, Map<String, Double> resumen){
-        item.getResumenDePrecio().forEach((nombre, precio) -> resumen.merge(nombre, precio, Double::sum));
-    }
-
     public boolean tieneItems() {
-        return !contenido.isEmpty();
+        return contenido.tieneItems();
     }
 
     public List<Item> getContenido() {
-        return Collections.unmodifiableList(contenido); //Es inmutable para evitar que cualquiera pueda agregar o quitar items de un pedido.
+        return contenido.getItems();
     }
 
     public MetodoDeEnvio getEnvio() {
@@ -128,16 +104,16 @@ public class Pedido {
     public void setMedioPago(MedioPago medioPago) {
         this.medioPago = medioPago;
     }
+
     public double getPesoTotal() {
-		return contenido.stream().mapToInt(Item::getPeso).sum();
+		return contenido.getPesoTotal();
 	}
+
     public Direccion getDireccionEntrega() {
 		return cliente.getDireccion();
-		}
+    }
 
-	public Double valorTotalPedido() {
-		return contenido.stream()
-				        .mapToDouble(Item::getPrecio)
-				        .sum();
+	public Double getValorTotal() {
+		return contenido.getValorTotal();
 	}
 }
