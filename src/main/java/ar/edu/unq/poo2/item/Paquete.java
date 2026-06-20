@@ -6,20 +6,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Paquete extends Item {
 	private String nombre;
 	private double descuento;
 	private String descripcion;
 	private List<Item> items;
+	private Categoria categoria;
 	
-	
-	public Paquete(String nombre,double descuento, String descripcion) {
+	public Paquete(String nombre,double descuento, String descripcion, Categoria categoria) {
 		this.nombre = nombre;
 		this.descuento= descuento;
 		this.descripcion= descripcion;
 		this.items = new ArrayList<>();
+		this.categoria = categoria;
 	}
 
 	@Override
@@ -80,21 +80,11 @@ public class Paquete extends Item {
 		}
 		return resumen;
 	}
+
 	@Override
 	public Categoria getCategoria() {
-		//se qeuda con la categoria predominante del paquete
-        return items.stream()
-                    .map(Item::getCategoria)
-                    .collect(Collectors.groupingBy(categoria -> categoria, Collectors.counting()))
-                    .entrySet().stream()
-                    .max(Map.Entry.comparingByValue())
-                    .map(Map.Entry::getKey)
-                    .orElse(null); 
+		return categoria;
     }
-    
-	}
-	
-
 
 	@Override
 	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {

@@ -11,6 +11,7 @@ public abstract class Item {
 
 	public abstract String getNombre();
 	public abstract String getDescripcion();
+    public abstract Categoria getCategoria();
     public abstract int getPeso();
 	public abstract double getPrecioBaseCalculado();
 	public abstract void add(Item item);

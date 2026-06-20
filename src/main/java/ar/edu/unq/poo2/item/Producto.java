@@ -17,7 +17,6 @@ public class Producto extends Item {
 	private double descuento;
 	private HashMap<String, Object> atributosDinamicos;
 
-
 	public Producto(String sku, String nombre,String descripcion, int peso, String marca, Categoria categoria, double precioBase, double descuento) {
 		super();
 		this.sku = sku;
@@ -25,7 +24,7 @@ public class Producto extends Item {
 		this.descripcion= descripcion;
 		this.peso = peso;
 		this.marca = marca;
-		this.setCategoria(categoria);
+		this.categoria = categoria;
 		this.precioBase = precioBase;
 		this.descuento = descuento;
 		this.atributosDinamicos = new HashMap<>();
@@ -53,15 +52,16 @@ public class Producto extends Item {
 		return this.peso;
 	}
 
-
 	public boolean validacionDeAtributos() {
 		return this.validacionAtributosFijos() &&
 			   this.validacionAtributosDinamicos();
 	}
+
 	public boolean validacionAtributosFijos() {
 		return this.sku != null && !this.sku.isEmpty() &&
 				this.nombre != null && !this.nombre.isEmpty();
 	}
+
 	public boolean validacionAtributosDinamicos() {
 		return this.atributosDinamicos.entrySet().stream()
 		                              .allMatch(entry -> entry.getValue() != null &&
@@ -69,9 +69,7 @@ public class Producto extends Item {
 		                               .toString()
 		                               .trim()
 		                               .isEmpty());
-		}
-
-
+	}
 
 	@Override
 	public double getPrecioBaseCalculado() {
@@ -96,12 +94,10 @@ public class Producto extends Item {
 		return resumen;
 	}
 
+	@Override
 	public Categoria getCategoria() {
 		return categoria;
 	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
 
 	@Override
 	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {
