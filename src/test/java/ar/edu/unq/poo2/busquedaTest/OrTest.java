@@ -13,58 +13,49 @@ import ar.edu.unq.poo2.busqueda.Or;
 import ar.edu.unq.poo2.item.Item;
 
 public class OrTest {
-
-    private Item item;
-
-    private CriterioBusqueda criterio1;
-    private CriterioBusqueda criterio2;
-
-    private Or or;
+    private Or criterioOr;
+    private Item itemMock;
+    private CriterioBusqueda criterioMockUno;
+    private CriterioBusqueda criterioMockDos;
 
     @BeforeEach
     void setUp() {
+        itemMock = mock(Item.class);
+        criterioMockUno = mock(CriterioBusqueda.class);
+        criterioMockDos = mock(CriterioBusqueda.class);
 
-        item = mock(Item.class);
-
-        criterio1 = mock(CriterioBusqueda.class);
-        criterio2 = mock(CriterioBusqueda.class);
-
-        or = new Or(criterio1, criterio2);
+        criterioOr = new Or(criterioMockUno, criterioMockDos);
     }
 
     @Test
     void cumpleCuandoAmbosCriteriosSeCumplen() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        when(criterio1.cumple(item)).thenReturn(true);
-        when(criterio2.cumple(item)).thenReturn(true);
-
-        assertTrue(or.cumple(item));
+        assertTrue(criterioOr.cumple(itemMock));
     }
 
     @Test
     void cumpleCuandoSoloElPrimerCriterioSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
 
-        when(criterio1.cumple(item)).thenReturn(true);
-        when(criterio2.cumple(item)).thenReturn(false);
-
-        assertTrue(or.cumple(item));
+        assertTrue(criterioOr.cumple(itemMock));
     }
 
     @Test
     void cumpleCuandoSoloElSegundoCriterioSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(false);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        when(criterio1.cumple(item)).thenReturn(false);
-        when(criterio2.cumple(item)).thenReturn(true);
-
-        assertTrue(or.cumple(item));
+        assertTrue(criterioOr.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoNingunCriterioSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(false);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
 
-        when(criterio1.cumple(item)).thenReturn(false);
-        when(criterio2.cumple(item)).thenReturn(false);
-
-        assertFalse(or.cumple(item));
+        assertFalse(criterioOr.cumple(itemMock));
     }
 }

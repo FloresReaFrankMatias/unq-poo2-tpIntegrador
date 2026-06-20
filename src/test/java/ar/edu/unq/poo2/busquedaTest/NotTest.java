@@ -13,34 +13,29 @@ import ar.edu.unq.poo2.busqueda.Not;
 import ar.edu.unq.poo2.item.Item;
 
 public class NotTest {
-
-    private Item item;
-    private CriterioBusqueda criterio;
-    private Not not;
+    private Not criterioNot;
+    private Item itemMock;
+    private CriterioBusqueda criterioMock;
 
     @BeforeEach
     void setUp() {
+        itemMock = mock(Item.class);
+        criterioMock = mock(CriterioBusqueda.class);
 
-        item = mock(Item.class);
-
-        criterio = mock(CriterioBusqueda.class);
-
-        not = new Not(criterio);
+        criterioNot = new Not(criterioMock);
     }
 
     @Test
     void cumpleCuandoElCriterioOriginalNoSeCumple() {
+        when(criterioMock.cumple(itemMock)).thenReturn(false);
 
-        when(criterio.cumple(item)).thenReturn(false);
-
-        assertTrue(not.cumple(item));
+        assertTrue(criterioNot.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoElCriterioOriginalSeCumple() {
+        when(criterioMock.cumple(itemMock)).thenReturn(true);
 
-        when(criterio.cumple(item)).thenReturn(true);
-
-        assertFalse(not.cumple(item));
+        assertFalse(criterioNot.cumple(itemMock));
     }
 }

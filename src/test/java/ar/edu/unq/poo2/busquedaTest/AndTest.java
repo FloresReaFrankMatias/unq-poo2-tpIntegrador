@@ -1,7 +1,9 @@
 package ar.edu.unq.poo2.busquedaTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -11,58 +13,49 @@ import ar.edu.unq.poo2.busqueda.CriterioBusqueda;
 import ar.edu.unq.poo2.item.Item;
 
 public class AndTest {
-
-    private Item item;
-
-    private CriterioBusqueda criterio1;
-    private CriterioBusqueda criterio2;
-
-    private And and;
+    private And criterioAnd;
+    private Item itemMock;
+    private CriterioBusqueda criterioMockUno;
+    private CriterioBusqueda criterioMockDos;
 
     @BeforeEach
     void setUp() {
+        itemMock = mock(Item.class);
+        criterioMockUno = mock(CriterioBusqueda.class);
+        criterioMockDos = mock(CriterioBusqueda.class);
 
-        item = mock(Item.class);
-
-        criterio1 = mock(CriterioBusqueda.class);
-        criterio2 = mock(CriterioBusqueda.class);
-
-        and = new And(criterio1, criterio2);
+        criterioAnd = new And(criterioMockUno, criterioMockDos);
     }
 
     @Test
     void cumpleCuandoAmbosCriteriosSeCumplen() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        when(criterio1.cumple(item)).thenReturn(true);
-        when(criterio2.cumple(item)).thenReturn(true);
-
-        assertTrue(and.cumple(item));
+        assertTrue(criterioAnd.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoElPrimerCriterioNoSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(false);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        when(criterio1.cumple(item)).thenReturn(false);
-        when(criterio2.cumple(item)).thenReturn(true);
-
-        assertFalse(and.cumple(item));
+        assertFalse(criterioAnd.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoElSegundoCriterioNoSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
 
-        when(criterio1.cumple(item)).thenReturn(true);
-        when(criterio2.cumple(item)).thenReturn(false);
-
-        assertFalse(and.cumple(item));
+        assertFalse(criterioAnd.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoNingunCriterioSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(false);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
 
-        when(criterio1.cumple(item)).thenReturn(false);
-        when(criterio2.cumple(item)).thenReturn(false);
-
-        assertFalse(and.cumple(item));
+        assertFalse(criterioAnd.cumple(itemMock));
     }
 }
