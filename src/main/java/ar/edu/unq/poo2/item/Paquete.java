@@ -31,19 +31,6 @@ public class Paquete extends Item {
 	}
 	
 	@Override
-	public Categoria getCategoria() {
-
-	    Categoria categoriaComun = items.get(0).getCategoria();
-
-	    if (todosLosItemsSonDeLaMismaCategoria(categoriaComun)) {
-	        return categoriaComun;
-	    }
-
-	    return Categoria.OTROS;
-	}
-
-	
-	@Override
 	public void add(Item item) {
 		this.items.add(item);
 	}
@@ -82,34 +69,12 @@ public class Paquete extends Item {
 	}
 	
 	@Override
-	public boolean coincideNombre(String textoBuscado) {
-
-	    return coincideConNombreDePaquete(textoBuscado)
-	        || coincideConNombreDeAlgunItem(textoBuscado);
+	public boolean coincideNombre(String nombre) {
+	    return super.coincideNombre(nombre) || coincideConNombreDeAlgunItem(nombre);
 	}
 	
-	private boolean coincideConNombreDePaquete(String textoBuscado) {
-
-	    return this.getNombre().toLowerCase().contains(textoBuscado.toLowerCase());
-	}
-	
-	private boolean coincideConNombreDeAlgunItem(String textoBuscado) {
-
+	private boolean coincideConNombreDeAlgunItem(String nombre) {
 	    return this.items.stream()
-	                     .anyMatch(item ->
-	                             item.coincideNombre(textoBuscado));
+	                     .anyMatch(item -> item.coincideNombre(nombre));
 	}
-	
-	private boolean todosLosItemsSonDeLaMismaCategoria(Categoria categoriaComun) {
-
-	    for (Item item : items) {
-
-	        if (!item.getCategoria().equals(categoriaComun)) {
-	            return false;
-	        }
-	    }
-
-	    return true;
-	}
-
 }

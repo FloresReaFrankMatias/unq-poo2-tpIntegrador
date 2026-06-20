@@ -36,7 +36,7 @@ public abstract class Item {
 	}
 
     public boolean coincideNombre(String nombre){
-        return this.nombre.equals(nombre);
+        return this.nombre.toLowerCase().contains(nombre.toLowerCase());
     }
 
 	public String getNombre(){
