@@ -1,8 +1,6 @@
 package ar.edu.unq.poo2.pedido;
 
-import ar.edu.unq.poo2.Metodo_Envio.Direccion;
-import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
-import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
+import ar.edu.unq.poo2.envio.Direccion;
 
 public class Cliente {
 	private String mail;

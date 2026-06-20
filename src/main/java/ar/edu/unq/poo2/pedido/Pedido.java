@@ -1,7 +1,7 @@
 package ar.edu.unq.poo2.pedido;
 
-import ar.edu.unq.poo2.Metodo_Envio.Direccion;
-import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
+import ar.edu.unq.poo2.envio.Direccion;
+import ar.edu.unq.poo2.envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;

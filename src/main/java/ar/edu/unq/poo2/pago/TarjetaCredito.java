@@ -1,7 +1,7 @@
 package ar.edu.unq.poo2.pago;
 
 import ar.edu.unq.poo2.pago.api.APITarjetaCredito;
-import ar.edu.unq.poo2.pago.comporbante.CuponPago;
+import ar.edu.unq.poo2.pago.comprobante.CuponPago;
 
 public class TarjetaCredito extends MedioPago {
 	private String numeroTarjeta;

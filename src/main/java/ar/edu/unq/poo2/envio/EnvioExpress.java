@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.Metodo_Envio;
+package ar.edu.unq.poo2.envio;
 
 import ar.edu.unq.poo2.pedido.Pedido;
 

@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.pago.comporbante;
+package ar.edu.unq.poo2.pago.comprobante;
 
 public class CuponPago {
 

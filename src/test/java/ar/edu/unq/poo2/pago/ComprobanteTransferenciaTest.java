@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.pago.comporbante.ComprobanteTransferencia;
+import ar.edu.unq.poo2.pago.comprobante.ComprobanteTransferencia;
 
 class ComprobanteTransferenciaTest {
 
