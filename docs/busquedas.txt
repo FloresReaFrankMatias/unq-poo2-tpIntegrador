@@ -2,37 +2,13 @@
 
 skinparam classAttributeIconSize 0
 
+interface CriterioBusqueda {
+    + cumple(item : Item) : boolean
+}
+
 class Catalogo {
     - items : List<Item>
-
     + agregarItem(item : Item)
-    + quitarItem(item : Item)
-    + buscar(criterio : CriterioBusqueda) : List<Item>
-}
-
-interface CriterioBusqueda {
-    + cumple(item : Item) : boolean
-}
-
-class PorNombre {
-    - texto : String
-}
-
-class PorPrecioMaximo {
-    - precioMaximo : double
-}
-
-class PorCategoria {
-@startuml
-
-skinparam classAttributeIconSize 0
-
-interface CriterioBusqueda {
-    + cumple(item : Item) : boolean
-}
-
-class Catalogo {
-    - items : List<Item>
     + buscar(criterio : CriterioBusqueda) : List<Item>
 }
 
@@ -64,8 +40,9 @@ class Inventario {
     + tieneStock(sku : String) : boolean
 }
 
-class Item {
+abstract class Item {
     + getNombre() : String
+    + coincideNombre(textoBuscado : String) : boolean
     + getPrecioBaseCalculado() : double
     + getCategoria() : Categoria
     + getResumenDeSku() : Map<String,Integer>
@@ -74,10 +51,12 @@ class Item {
 class Producto {
     - sku : String
     - categoria : Categoria
+    + coincideNombre(textoBuscado : String) : boolean
 }
 
 class Paquete {
     - items : List<Item>
+    + coincideNombre(textoBuscado : String) : boolean
 }
 
 enum Categoria {
@@ -90,9 +69,19 @@ enum Categoria {
     OTROS
 }
 
-class And
-class Or
-class Not
+class And {
+    - criterio1 : CriterioBusqueda
+    - criterio2 : CriterioBusqueda
+}
+
+class Or {
+    - criterio1 : CriterioBusqueda
+    - criterio2 : CriterioBusqueda
+}
+
+class Not {
+    - criterio : CriterioBusqueda
+}
 
 CriterioBusqueda <|.. PorNombre
 CriterioBusqueda <|.. PorPrecioMaximo
@@ -105,6 +94,10 @@ CriterioBusqueda <|.. Not
 
 Catalogo o-- Item
 Catalogo ..> CriterioBusqueda
+
+And --> CriterioBusqueda
+Or --> CriterioBusqueda
+Not --> CriterioBusqueda
 
 PorDisponibilidad --> ConsultaDisponibilidadInventario
 ConsultaDisponibilidadInventario --> Inventario
