@@ -29,7 +29,7 @@ public class Paquete extends Item {
 				.mapToInt(item -> item.getPeso())
 				.sum();
 	}
-
+	
 	@Override
 	public void add(Item item) {
 		this.items.add(item);
@@ -52,7 +52,7 @@ public class Paquete extends Item {
 
 		return registros;
 	}
-
+	
 	@Override
 	public Map<String, Integer> getResumenDeSku() {
 		Map<String, Integer> resumen = new HashMap<>();
@@ -66,5 +66,15 @@ public class Paquete extends Item {
 		if (!this.items.contains(item)) {
 			throw new RuntimeException("El item no se encuentra en el paquete");
 		}
+	}
+	
+	@Override
+	public boolean coincideNombre(String nombre) {
+	    return super.coincideNombre(nombre) || coincideConNombreDeAlgunItem(nombre);
+	}
+	
+	private boolean coincideConNombreDeAlgunItem(String nombre) {
+	    return this.items.stream()
+	                     .anyMatch(item -> item.coincideNombre(nombre));
 	}
 }

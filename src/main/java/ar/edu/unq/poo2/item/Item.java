@@ -35,6 +35,10 @@ public abstract class Item {
 		throw new UnsupportedOperationException("No se pueden remover items de este elemento");
 	}
 
+    public boolean coincideNombre(String nombre){
+        return this.nombre.toLowerCase().contains(nombre.toLowerCase());
+    }
+
 	public String getNombre(){
 		return nombre;
 	}

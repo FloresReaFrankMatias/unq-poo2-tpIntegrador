@@ -53,4 +53,8 @@ public class Inventario {
     private Integer getCantidadDisponible(String sku){
         return stockDeInventario.getOrDefault(sku, 0);
     }
+    
+    public boolean tieneStock(String sku) {
+        return getCantidadDisponible(sku) > 0;
+    }
 }
