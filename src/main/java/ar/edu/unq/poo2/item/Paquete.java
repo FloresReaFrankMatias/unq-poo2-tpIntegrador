@@ -6,58 +6,33 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Paquete extends Item {
-	private String nombre;
-	private double descuento;
-	private String descripcion;
 	private List<Item> items;
-	
-	
-	public Paquete(String nombre,double descuento, String descripcion) {
-		this.nombre = nombre;
-		this.descuento= descuento;
-		this.descripcion= descripcion;
+
+	public Paquete(String nombre, double descuento, String descripcion, Categoria categoria) {
+		// Pasamos al padre
+		super(nombre, descripcion, categoria, descuento);
 		this.items = new ArrayList<>();
 	}
 
 	@Override
-	public String getNombre() {
-		return nombre;
-	}
-
-	@Override
-	public String getDescripcion() {
-		return this.descripcion;
-	}
-
-	public List<Item> getItems() {
-		return items;
-	}
-
-	
 	public double getPrecioBase() {
 		return this.items.stream()
-				         .mapToDouble(item -> item.getPrecioBaseCalculado())
-				         .sum();
+				.mapToDouble(item -> item.getPrecio())
+				.sum();
 	}
+
 	@Override
 	public int getPeso() {
 		return this.items.stream()
-				         .mapToInt(item -> item.getPeso())
-				         .sum();
-	}
-
-	@Override
-	public double getPrecioBaseCalculado() {
-		return this.getPrecioBase()* (1.0 - this.descuento);
+				.mapToInt(item -> item.getPeso())
+				.sum();
 	}
 
 	@Override
 	public void add(Item item) {
 		this.items.add(item);
-
 	}
 
 	@Override
@@ -66,10 +41,16 @@ public class Paquete extends Item {
 		this.items.remove(item);
 	}
 
-	private void puedeEliminarItem(Item item) {
-		if (!this.items.contains(item)) {
-			throw new RuntimeException("El item no se encuentra en el paquete");
-		}
+	@Override
+	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {
+		double precioEfectivoPaquete = this.getPrecio() * multiplicadorDescuento;
+		double nuevoMultiplicador = multiplicadorDescuento * (1.0 - getDescuento());
+
+		List<RegistroDeItem> registros = new ArrayList<>();
+		registros.add(new RegistroDeItem(this, precioEfectivoPaquete));
+		this.items.forEach(item -> registros.addAll(item.getRegistroDeItem(nuevoMultiplicador)));
+
+		return registros;
 	}
 
 	@Override
@@ -80,31 +61,10 @@ public class Paquete extends Item {
 		}
 		return resumen;
 	}
-	@Override
-	public Categoria getCategoria() {
-		//se qeuda con la categoria predominante del paquete
-        return items.stream()
-                    .map(Item::getCategoria)
-                    .collect(Collectors.groupingBy(categoria -> categoria, Collectors.counting()))
-                    .entrySet().stream()
-                    .max(Map.Entry.comparingByValue())
-                    .map(Map.Entry::getKey)
-                    .orElse(null); 
-    }
-    
-	}
-	
 
-
-	@Override
-	public List<RegistroDeItem> getRegistroDeItem(double multiplicadorDescuento) {
-		double precioEfectivoPaquete = this.getPrecioBaseCalculado() * multiplicadorDescuento;
-		double nuevoMultiplicador = multiplicadorDescuento * (1.0 - this.descuento);
-
-		List<RegistroDeItem> registros = new ArrayList<>();
-		registros.add(new RegistroDeItem(this, precioEfectivoPaquete));
-		this.items.forEach(item -> registros.addAll(item.getRegistroDeItem(nuevoMultiplicador)));
-
-		return registros;
+	private void puedeEliminarItem(Item item) {
+		if (!this.items.contains(item)) {
+			throw new RuntimeException("El item no se encuentra en el paquete");
+		}
 	}
 }
