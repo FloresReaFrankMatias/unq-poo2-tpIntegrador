@@ -12,4 +12,16 @@ public class Catalogo {
     public Catalogo() {
         this.items = new ArrayList<>();
     }
+
+    public void agregarItem(Item item) {
+        this.items.add(item);
+    }
+
+    public List<Item> buscar(CriterioBusqueda criterio) {
+
+        return this.items.stream()
+                         .filter(item ->
+                                 criterio.cumple(item))
+                         .toList();
+    }
 }
