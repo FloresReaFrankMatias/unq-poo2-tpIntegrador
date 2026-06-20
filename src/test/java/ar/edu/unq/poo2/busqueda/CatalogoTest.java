@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.busquedaTest;
+package ar.edu.unq.poo2.busqueda;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -10,8 +10,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.busqueda.Catalogo;
-import ar.edu.unq.poo2.busqueda.CriterioBusqueda;
 import ar.edu.unq.poo2.item.Item;
 
 public class CatalogoTest {

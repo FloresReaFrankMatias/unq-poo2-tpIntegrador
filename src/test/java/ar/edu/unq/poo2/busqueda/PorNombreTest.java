@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.busquedaTest;
+package ar.edu.unq.poo2.busqueda;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.busqueda.PorNombre;
 import ar.edu.unq.poo2.item.Item;
 
 public class PorNombreTest {

@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.busquedaTest;
+package ar.edu.unq.poo2.busqueda;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,12 +8,10 @@ import static org.mockito.Mockito.when;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.busqueda.CriterioBusqueda;
-import ar.edu.unq.poo2.busqueda.Or;
 import ar.edu.unq.poo2.item.Item;
 
-public class OrTest {
-    private Or criterioOr;
+public class AndTest {
+    private And criterioAnd;
     private Item itemMock;
     private CriterioBusqueda criterioMockUno;
     private CriterioBusqueda criterioMockDos;
@@ -24,7 +22,7 @@ public class OrTest {
         criterioMockUno = mock(CriterioBusqueda.class);
         criterioMockDos = mock(CriterioBusqueda.class);
 
-        criterioOr = new Or(criterioMockUno, criterioMockDos);
+        criterioAnd = new And(criterioMockUno, criterioMockDos);
     }
 
     @Test
@@ -32,23 +30,23 @@ public class OrTest {
         when(criterioMockUno.cumple(itemMock)).thenReturn(true);
         when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        assertTrue(criterioOr.cumple(itemMock));
+        assertTrue(criterioAnd.cumple(itemMock));
     }
 
     @Test
-    void cumpleCuandoSoloElPrimerCriterioSeCumple() {
-        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
-        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
-
-        assertTrue(criterioOr.cumple(itemMock));
-    }
-
-    @Test
-    void cumpleCuandoSoloElSegundoCriterioSeCumple() {
+    void noCumpleCuandoElPrimerCriterioNoSeCumple() {
         when(criterioMockUno.cumple(itemMock)).thenReturn(false);
         when(criterioMockDos.cumple(itemMock)).thenReturn(true);
 
-        assertTrue(criterioOr.cumple(itemMock));
+        assertFalse(criterioAnd.cumple(itemMock));
+    }
+
+    @Test
+    void noCumpleCuandoElSegundoCriterioNoSeCumple() {
+        when(criterioMockUno.cumple(itemMock)).thenReturn(true);
+        when(criterioMockDos.cumple(itemMock)).thenReturn(false);
+
+        assertFalse(criterioAnd.cumple(itemMock));
     }
 
     @Test
@@ -56,6 +54,6 @@ public class OrTest {
         when(criterioMockUno.cumple(itemMock)).thenReturn(false);
         when(criterioMockDos.cumple(itemMock)).thenReturn(false);
 
-        assertFalse(criterioOr.cumple(itemMock));
+        assertFalse(criterioAnd.cumple(itemMock));
     }
 }
