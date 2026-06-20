@@ -1,10 +1,9 @@
 package ar.edu.unq.poo2.pago;
 
 import ar.edu.unq.poo2.pago.api.APITransferenciaBancaria;
-import ar.edu.unq.poo2.pago.comporbante.ComprobanteTransferencia;
+import ar.edu.unq.poo2.pago.comprobante.ComprobanteTransferencia;
 
 public class TransferenciaBancaria extends MedioPago {
-
 	private String cbu;
 	private String alias;
 	private APITransferenciaBancaria apiTransferencia;
@@ -49,6 +48,7 @@ public class TransferenciaBancaria extends MedioPago {
 
 		comprobante =new ComprobanteTransferencia(getCodigoTransaccion());
 	}
+
 	public String getCbu() {
 		return cbu;
 	}
