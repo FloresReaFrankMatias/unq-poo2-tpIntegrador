@@ -12,6 +12,6 @@ public class PorPrecioMaximo implements CriterioBusqueda{
     
     @Override
     public boolean cumple(Item item) {
-        return item.getPrecioBaseCalculado() <= precioMaximo;
+        return item.getPrecio() <= precioMaximo;
     }
 }
