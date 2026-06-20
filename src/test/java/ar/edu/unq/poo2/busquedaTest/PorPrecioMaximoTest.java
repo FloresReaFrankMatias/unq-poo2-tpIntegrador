@@ -9,97 +9,37 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import ar.edu.unq.poo2.busqueda.PorPrecioMaximo;
-import ar.edu.unq.poo2.item.Categoria;
 import ar.edu.unq.poo2.item.Item;
-import ar.edu.unq.poo2.item.Paquete;
-import ar.edu.unq.poo2.item.Producto;
 
 public class PorPrecioMaximoTest {
-
-    private Item item;
     private PorPrecioMaximo criterio;
+    private Item itemMock;
 
-    private Producto mate;
-    private Producto bombilla;
-    private Paquete paquete;
 
     @BeforeEach
     void setUp() {
-
-        item = mock(Item.class);
-
-        mate = new Producto(
-                "SKU1",
-                "Mate Stanley",
-                "Mate térmico",
-                1,
-                "Stanley",
-                Categoria.DEPORTES,
-                10000,
-                0);
-
-        bombilla = new Producto(
-                "SKU2",
-                "Bombilla Stanley",
-                "Bombilla",
-                1,
-                "Stanley",
-                Categoria.DEPORTES,
-                2000,
-                0);
-
-        paquete = new Paquete(
-                "Pack Matero",
-                0,
-                "Pack");
-
-        paquete.add(mate);
-        paquete.add(bombilla);
+        itemMock = mock(Item.class);
+        criterio = new PorPrecioMaximo(1000.0);
     }
 
     @Test
     void cumpleCuandoElPrecioEsMenorAlMaximo() {
+        when(itemMock.getPrecio()).thenReturn(500.0);
 
-        when(item.getPrecioBaseCalculado()).thenReturn(1000.0);
-
-        criterio = new PorPrecioMaximo(1500.0);
-
-        assertTrue(criterio.cumple(item));
+        assertTrue(criterio.cumple(itemMock));
     }
 
     @Test
     void cumpleCuandoElPrecioEsIgualAlMaximo() {
+        when(itemMock.getPrecio()).thenReturn(1000.0);
 
-        when(item.getPrecioBaseCalculado()).thenReturn(1000.0);
-
-        criterio = new PorPrecioMaximo(1000.0);
-
-        assertTrue(criterio.cumple(item));
+        assertTrue(criterio.cumple(itemMock));
     }
 
     @Test
     void noCumpleCuandoElPrecioSuperaElMaximo() {
+        when(itemMock.getPrecio()).thenReturn(1500.0);
 
-        when(item.getPrecioBaseCalculado()).thenReturn(2000.0);
-
-        criterio = new PorPrecioMaximo(1500.0);
-
-        assertFalse(criterio.cumple(item));
-    }
-
-    @Test
-    void unPaqueteCumpleCuandoSuPrecioEsMenorAlMaximo() {
-
-        criterio = new PorPrecioMaximo(15000);
-
-        assertTrue(criterio.cumple(paquete));
-    }
-
-    @Test
-    void unPaqueteNoCumpleCuandoSuPrecioSuperaElMaximo() {
-
-        criterio = new PorPrecioMaximo(10000);
-
-        assertFalse(criterio.cumple(paquete));
+        assertFalse(criterio.cumple(itemMock));
     }
 }

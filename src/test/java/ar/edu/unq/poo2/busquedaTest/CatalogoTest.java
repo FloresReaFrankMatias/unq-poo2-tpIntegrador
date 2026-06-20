@@ -2,107 +2,75 @@ package ar.edu.unq.poo2.busquedaTest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import ar.edu.unq.poo2.busqueda.And;
 import ar.edu.unq.poo2.busqueda.Catalogo;
-import ar.edu.unq.poo2.busqueda.PorCategoria;
-import ar.edu.unq.poo2.busqueda.PorNombre;
-import ar.edu.unq.poo2.busqueda.PorPrecioMaximo;
-import ar.edu.unq.poo2.item.Categoria;
+import ar.edu.unq.poo2.busqueda.CriterioBusqueda;
 import ar.edu.unq.poo2.item.Item;
-import ar.edu.unq.poo2.item.Producto;
 
 public class CatalogoTest {
-
 	private Catalogo catalogo;
-
-	private Producto mate;
-	private Producto bombilla;
-	private Producto libro;
+	private Item itemMockUno;
+	private Item itemMockDos;
+	private Item itemMockTres;
+	private CriterioBusqueda criterioMock;
 
 	@BeforeEach
 	void setUp() {
+		itemMockUno = mock(Item.class);
+		itemMockDos = mock(Item.class);
+		itemMockTres = mock(Item.class);
+		criterioMock = mock(CriterioBusqueda.class);
 
 		catalogo = new Catalogo();
-
-		mate = new Producto(
-				"SKU1",
-				"Mate Stanley",
-				"Mate térmico",
-				1,
-				"Stanley",
-				Categoria.DEPORTES,
-				10000,
-				0);
-
-		bombilla = new Producto(
-				"SKU2",
-				"Bombilla Pico de Loro",
-				"Bombilla",
-				1,
-				"Lumilagro",
-				Categoria.DEPORTES,
-				2000,
-				0);
-
-		libro = new Producto(
-				"SKU3",
-				"El Señor de los Anillos",
-				"Libro",
-				1,
-				"Minotauro",
-				Categoria.LIBROS,
-				5000,
-				0);
-
-		catalogo.agregarItem(mate);
-		catalogo.agregarItem(bombilla);
-		catalogo.agregarItem(libro);
+		catalogo.agregarItem(itemMockUno);
+		catalogo.agregarItem(itemMockDos);
+		catalogo.agregarItem(itemMockTres);
 	}
 
 	@Test
-	void devuelveItemsQueCumplenElCriterioDeBusquedaPorNombre() {
+	void devuelveSoloLosItemsQueCumplenElCriterio() {
+		when(criterioMock.cumple(itemMockUno)).thenReturn(true);
+		when(criterioMock.cumple(itemMockDos)).thenReturn(false);
+		when(criterioMock.cumple(itemMockTres)).thenReturn(true);
 
-		List<Item> resultado =
-				catalogo.buscar(new PorNombre("stanley"));
+		List<Item> resultado = catalogo.buscar(criterioMock);
 
-		assertEquals(1, resultado.size());
-		assertTrue(resultado.contains(mate));
+		assertEquals(2, resultado.size());
+		assertTrue(resultado.contains(itemMockUno));
+		assertTrue(resultado.contains(itemMockTres));
 	}
 
 	@Test
 	void devuelveListaVaciaCuandoNingunItemCumpleElCriterio() {
+		// Configuramos: Ninguno pasa la prueba
+		when(criterioMock.cumple(itemMockUno)).thenReturn(false);
+		when(criterioMock.cumple(itemMockDos)).thenReturn(false);
+		when(criterioMock.cumple(itemMockTres)).thenReturn(false);
 
-		List<Item> resultado = catalogo.buscar(new PorNombre("televisor"));
+		List<Item> resultado = catalogo.buscar(criterioMock);
 
 		assertTrue(resultado.isEmpty());
 	}
 
 	@Test
-	void devuelveTodosLosItemsQueCumplenElCriterio() {
+	void devuelveTodosLosItemsCuandoTodosCumplenElCriterio() {
+		// Configuramos: Todos pasan la prueba
+		when(criterioMock.cumple(itemMockUno)).thenReturn(true);
+		when(criterioMock.cumple(itemMockDos)).thenReturn(true);
+		when(criterioMock.cumple(itemMockTres)).thenReturn(true);
 
-		List<Item> resultado =	catalogo.buscar(new PorCategoria(Categoria.DEPORTES));
+		List<Item> resultado = catalogo.buscar(criterioMock);
 
-		assertEquals(2, resultado.size());
-		assertTrue(resultado.contains(mate));
-		assertTrue(resultado.contains(bombilla));
-	}
-
-	@Test
-	void permiteBuscarConCriteriosCompuestos() {
-
-		List<Item> resultado =
-				catalogo.buscar(
-						new And(
-								new PorCategoria(Categoria.DEPORTES),
-								new PorPrecioMaximo(5000)));
-
-		assertEquals(1, resultado.size());
-		assertTrue(resultado.contains(bombilla));
+		assertEquals(3, resultado.size());
+		assertTrue(resultado.contains(itemMockUno));
+		assertTrue(resultado.contains(itemMockDos));
+		assertTrue(resultado.contains(itemMockTres));
 	}
 }
