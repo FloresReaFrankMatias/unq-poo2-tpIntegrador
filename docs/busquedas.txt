@@ -23,33 +23,76 @@ class PorPrecioMaximo {
 }
 
 class PorCategoria {
+@startuml
+
+skinparam classAttributeIconSize 0
+
+interface CriterioBusqueda {
+    + cumple(item : Item) : boolean
+}
+
+class Catalogo {
+    - items : List<Item>
+    + buscar(criterio : CriterioBusqueda) : List<Item>
+}
+
+class PorNombre {
+    - textoBuscado : String
+}
+
+class PorPrecioMaximo {
+    - precioMaximo : double
+}
+
+class PorCategoria {
     - categoria : Categoria
 }
 
 class PorDisponibilidad {
-    - consulta : ConsultaDisponibilidadInventario
+    - consultaInventario : ConsultaDisponibilidadInventario
 }
 
 class ConsultaDisponibilidadInventario {
     - inventario : Inventario
-
-    + estaDisponible(item : Item) : boolean
+    + tieneStock(sku : String) : boolean
 }
 
-class And {
-    - criterios : List<CriterioBusqueda>
+class Inventario {
+    - stockDeInventario : Map<String,Integer>
+    + incrementarStock(articulos : Map<String,Integer>)
+    + decrementarStock(articulos : Map<String,Integer>)
+    + tieneStock(sku : String) : boolean
 }
 
-class Or {
-    - criterios : List<CriterioBusqueda>
+class Item {
+    + getNombre() : String
+    + getPrecioBaseCalculado() : double
+    + getCategoria() : Categoria
+    + getResumenDeSku() : Map<String,Integer>
 }
 
-class Not {
-    - criterio : CriterioBusqueda
+class Producto {
+    - sku : String
+    - categoria : Categoria
 }
 
-Catalogo *-- Item
-Catalogo ..> CriterioBusqueda
+class Paquete {
+    - items : List<Item>
+}
+
+enum Categoria {
+    ELECTRONICA
+    HOGAR
+    JUGUETES
+    ROPA
+    DEPORTES
+    LIBROS
+    OTROS
+}
+
+class And
+class Or
+class Not
 
 CriterioBusqueda <|.. PorNombre
 CriterioBusqueda <|.. PorPrecioMaximo
@@ -60,11 +103,18 @@ CriterioBusqueda <|.. And
 CriterioBusqueda <|.. Or
 CriterioBusqueda <|.. Not
 
-And *-- CriterioBusqueda
-Or *-- CriterioBusqueda
-Not *-- CriterioBusqueda
+Catalogo o-- Item
+Catalogo ..> CriterioBusqueda
 
 PorDisponibilidad --> ConsultaDisponibilidadInventario
 ConsultaDisponibilidadInventario --> Inventario
+
+Item <|-- Producto
+Item <|-- Paquete
+
+Paquete o-- Item
+
+Producto --> Categoria
+PorCategoria --> Categoria
 
 @enduml
