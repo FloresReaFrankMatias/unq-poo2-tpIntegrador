@@ -1,5 +1,9 @@
 package ar.edu.unq.poo2.item;
 
+import ar.edu.unq.poo2.item.atributo.Atributo;
+import ar.edu.unq.poo2.item.atributo.AtributoBooleano;
+import ar.edu.unq.poo2.item.atributo.AtributoNumero;
+import ar.edu.unq.poo2.item.atributo.AtributoString;
 import ar.edu.unq.poo2.venta.RegistroDeItem;
 
 import java.util.HashMap;
@@ -15,7 +19,7 @@ public class Producto extends Item {
 	private Categoria categoria;
 	private double precioBase;
 	private double descuento;
-	private HashMap<String, Object> atributosDinamicos;
+	private HashMap<String, Atributo<?>> atributosDinamicos;
 
 	public Producto(String sku, String nombre,String descripcion, int peso, String marca, Categoria categoria, double precioBase, double descuento) {
 		super();
@@ -40,9 +44,17 @@ public class Producto extends Item {
 		return this.descripcion;
 	}
 
-	public void setAtributoDinamico(String nombre, Object valor) {
-        this.atributosDinamicos.put(nombre, valor);
-    }
+	public void setAtributoDinamico(String nombre, String valor) {
+		this.atributosDinamicos.put(nombre, new AtributoString(valor));
+	}
+
+	public void setAtributoDinamico(String nombre, Number valor) {
+		this.atributosDinamicos.put(nombre, new AtributoNumero(valor));
+	}
+
+	public void setAtributoDinamico(String nombre, Boolean valor) {
+		this.atributosDinamicos.put(nombre, new AtributoBooleano(valor));
+	}
 
 	public Object getAtributoDinamico(String nombre) {
         return this.atributosDinamicos.get(nombre);
@@ -52,23 +64,16 @@ public class Producto extends Item {
 		return this.peso;
 	}
 
-	public boolean validacionDeAtributos() {
-		return this.validacionAtributosFijos() &&
-			   this.validacionAtributosDinamicos();
+	public boolean atributosSonValidos() {
+		return atributosFijosSonValidos() && atributosDinamicosSonValidos();
 	}
 
-	public boolean validacionAtributosFijos() {
-		return this.sku != null && !this.sku.isEmpty() &&
-				this.nombre != null && !this.nombre.isEmpty();
+	public boolean atributosFijosSonValidos() {
+		return  sku != null && nombre != null;
 	}
 
-	public boolean validacionAtributosDinamicos() {
-		return this.atributosDinamicos.entrySet().stream()
-		                              .allMatch(entry -> entry.getValue() != null &&
-		                               !entry.getValue()
-		                               .toString()
-		                               .trim()
-		                               .isEmpty());
+	public boolean atributosDinamicosSonValidos() {
+		return atributosDinamicos.values().stream().allMatch(valorAtributo -> valorAtributo != null);
 	}
 
 	@Override
