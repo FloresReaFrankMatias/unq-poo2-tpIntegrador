@@ -136,10 +136,8 @@ public class Pedido {
 		}
 
 	public Double valorTotalPedido() {
-		// TODO Auto-generated method stub
-		return contenido.stream() 
+		return contenido.stream()
 				        .mapToDouble(Item::getPrecio)
 				        .sum();
 	}
-    
 }

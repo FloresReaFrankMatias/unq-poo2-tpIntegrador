@@ -4,18 +4,13 @@ import ar.edu.unq.poo2.pago.api.APITarjetaCredito;
 import ar.edu.unq.poo2.pago.comporbante.CuponPago;
 
 public class TarjetaCredito extends MedioPago {
-
 	private String numeroTarjeta;
 	private String cvv;
 	private String fechaVencimiento;
 	private APITarjetaCredito apiTarjeta;
 	private CuponPago cuponPago;
 
-	public TarjetaCredito(String numeroTarjeta,
-						  String cvv,
-						  String fechaVencimiento,
-						  APITarjetaCredito apiTarjeta) {
-
+	public TarjetaCredito(String numeroTarjeta, String cvv, String fechaVencimiento, APITarjetaCredito apiTarjeta) {
 		this.numeroTarjeta = numeroTarjeta;
 		this.cvv = cvv;
 		this.fechaVencimiento = fechaVencimiento;
@@ -24,7 +19,6 @@ public class TarjetaCredito extends MedioPago {
 
 	@Override
 	protected void validarDatos() {
-
 		boolean esValida = apiTarjeta.validarTarjeta(
 				numeroTarjeta,
 				cvv,

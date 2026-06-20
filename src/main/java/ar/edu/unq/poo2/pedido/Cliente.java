@@ -7,9 +7,8 @@ import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 public class Cliente {
 	private String mail;
 	private Direccion direccion;
+
 	public Cliente(String mail, Direccion direccion) {
-		super();
-		// TODO Auto-generated constructor stub
 		this.setMail(mail);
 		this.direccion = direccion;
 	}
@@ -25,5 +24,4 @@ public class Cliente {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
-
 }

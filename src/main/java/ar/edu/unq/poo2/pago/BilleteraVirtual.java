@@ -3,7 +3,6 @@ package ar.edu.unq.poo2.pago;
 import ar.edu.unq.poo2.pago.api.APIBilleteraVirtual;
 
 public class BilleteraVirtual extends MedioPago {
-
 	private APIBilleteraVirtual apiBilletera;
 
 	public BilleteraVirtual(APIBilleteraVirtual apiBilletera) {
