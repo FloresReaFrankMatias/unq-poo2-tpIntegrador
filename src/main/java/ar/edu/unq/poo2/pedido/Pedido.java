@@ -5,7 +5,6 @@ import ar.edu.unq.poo2.Metodo_Envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
-import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
@@ -139,7 +138,7 @@ public class Pedido {
 	public Double valorTotalPedido() {
 		// TODO Auto-generated method stub
 		return contenido.stream() 
-				        .mapToDouble(Item::getPrecioBaseCalculado)
+				        .mapToDouble(Item::getPrecio)
 				        .sum();
 	}
     
