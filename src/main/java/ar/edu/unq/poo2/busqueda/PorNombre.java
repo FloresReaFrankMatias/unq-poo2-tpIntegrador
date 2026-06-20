@@ -13,9 +13,6 @@ public class PorNombre implements CriterioBusqueda {
     @Override
     public boolean cumple(Item item) {
 
-        String nombreItem = item.getNombre().toLowerCase();
-        String textoABuscar = textoBuscado.toLowerCase();
-
-        return nombreItem.contains(textoABuscar);
+        return item.coincideNombre(textoBuscado);
     }
 }
