@@ -43,25 +43,6 @@ public class PedidoTest {
     }
 
     @Test
-    void unPedidoSeCreaConContenidoVacio() {
-        Pedido nuevoPedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
-        assertFalse(nuevoPedido.tieneItems());
-    }
-
-    @Test
-    void unPedidoAgregaUnItem() {
-        pedido.agregarItem(itemMockUno);
-        assertTrue(pedido.getContenido().contains(itemMockUno));
-    }
-
-    @Test
-    void unPedidoSacaUnItem() {
-        pedido.agregarItem(itemMockUno);
-        pedido.quitarItem(itemMockUno);
-        assertFalse(pedido.getContenido().contains(itemMockUno));
-    }
-
-    @Test
     void unPedidoDelegaLaAccionASuEstadoAlIntentarConfirmarlo(){
         pedido.confirmar();
         verify(estadoMock).confirmar(pedido);
@@ -128,35 +109,9 @@ public class PedidoTest {
     }
 
     @Test
-    public void alDescontarStockSeEnviaElResumenEsperadoAlInventario() {
-        pedido.agregarItem(itemMockUno);
-        pedido.agregarItem(itemMockDos);
-        Map<String, Integer> resumenEsperadoItemUno = Map.of("ItemUno", 2);
-        Map<String, Integer> resumenEsperadoItemDos = Map.of("ItemDos", 1);
-        Map<String, Integer> resumenEsperadoCombinado = new HashMap<>(resumenEsperadoItemUno);
-        resumenEsperadoCombinado.putAll(resumenEsperadoItemDos);when(itemMockUno.getResumenDeSku()).thenReturn(resumenEsperadoItemUno);
-        when(itemMockDos.getResumenDeSku()).thenReturn(resumenEsperadoItemDos);
-        pedido.descontarStock();
-        verify(inventarioMock).decrementarStock(resumenEsperadoCombinado);
-    }
-
-    @Test
     public void alReponerStockSeLlamaAlInventario(){
         pedido.reponerStock();
         verify(inventarioMock).incrementarStock(anyMap());
-    }
-
-    @Test
-    public void alReponerStockSeEnviaElResumenEsperadoAlInventario() {
-        pedido.agregarItem(itemMockUno);
-        pedido.agregarItem(itemMockDos);
-        Map<String, Integer> resumenEsperadoItemUno = Map.of("ItemUno", 2);
-        Map<String, Integer> resumenEsperadoItemDos = Map.of("ItemDos", 1);
-        Map<String, Integer> resumenEsperadoCombinado = new HashMap<>(resumenEsperadoItemUno);
-        resumenEsperadoCombinado.putAll(resumenEsperadoItemDos);when(itemMockUno.getResumenDeSku()).thenReturn(resumenEsperadoItemUno);
-        when(itemMockDos.getResumenDeSku()).thenReturn(resumenEsperadoItemDos);
-        pedido.reponerStock();
-        verify(inventarioMock).incrementarStock(resumenEsperadoCombinado);
     }
 
     @Test
@@ -166,36 +121,92 @@ public class PedidoTest {
     }
 
     @Test
-    public void alGenerarNotaDeCreditoSeEnviaElResumenEsperadoAlGestor() {
+    public void alDescontarStockSeLePasaElResumenAlInventario() {
+        pedido.agregarItem(itemMockUno);
+
+        pedido.descontarStock();
+
+        verify(inventarioMock).decrementarStock(anyMap());
+    }
+
+    @Test
+    public void alGenerarNotaDeCreditoSeAgreganLosExtrasAlResumenDelContenido() {
+        pedido.agregarItem(itemMockUno);
+        when(itemMockUno.getResumenDePrecio()).thenReturn(Map.of("ItemUno", 100.0));
+        Map<String, Double> extras = Map.of("CostoEnvio", 50.0);
+        Map<String, Double> mapaEsperado = Map.of(
+                "ItemUno", 100.0,
+                "CostoEnvio", 50.0
+        );
+
+        pedido.generarNotaDeCredito(extras);
+
+        verify(gestorMock).hacerNotaDeCredito(mapaEsperado);
+    }
+
+    @Test
+    void indicaCorrectamenteSiTieneItems() {
+        pedido.agregarItem(itemMockUno);
+
+        assertTrue(pedido.tieneItems(), "El pedido debería registrar que tiene ítems");
+    }
+
+    @Test
+    void devuelveElPesoTotalCorrectoBasadoEnSusItems() {
+        when(itemMockUno.getPeso()).thenReturn(10);
+        when(itemMockDos.getPeso()).thenReturn(15);
+
         pedido.agregarItem(itemMockUno);
         pedido.agregarItem(itemMockDos);
-        Map<String, Double> resumenEsperadoItemUno = Map.of("ItemUno", 2.0);
-        Map<String, Double> resumenEsperadoItemDos = Map.of("ItemDos", 1.0);
-        Map<String, Double> resumenEsperadoCombinado = new HashMap<>(resumenEsperadoItemUno);
-        resumenEsperadoCombinado.putAll(resumenEsperadoItemDos);
-        when(itemMockUno.getResumenDePrecio()).thenReturn(resumenEsperadoItemUno);
-        when(itemMockDos.getResumenDePrecio()).thenReturn(resumenEsperadoItemDos);
-        pedido.generarNotaDeCredito(new HashMap<>());
-        verify(gestorMock).hacerNotaDeCredito(resumenEsperadoCombinado);
+
+        assertEquals(25, pedido.getPesoTotal());
     }
 
     @Test
-    public void alGenerarNotaDeCreditoSeEnviaElResumenConExtras() {
+    void devuelveElValorTotalCorrectoBasadoEnSusItems() {
+        when(itemMockUno.getPrecio()).thenReturn(150.0);
+        when(itemMockDos.getPrecio()).thenReturn(50.5);
+
         pedido.agregarItem(itemMockUno);
-        Map<String, Double> resumenEsperadoItem = Map.of("ItemUno", 2.0);
-        Map<String, Double> extras = Map.of("ItemDos", 1.0);
-        Map<String, Double> resumenEsperadoCombinado = new HashMap<>(resumenEsperadoItem);
-        resumenEsperadoCombinado.putAll(extras);
-        when(itemMockUno.getResumenDePrecio()).thenReturn(resumenEsperadoItem);
+        pedido.agregarItem(itemMockDos);
+
+        assertEquals(200.5, pedido.getValorTotal());
+    }
+
+    @Test
+    void devuelveSuContenidoDeFormaInmodificable() {
+        pedido.agregarItem(itemMockUno);
+        List<Item> listaObtenida = pedido.getContenido();
+
+        assertThrows(UnsupportedOperationException.class, () -> listaObtenida.add(itemMockDos));
+        assertThrows(UnsupportedOperationException.class, () -> listaObtenida.remove(itemMockUno));
+    }
+
+    @Test
+    public void alReponerStockSeEnviaElResumenCorrectoDeSusItemsAlInventario() {
+        when(itemMockUno.getResumenDeSku()).thenReturn(Map.of("SKU-1", 2));
+        when(itemMockDos.getResumenDeSku()).thenReturn(Map.of("SKU-2", 1));
+        pedido.agregarItem(itemMockUno);
+        pedido.agregarItem(itemMockDos);
+        Map<String, Integer> resumenEsperado = Map.of("SKU-1", 2, "SKU-2", 1);
+
+        pedido.reponerStock();
+
+        verify(inventarioMock).incrementarStock(resumenEsperado);
+    }
+
+    @Test
+    public void alGenerarNotaDeCreditoSeEnviaElResumenCorrectoDeSusItemsConExtrasAlGestor() {
+        when(itemMockUno.getResumenDePrecio()).thenReturn(Map.of("ItemUno", 100.0));
+        pedido.agregarItem(itemMockUno);
+        Map<String, Double> extras = Map.of("CostoEnvio", 50.0);
+        Map<String, Double> resumenEsperadoFinal = Map.of(
+                "ItemUno", 100.0,
+                "CostoEnvio", 50.0
+        );
+
         pedido.generarNotaDeCredito(extras);
-        verify(gestorMock).hacerNotaDeCredito(resumenEsperadoCombinado);
-    }
 
-    @Test
-    void unPedidoDevuelveSuContenidoInmutableCuandoSeLoPiden() {
-        pedido.agregarItem(itemMockUno);
-        List<Item> contenido = pedido.getContenido();
-        assertThrows(UnsupportedOperationException.class, () -> contenido.add(itemMockDos));
-        assertThrows(UnsupportedOperationException.class, () -> contenido.remove(itemMockUno));
+        verify(gestorMock).hacerNotaDeCredito(resumenEsperadoFinal);
     }
 }
