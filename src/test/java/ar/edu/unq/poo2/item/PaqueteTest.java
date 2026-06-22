@@ -51,9 +51,26 @@ class PaqueteTest {
 
 		paquete.add(itemMock1);
 		paquete.add(itemMock2);
-
+		
 		assertEquals(3000, paquete.getPeso());
 	}
+    @Test
+    void testRemoveEliminaUnItemExistente() {
+        paquete.add(itemMock1);
+        assertEquals(1, paquete.getItems().size());
+    }
+
+    @Test
+    void test_Remove_LanzaExcepcionSiItemNoExiste() {
+        paquete.add(itemMock1);
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            paquete.remove(itemMock2);
+        });
+
+        assertEquals("El item no se encuentra en el paquete", exception.getMessage());
+
+    }
 
 
 
