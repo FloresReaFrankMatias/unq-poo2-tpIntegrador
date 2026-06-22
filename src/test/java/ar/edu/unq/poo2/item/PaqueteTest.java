@@ -22,7 +22,18 @@ class PaqueteTest {
         itemMock2 = mock(Item.class);
     }
 
-
+    @Test
+    void test_gettersPaquete() {
+    	
+    	assertEquals("Combo Gamer", paquete.getNombre());
+		assertEquals("Teclado + Mouse", paquete.getDescripcion());
+		assertEquals(Categoria.ELECTRONICA, paquete.getCategoria());
+		assertEquals(0.10, paquete.getDescuento(), 0.001);
+		assertTrue(paquete.getResumenDeSku().isEmpty());
+    }
+    
+    
+    
     @Test
     void test_GetPrecioBasePaquete() {
         when(itemMock1.getPrecio()).thenReturn(5000.0);
