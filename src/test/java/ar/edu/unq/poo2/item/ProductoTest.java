@@ -23,6 +23,7 @@ class ProductoTest {
 		assertEquals("Notebook gamer 16GB", pr1.getDescripcion());
 		assertEquals(Categoria.ELECTRONICA, pr1.getCategoria());
 		assertEquals(90000.0, pr1.getPrecio(), 0.001);
+		assertEquals(100000.0, pr1.getPrecioBase());
 	}
 	@Test
 	void test_Accesors_AtributosDinamicos() {
@@ -63,6 +64,12 @@ class ProductoTest {
 		
 		
 	}
-	
+	@Test
+	void test_resumenDeSku_producto() {
+		assertEquals(1, pr1.getResumenDeSku().size());
+		assertTrue(pr1.getResumenDeSku().containsKey("SKU-NGA"));
+		assertEquals(1, pr1.getResumenDeSku().get("SKU-NGA").intValue());
+	}
+
 
 }
