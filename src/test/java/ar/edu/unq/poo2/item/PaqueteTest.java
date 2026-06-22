@@ -55,7 +55,7 @@ class PaqueteTest {
 		assertEquals(3000, paquete.getPeso());
 	}
     @Test
-    void testRemoveEliminaUnItemExistente() {
+    void test_Remove_EliminaUnItemExistente() {
         paquete.add(itemMock1);
         assertEquals(1, paquete.getItems().size());
     }
