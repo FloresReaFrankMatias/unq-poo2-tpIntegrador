@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.*;
 
 class ProductoTest {
 	Producto pr1;
@@ -76,6 +77,17 @@ class ProductoTest {
 		assertEquals(1, pr1.getRegistroDeItem(1.0).size());
 		assertEquals(pr1, pr1.getRegistroDeItem(1.0).get(0).getItem());
 		assertEquals(90000.0, pr1.getRegistroDeItem(1.0).get(0).getPrecio(), 0.001);
+	}
+	
+	@Test
+	void test_NoPuedeAgregarProducto() {
+		Producto prMock = mock(Producto.class);
+		assertThrows(UnsupportedOperationException.class, () -> pr1.add(prMock));
+	}
+	@Test
+	void test_NoPuedeEliminarProducto() {
+		Producto prMock = mock(Producto.class);
+		assertThrows(UnsupportedOperationException.class, () -> pr1.remove(prMock));
 	}
 
 
