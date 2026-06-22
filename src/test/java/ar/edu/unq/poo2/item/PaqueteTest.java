@@ -5,6 +5,8 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.*;
+
+import java.util.Map;
 class PaqueteTest {
 
 	 Paquete paquete;
@@ -71,6 +73,24 @@ class PaqueteTest {
         assertEquals("El item no se encuentra en el paquete", exception.getMessage());
 
     }
+    
+    @Test
+    void test_resumenDeSku_Paquete() {
+		when(itemMock1.getResumenDeSku()).thenReturn(Map.of("SKU-123", 2));
+		when(itemMock2.getResumenDeSku()).thenReturn(Map.of("SKU-456", 1));
+
+		paquete.add(itemMock1);
+		paquete.add(itemMock2);
+
+		
+		Map<String, Integer> resumen = paquete.getResumenDeSku();
+		assertEquals(2, resumen.size());
+		assertTrue(resumen.containsKey("SKU-123"));
+		assertTrue(resumen.containsKey("SKU-456"));
+		assertEquals(2, resumen.get("SKU-123").intValue());
+		assertEquals(1, resumen.get("SKU-456").intValue());
+	}
+    
     @Test
     void test_CoincideNombre_NoCoincideConNingunItem() {
 		
