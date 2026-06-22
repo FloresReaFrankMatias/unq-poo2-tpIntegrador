@@ -89,6 +89,12 @@ class ProductoTest {
 		Producto prMock = mock(Producto.class);
 		assertThrows(UnsupportedOperationException.class, () -> pr1.remove(prMock));
 	}
+	@Test
+	void test_ResumenDePrecio() {
+		assertEquals(1, pr1.getResumenDePrecio().size());
+		assertTrue(pr1.getResumenDePrecio().containsKey("Notebook"));
+		assertEquals(90000.0, pr1.getResumenDePrecio().get("Notebook"), 0.001);
+	}
 
 
 }
