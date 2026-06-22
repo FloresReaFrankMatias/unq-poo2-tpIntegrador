@@ -70,6 +70,13 @@ class ProductoTest {
 		assertTrue(pr1.getResumenDeSku().containsKey("SKU-NGA"));
 		assertEquals(1, pr1.getResumenDeSku().get("SKU-NGA").intValue());
 	}
+	
+	@Test
+	void test_registroDeItem_producto() {
+		assertEquals(1, pr1.getRegistroDeItem(1.0).size());
+		assertEquals(pr1, pr1.getRegistroDeItem(1.0).get(0).getItem());
+		assertEquals(90000.0, pr1.getRegistroDeItem(1.0).get(0).getPrecio(), 0.001);
+	}
 
 
 }
