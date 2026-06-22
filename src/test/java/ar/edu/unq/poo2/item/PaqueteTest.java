@@ -71,6 +71,31 @@ class PaqueteTest {
         assertEquals("El item no se encuentra en el paquete", exception.getMessage());
 
     }
+    @Test
+    void test_CoincideNombre_NoCoincideConNingunItem() {
+		
+		when(itemMock1.coincideNombre("Mouse")).thenReturn(false);
+		when(itemMock2.coincideNombre("Mouse")).thenReturn(false);
+
+		paquete.add(itemMock1);
+		paquete.add(itemMock2);
+
+		
+		assertFalse(paquete.coincideNombre("Mouse"));
+	}
+    
+    @Test
+    void test_CoincideNombreConAlgunItem() {
+        
+        when(itemMock1.coincideNombre("Mouse")).thenReturn(false);
+        when(itemMock2.coincideNombre("Mouse")).thenReturn(true);
+
+        paquete.add(itemMock1);
+        paquete.add(itemMock2);
+
+        
+        assertTrue(paquete.coincideNombre("Mouse"));
+    }
 
 
 
