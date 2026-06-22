@@ -36,6 +36,33 @@ class ProductoTest {
 		
 		
 	}
+	@Test
+	void test_AtributosSonValidos() {
+		assertTrue(pr1.atributosSonValidos());
+		
+		pr1.setAtributoDinamico("Color","Rojo");
+		pr1.setAtributoDinamico("Graficos Integrados", false);
+		pr1.setAtributoDinamico("Disco", 500);
+		
+		assertTrue(pr1.atributosSonValidos());
+		
+		
+	}
+	@Test
+	void test_AtributosSonInValidos_Por_Setear_StringVacio() {
+		assertTrue(pr1.atributosSonValidos());
+		
+		
+		pr1.setAtributoDinamico("Graficos Integrados", false);
+		pr1.setAtributoDinamico("Disco", 500);
+		
+		assertTrue(pr1.atributosSonValidos());
+		
+		pr1.setAtributoDinamico("Color"," ");
+		assertFalse(pr1.atributosSonValidos());
+		
+		
+	}
 	
 
 }
