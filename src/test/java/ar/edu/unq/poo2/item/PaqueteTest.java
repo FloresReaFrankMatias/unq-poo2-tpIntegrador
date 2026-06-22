@@ -33,7 +33,6 @@ class PaqueteTest {
     }
     
     
-    
     @Test
     void test_GetPrecioBasePaquete() {
         when(itemMock1.getPrecio()).thenReturn(5000.0);
@@ -45,6 +44,16 @@ class PaqueteTest {
        
         assertEquals(8000.0, paquete.getPrecioBase(), 0.01);
     }
+    @Test
+    void test_GetPesoPaquete() {
+		when(itemMock1.getPeso()).thenReturn(2000);
+		when(itemMock2.getPeso()).thenReturn(1000);
+
+		paquete.add(itemMock1);
+		paquete.add(itemMock2);
+
+		assertEquals(3000, paquete.getPeso());
+	}
 
 
 
