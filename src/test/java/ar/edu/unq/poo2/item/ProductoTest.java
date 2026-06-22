@@ -24,7 +24,18 @@ class ProductoTest {
 		assertEquals(Categoria.ELECTRONICA, pr1.getCategoria());
 		assertEquals(90000.0, pr1.getPrecio(), 0.001);
 	}
-	
+	@Test
+	void test_Accesors_AtributosDinamicos() {
+		pr1.setAtributoDinamico("Color","Rojo");
+		pr1.setAtributoDinamico("Graficos Integrados", false);
+		pr1.setAtributoDinamico("Disco", 500);
+		
+		assertEquals("Rojo", pr1.getAtributoDinamico("Color").getValor());
+		assertEquals(false, pr1.getAtributoDinamico("Graficos Integrados").getValor());
+		assertEquals(500.0, pr1.getAtributoDinamico("Disco").getValor());
+		
+		
+	}
 	
 
 }
