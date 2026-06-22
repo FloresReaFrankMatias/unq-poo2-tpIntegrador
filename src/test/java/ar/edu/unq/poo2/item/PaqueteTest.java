@@ -4,8 +4,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import ar.edu.unq.poo2.venta.RegistroDeItem;
+
 import static org.mockito.Mockito.*;
 
+import java.util.List;
 import java.util.Map;
 class PaqueteTest {
 
@@ -73,6 +77,40 @@ class PaqueteTest {
         assertEquals("El item no se encuentra en el paquete", exception.getMessage());
 
     }
+    @Test
+    void test_GetRegistroDeItem_Paquete() {
+    	
+        when(itemMock1.getPrecio()).thenReturn(5000.0);
+        when(itemMock2.getPrecio()).thenReturn(3000.0);
+        
+        RegistroDeItem registroHijo1 = new RegistroDeItem(itemMock1, 4500.0);
+        RegistroDeItem registroHijo2 = new RegistroDeItem(itemMock2, 2700.0); 
+        
+        when(itemMock1.getRegistroDeItem(0.9)).thenReturn(List.of(registroHijo1));
+        when(itemMock2.getRegistroDeItem(0.9)).thenReturn(List.of(registroHijo2));
+
+        
+        paquete.add(itemMock1);
+        paquete.add(itemMock2);
+
+   
+        List<RegistroDeItem> registrosResultantes = paquete.getRegistroDeItem(1.0);
+
+        assertEquals(3, registrosResultantes.size());
+
+       
+        RegistroDeItem registroDelPaquete = registrosResultantes.get(0);
+        assertEquals(paquete, registroDelPaquete.getItem());
+        assertEquals(7200.0, registroDelPaquete.getPrecio());
+
+        
+        assertTrue(registrosResultantes.contains(registroHijo1));
+        assertTrue(registrosResultantes.contains(registroHijo2));
+        
+        verify(itemMock1).getRegistroDeItem(0.9);
+        verify(itemMock2).getRegistroDeItem(0.9);
+    }
+    
     
     @Test
     void test_resumenDeSku_Paquete() {
