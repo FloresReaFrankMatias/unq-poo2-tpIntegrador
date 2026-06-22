@@ -15,7 +15,11 @@ public class Paquete extends Item {
 		super(nombre, descripcion, categoria, descuento);
 		this.items = new ArrayList<>();
 	}
-
+	
+	public List<Item> getItems() {
+		return items;
+	}
+	
 	@Override
 	public double getPrecioBase() {
 		return this.items.stream()

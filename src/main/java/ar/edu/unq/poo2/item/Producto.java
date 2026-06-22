@@ -51,7 +51,8 @@ public class Producto extends Item {
 	}
 
 	private boolean atributosDinamicosSonValidos() {
-		return atributosDinamicos.values().stream().allMatch(atributo -> atributo.getValor() != null);
+		return atributosDinamicos.values().stream().allMatch(a -> a.getValor() != null  && !a.getValor().toString().trim().isEmpty());
+	
 	}
 
 	@Override
