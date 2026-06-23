@@ -1,0 +1,18 @@
+# Carpetas de compilación de Maven
+target/
+*.class
+
+# Archivos específicos de Eclipse (tus configuraciones)
+.classpath
+.project
+.settings/
+.factorypath
+
+# Archivos específicos de IntelliJ (las de tu compañero)
+.idea/
+*.iml
+*.iws
+
+# Archivos temporales del sistema
+.DS_Store
+Thumbs.db
