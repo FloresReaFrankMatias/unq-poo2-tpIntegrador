@@ -86,7 +86,7 @@ class EstadoEnPreparacionTest{
     @Test
     void alNotificarTransicionSeLlamaAAlPrepararDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alPreparar(pedido);
+        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
+        verify(observadorMock).alPreparar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
     }
 }

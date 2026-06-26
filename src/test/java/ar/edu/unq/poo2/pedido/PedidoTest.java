@@ -52,7 +52,7 @@ public class PedidoTest {
     @Test
     void alConfirmarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
         pedido.confirmar();
-        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+        verify(estadoMock).notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PedidoTest {
     @Test
     void alCancelarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
         pedido.cancelar();
-        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+        verify(estadoMock).notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class PedidoTest {
     @Test
     void alPrepararSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
         pedido.preparar();
-        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+        verify(estadoMock).notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
     }
 
     @Test
@@ -88,7 +88,7 @@ public class PedidoTest {
     @Test
     void alEnviarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
         pedido.enviar();
-        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+        verify(estadoMock).notificarTransicion(pedido, observadorMock, pedido.getEstadoAnterior());
     }
 
     @Test
@@ -100,7 +100,7 @@ public class PedidoTest {
     @Test
     void alEntregarSePideAlEstadoActualQueNotifiqueTransicionALosObservadores() {
         pedido.entregar();
-        verify(estadoMock).notificarTransicion(pedido, observadorMock);
+        verify(estadoMock).notificarTransicion(pedido, observadorMock, pedido.getEstadoAnterior());
     }
 
     @Test

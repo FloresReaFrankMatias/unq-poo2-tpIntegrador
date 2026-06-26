@@ -71,7 +71,7 @@ class EstadoConfirmadoTest{
     @Test
     void alNotificarTransicionSeLlamaAAlConfirmarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alConfirmar(pedido);
+        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
+        verify(observadorMock).alConfirmar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
     }
 }

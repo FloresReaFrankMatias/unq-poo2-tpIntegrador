@@ -1,6 +1,5 @@
 package ar.edu.unq.poo2.notificaciones;
 
-import ar.edu.unq.poo2.pedido.Cliente;
 
 public class Cupon {
 

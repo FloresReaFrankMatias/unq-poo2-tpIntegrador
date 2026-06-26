@@ -75,7 +75,7 @@ class EstadoEnviadoTest{
     @Test
     void alNotificarTransicionSeLlamaAAlEnviarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alEnviar(pedido);
+        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
+        verify(observadorMock).alEnviar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
     }
 }

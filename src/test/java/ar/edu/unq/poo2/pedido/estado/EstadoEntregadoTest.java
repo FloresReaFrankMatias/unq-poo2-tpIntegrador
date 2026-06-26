@@ -62,7 +62,7 @@ class EstadoEntregadoTest{
     @Test
     void alNotificarTransicionSeLlamaAAlEntregarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alEntregar(pedido);
+        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
+        verify(observadorMock).alEntregar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
     }
 }
