@@ -1,6 +1,5 @@
 package ar.edu.unq.poo2.notificaciones;
 
-import java.time.LocalDate;
 
 import ar.edu.unq.poo2.pedido.Pedido;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
@@ -13,8 +12,22 @@ public class NotificadorEmail implements ObservadorPedido {
 	}
 	
 	 @Override
-	    public void alEntregar(Pedido pedido,EstadoPedido estAnterior,EstadoPedido estActual){
-	        mail.enviarMail(pedido.getClienteEmail(), " sdf", " dfs", null );
+	    public void alConfirmar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	        enviarNotificacion(pedido, "Pedido confirmado", "Tu pedido fue confirmado");
+	    }
+
+	    @Override
+	    public void alEnviar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	        enviarNotificacion(pedido, "Pedido enviado", "Tu pedido está en camino");
+	    }
+
+	    @Override
+	    public void alEntregar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	        enviarNotificacion(pedido, "Pedido entregado", "Tu pedido fue entregado");
+	    }
+
+	    private void enviarNotificacion(Pedido pedido, String titulo, String mensaje) {
+	        mail.enviarMail(pedido.getClienteEmail(), titulo, mensaje, null);
 	    }
 	 
 
