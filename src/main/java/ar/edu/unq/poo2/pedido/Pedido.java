@@ -3,11 +3,11 @@ package ar.edu.unq.poo2.pedido;
 import ar.edu.unq.poo2.envio.Direccion;
 import ar.edu.unq.poo2.envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
 import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
-import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 
 import java.util.*;
 
