@@ -1,6 +1,7 @@
 package ar.edu.unq.poo2.notificaciones;
 
 import ar.edu.unq.poo2.pedido.Pedido;
+import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.venta.HistorialDeVentas;
 import java.time.LocalDate;
 
@@ -12,7 +13,7 @@ public class ObservadorHistorialDeVentas implements ObservadorPedido{
     }
 
     @Override
-    public void alEntregar(Pedido pedido){
+    public void alEntregar(Pedido pedido, EstadoPedido estadoAnterior,EstadoPedido estadoActual){
         historial.registrarVenta(pedido.getContenido(), LocalDate.now());
     }
 }

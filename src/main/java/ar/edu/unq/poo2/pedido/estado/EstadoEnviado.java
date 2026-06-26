@@ -13,7 +13,7 @@ public class EstadoEnviado extends EstadoReembolsador{
     public void enviar(Pedido pedido){}
 
     @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
-        observador.alEnviar(pedido);
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador,EstadoPedido estadoAnterior){
+        observador.alEnviar(pedido,estadoAnterior, this);
     }
 }

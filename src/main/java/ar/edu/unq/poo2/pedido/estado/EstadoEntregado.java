@@ -8,7 +8,7 @@ public class EstadoEntregado extends EstadoPedido{
     public void entregar(Pedido pedido){}
 
     @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
-        observador.alEntregar(pedido);
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador, EstadoPedido estadoAnterior){
+        observador.alEntregar(pedido,estadoAnterior, this);
     }
 }

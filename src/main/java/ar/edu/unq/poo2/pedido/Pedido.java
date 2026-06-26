@@ -13,6 +13,7 @@ import java.util.*;
 
 public class Pedido {
     private EstadoPedido estadoActual = new EstadoBorrador();
+    private EstadoPedido estadoAnterior = estadoActual;
     private ContenidoPedido contenido = new ContenidoPedido();
     private MetodoDeEnvio envio;
     private final Inventario inventario;
@@ -26,6 +27,13 @@ public class Pedido {
         this.gestorNotasDeCredito = gestorNotasDeCredito;
         this.envio = envio;
         this.observadores = observadores;
+    }
+    
+    public EstadoPedido getEstadoActual() {
+    	return estadoActual;
+    }
+    public EstadoPedido getEstadoAnterior() {
+    	return estadoAnterior;
     }
 
     public void agregarItem(Item item){
@@ -64,7 +72,7 @@ public class Pedido {
     }
 
     private void notificarObservadores() {
-        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
+        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador, this.getEstadoAnterior()));
     }
 
     public void descontarStock() {
@@ -115,5 +123,10 @@ public class Pedido {
 
 	public Double getValorTotal() {
 		return contenido.getValorTotal();
+	}
+
+	public String getClienteEmail() {
+		// TODO Auto-generated method stub
+		return cliente.getEmail();
 	}
 }

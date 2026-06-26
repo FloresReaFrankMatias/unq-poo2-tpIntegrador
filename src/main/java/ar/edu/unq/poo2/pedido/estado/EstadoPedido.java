@@ -37,5 +37,5 @@ public abstract class EstadoPedido {
         throw new OperacionInvalidaParaEstadoException();
     }
 
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){}
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador, EstadoPedido esttAnterior){}
 }
