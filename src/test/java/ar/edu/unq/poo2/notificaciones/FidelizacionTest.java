@@ -18,7 +18,6 @@ class FidelizacionTest {
 	EstadoPedido actual;
 	Cupon cupon;
 	
-
 	@BeforeEach
 	void setUp() throws Exception {
 		
@@ -27,36 +26,43 @@ class FidelizacionTest {
 		anterior = mock(EstadoPedido.class);
 		actual = mock(EstadoPedido.class);
 		
-		fidelizacion = new Fidelizacion(mailSender);
 		
 		cupon = new Cupon( "cliente@mail.com",0.5);
+		fidelizacion = new Fidelizacion(mailSender,cupon);
+		
 		
 	    when(pedido.getClienteEmail()).thenReturn("cliente@mail.com");
-	    }
+	   }
 
-	    @Test
-	    void alCancelarEnviaMailConCupon() {
-	    	
-	        fidelizacion.alCancelar(pedido, anterior, actual);
+	@Test
+	void alCancelar_EnviaMailConCupon() {
+	    fidelizacion.alCancelar(pedido, anterior, actual);
 
-	        verify(mailSender).enviarMail("cliente@mail.com",any(),any(), cupon);
-	    }
+	    verify(mailSender).enviarMail("cliente@mail.com","Cancelacion de Compra", 
+		        "Debido a la cancelacion te enviamos un cupo de descuento para tu proxima compra", cupon);
+	}
 
 	   
-
-	    @Test
-	    void alConfirmarNoEnviaMail() {
+	@Test
+	void alConfirmar_NoEnviaMail() {
 	    	
-	        fidelizacion.alConfirmar(pedido, anterior, actual);
+		fidelizacion.alConfirmar(pedido, anterior, actual);
 
-	        verifyNoInteractions(mailSender);
-	    }
+	    verifyNoInteractions(mailSender);
+    }
 
-	    @Test
-	    void alEntregarNoEnviaMail() {
-	        fidelizacion.alEntregar(pedido, anterior, actual);
+	@Test
+	void alEntregar_NoEnviaMail() {
+		fidelizacion.alEntregar(pedido, anterior, actual);
 
-	        verifyNoInteractions(mailSender);
-	    }
+	    verifyNoInteractions(mailSender);
+	}
+	@Test
+	void alPreparar_NoEnviaMail() {
+		fidelizacion.alPreparar(pedido, anterior, actual);
 
+	    verifyNoInteractions(mailSender);
+	}
+	   
+	    
 }
