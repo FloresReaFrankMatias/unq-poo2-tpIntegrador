@@ -1,4 +1,4 @@
-package ar.edu.unq.poo2.pedido.observadores;
+package ar.edu.unq.poo2.notificaciones;
 
 import ar.edu.unq.poo2.item.Item;
 import ar.edu.unq.poo2.notificaciones.ObservadorHistorialDeVentas;
@@ -31,16 +31,16 @@ public class ObservadorHistorialDeVentasTest {
     public void alReaccionarAEntregaSeEnviaElContenidoDadoAlHistorialDeVentas() {
         List<Item> contenidoVacio = List.of(itemMock);
         when(pedidoMock.getContenido()).thenReturn(contenidoVacio);
-        observador.alEntregar(pedidoMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
+        observador.alEntregar(pedidoMock);
         verify(historialMock).registrarVenta(eq(contenidoVacio), any(LocalDate.class));
     }
 
     @Test
     public void noSeReaccionaAOtrosEventosDePedidoQueNoSeanEntregar() {
-        observador.alConfirmar(pedidoMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
-        observador.alPreparar(pedidoMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
-        observador.alEnviar(pedidoMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
-        observador.alCancelar(pedidoMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
-        verifyNoInteractions(historialMock,pedidoMock.getEstadoActual(),pedidoMock.getEstadoAnterior());
+        observador.alConfirmar(pedidoMock);
+        observador.alPreparar(pedidoMock);
+        observador.alEnviar(pedidoMock);
+        observador.alCancelar(pedidoMock);
+        verifyNoInteractions(historialMock);
     }
 }

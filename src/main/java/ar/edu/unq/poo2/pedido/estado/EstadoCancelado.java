@@ -8,7 +8,7 @@ public class EstadoCancelado extends EstadoPedido{
     public void cancelar(Pedido pedido){}
 
     @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador, EstadoPedido estAnt){
-        observador.alCancelar(pedido,estAnt, this);
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
+        observador.alCancelar(pedido);
     }
 }

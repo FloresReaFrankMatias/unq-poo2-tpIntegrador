@@ -29,7 +29,7 @@ public class EstadoEnPreparacion extends EstadoReembolsador{
     }
 
     @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador,EstadoPedido estadoAnterior){
-        observador.alPreparar(pedido, estadoAnterior, this);
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
+        observador.alPreparar(pedido);
     }
 }

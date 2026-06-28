@@ -62,7 +62,7 @@ class EstadoCanceladoTest{
     @Test
     void alNotificarTransicionSeLlamaAAlCancelarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
-        verify(observadorMock).alCancelar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
-    }
+        estado.notificarTransicion(pedido, observadorMock);
+        verify(observadorMock).alCancelar(pedido);
+     }
 }

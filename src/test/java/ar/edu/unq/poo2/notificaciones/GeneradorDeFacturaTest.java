@@ -15,8 +15,7 @@ class GeneradorDeFacturaTest {
 	Pedido pedido;
 	GeneradorDeFactura generadorFactura;
 	MailSender mailSender;
-	EstadoPedido anterior;
-	EstadoPedido actual;
+
 	ComprobanteFiscal comprobante;
 	
 	
@@ -26,8 +25,6 @@ class GeneradorDeFacturaTest {
 		
 		pedido = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
-		anterior = mock(EstadoPedido.class);
-		actual = mock(EstadoPedido.class);
 		comprobante = mock(ComprobanteFiscal.class);
 		
 		generadorFactura = new GeneradorDeFactura(comprobante);
@@ -35,7 +32,7 @@ class GeneradorDeFacturaTest {
 	
     @Test
 	void alEntregar_GeneraFactura() {
-		generadorFactura.alEntregar(pedido, anterior, actual);
+		generadorFactura.alEntregar(pedido);
 
 	    verify(comprobante, times(1)).generarComprobante(pedido);
 	}
@@ -43,20 +40,20 @@ class GeneradorDeFacturaTest {
 
 	@Test
 	void alConfirmar_NoGeneraFactura() {
-	    generadorFactura.alConfirmar(pedido, anterior, actual);
+	    generadorFactura.alConfirmar(pedido);
 
 	    verifyNoInteractions(pedido);
 	}
     @Test
 	void alCancelar_NoGeneraFactura() {
-	    generadorFactura.alCancelar(pedido, anterior, actual);
+	    generadorFactura.alCancelar(pedido );
 
 	    verifyNoInteractions(pedido);
 	}
 
     @Test 
     void alPreparar_NoGeneraFactura(){
-    	generadorFactura.alPreparar(pedido, anterior, actual);
+    	generadorFactura.alPreparar(pedido);
     	
     	verifyNoInteractions(pedido);
     	

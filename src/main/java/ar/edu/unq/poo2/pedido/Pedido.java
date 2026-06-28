@@ -13,7 +13,6 @@ import java.util.*;
 
 public class Pedido {
     private EstadoPedido estadoActual = new EstadoBorrador();
-    private EstadoPedido estadoAnterior = estadoActual;
     private ContenidoPedido contenido = new ContenidoPedido();
     private MetodoDeEnvio envio;
     private final Inventario inventario;
@@ -29,12 +28,55 @@ public class Pedido {
         this.observadores = observadores;
     }
     
+    
+    //-------------- 	GETTERS ------------------------------------
     public EstadoPedido getEstadoActual() {
     	return estadoActual;
     }
-    public EstadoPedido getEstadoAnterior() {
-    	return estadoAnterior;
+    public double getPesoTotal() {
+		return contenido.getPesoTotal();
+	}
+
+    public Direccion getDireccionEntrega() {
+		return cliente.getDireccion();
     }
+
+	public Double getValorTotal() {
+		return contenido.getValorTotal();
+	}
+
+	public String getClienteEmail() {
+		// TODO Auto-generated method stub
+		return cliente.getEmail();
+	}
+	  public MedioPago getMedioPago() {
+	        return medioPago;
+	    }	
+
+	  public List<Item> getContenido() {
+	        return contenido.getItems();
+	  }
+
+	  public MetodoDeEnvio getEnvio() {
+	        return envio;
+	  }	  
+    
+    
+  //------------------  SETtters-------------------------------
+
+	  public void setEstadoActual(EstadoPedido estadoPedido){
+	        estadoActual = estadoPedido;
+	    }
+
+	  
+
+	    public void setMedioPago(MedioPago medioPago) {
+	        this.medioPago = medioPago;
+	    }	  
+	  
+	  
+	  
+//-------------------------------------------------
 
     public void agregarItem(Item item){
         estadoActual.verificarAgregarItem(this, item);
@@ -71,9 +113,7 @@ public class Pedido {
         notificarObservadores();
     }
 
-    private void notificarObservadores() {
-        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador, this.getEstadoAnterior()));
-    }
+    
 
     public void descontarStock() {
         this.inventario.decrementarStock(contenido.getResumenDeSkus());
@@ -93,40 +133,18 @@ public class Pedido {
         return contenido.tieneItems();
     }
 
-    public List<Item> getContenido() {
-        return contenido.getItems();
+    
+//-------- notificaciones    --------------------------------        
+    public void notificarObservadores() {
+        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
     }
-
-    public MetodoDeEnvio getEnvio() {
-        return envio;
+    public void suscribir(ObservadorPedido obs) {
+    	this.observadores.add(obs);
     }
-
-    public void setEstadoActual(EstadoPedido estadoPedido){
-        estadoActual = estadoPedido;
+    public void desuscribir(ObservadorPedido obs) {
+    	this.observadores.remove(obs);
     }
+   
 
-    public MedioPago getMedioPago() {
-        return medioPago;
-    }
-
-    public void setMedioPago(MedioPago medioPago) {
-        this.medioPago = medioPago;
-    }
-
-    public double getPesoTotal() {
-		return contenido.getPesoTotal();
-	}
-
-    public Direccion getDireccionEntrega() {
-		return cliente.getDireccion();
-    }
-
-	public Double getValorTotal() {
-		return contenido.getValorTotal();
-	}
-
-	public String getClienteEmail() {
-		// TODO Auto-generated method stub
-		return cliente.getEmail();
-	}
+    
 }

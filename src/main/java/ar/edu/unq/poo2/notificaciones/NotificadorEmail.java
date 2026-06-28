@@ -12,17 +12,17 @@ public class NotificadorEmail implements ObservadorPedido {
 	}
 	
 	 @Override
-	    public void alConfirmar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	    public void alConfirmar(Pedido pedido) {
 	        enviarNotificacion(pedido, "Pedido confirmado", "Tu pedido fue confirmado");
 	    }
 
 	    @Override
-	    public void alEnviar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	    public void alEnviar(Pedido pedido) {
 	        enviarNotificacion(pedido, "Pedido enviado", "Tu pedido está en camino");
 	    }
 
 	    @Override
-	    public void alEntregar(Pedido pedido, EstadoPedido anterior, EstadoPedido actual) {
+	    public void alEntregar(Pedido pedido) {
 	        enviarNotificacion(pedido, "Pedido entregado", "Tu pedido fue entregado");
 	    }
 

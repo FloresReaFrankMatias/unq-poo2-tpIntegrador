@@ -12,16 +12,14 @@ import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 class NotificadorEmailTest {
 	Pedido pedidoMock;
 	MailSender mailSender;
-	EstadoPedido anterior;
-	EstadoPedido actual;
+	
 	NotificadorEmail obsNotificador;
 	
 	@BeforeEach
 	void setUp() throws Exception {
 		pedidoMock = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
-		anterior = mock(EstadoPedido.class);
-		actual = mock(EstadoPedido.class);
+		
 		
 		obsNotificador = new NotificadorEmail(mailSender);
 		
@@ -32,7 +30,7 @@ class NotificadorEmailTest {
 	@Test
     void alConfirmar_EnviaMailAlCliente() {
 		
-		obsNotificador.alConfirmar(pedidoMock, anterior, actual);
+		obsNotificador.alConfirmar(pedidoMock);
 		
         verify(mailSender).enviarMail("cliente@mail.com", "Pedido confirmado", "Tu pedido fue confirmado", null);
     }
@@ -40,7 +38,7 @@ class NotificadorEmailTest {
     @Test
     void alEnviar_EnviaMailAlCliente() {
     	
-    	obsNotificador.alEnviar(pedidoMock, anterior, actual);
+    	obsNotificador.alEnviar(pedidoMock);
 
         verify(mailSender).enviarMail("cliente@mail.com", "Pedido enviado", "Tu pedido está en camino", null);
     }
@@ -48,7 +46,7 @@ class NotificadorEmailTest {
     @Test
     void alEntregar_EnviaMailAlCliente() {
     	
-    	obsNotificador.alEntregar(pedidoMock, anterior, actual);
+    	obsNotificador.alEntregar(pedidoMock);
 
         verify(mailSender).enviarMail("cliente@mail.com", "Pedido entregado", "Tu pedido fue entregado", null);
     }
@@ -56,7 +54,7 @@ class NotificadorEmailTest {
     @Test
     void alCancelar_NoEnviaMail() {
     
-    	obsNotificador.alCancelar(pedidoMock, anterior, actual);
+    	obsNotificador.alCancelar(pedidoMock);
 
         verifyNoInteractions(mailSender);
     }
@@ -64,7 +62,7 @@ class NotificadorEmailTest {
     @Test
     void alPreparar_NoEnviaMail() {
     	
-    	obsNotificador.alPreparar(pedidoMock, anterior, actual);
+    	obsNotificador.alPreparar(pedidoMock );
         verifyNoInteractions(mailSender);
     }
 }

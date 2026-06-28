@@ -14,8 +14,6 @@ class FidelizacionTest {
 	Pedido pedido;
 	Fidelizacion fidelizacion;
 	MailSender mailSender;
-	EstadoPedido anterior;
-	EstadoPedido actual;
 	Cupon cupon;
 	
 	@BeforeEach
@@ -23,8 +21,7 @@ class FidelizacionTest {
 		
 		pedido = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
-		anterior = mock(EstadoPedido.class);
-		actual = mock(EstadoPedido.class);
+		
 		
 		
 		cupon = new Cupon( "cliente@mail.com",0.5);
@@ -36,7 +33,7 @@ class FidelizacionTest {
 
 	@Test
 	void alCancelar_EnviaMailConCupon() {
-	    fidelizacion.alCancelar(pedido, anterior, actual);
+	    fidelizacion.alCancelar(pedido);
 
 	    verify(mailSender).enviarMail("cliente@mail.com","Cancelacion de Compra", 
 		        "Debido a la cancelacion te enviamos un cupo de descuento para tu proxima compra", cupon);
@@ -46,20 +43,20 @@ class FidelizacionTest {
 	@Test
 	void alConfirmar_NoEnviaMail() {
 	    	
-		fidelizacion.alConfirmar(pedido, anterior, actual);
+		fidelizacion.alConfirmar(pedido);
 
 	    verifyNoInteractions(mailSender);
     }
 
 	@Test
 	void alEntregar_NoEnviaMail() {
-		fidelizacion.alEntregar(pedido, anterior, actual);
+		fidelizacion.alEntregar(pedido);
 
 	    verifyNoInteractions(mailSender);
 	}
 	@Test
 	void alPreparar_NoEnviaMail() {
-		fidelizacion.alPreparar(pedido, anterior, actual);
+		fidelizacion.alPreparar(pedido);
 
 	    verifyNoInteractions(mailSender);
 	}

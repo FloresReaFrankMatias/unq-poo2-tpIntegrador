@@ -13,7 +13,7 @@ public class ObservadorHistorialDeVentas implements ObservadorPedido{
     }
 
     @Override
-    public void alEntregar(Pedido pedido, EstadoPedido estadoAnterior,EstadoPedido estadoActual){
+    public void alEntregar(Pedido pedido){
         historial.registrarVenta(pedido.getContenido(), LocalDate.now());
     }
 }

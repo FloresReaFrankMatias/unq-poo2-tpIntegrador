@@ -14,7 +14,7 @@ public class Fidelizacion implements ObservadorPedido {
 	}
 
 	@Override
-	public void alCancelar(Pedido pedido,EstadoPedido estAnterior,EstadoPedido estActual) {
+	public void alCancelar(Pedido pedido) {
 		// TODO Auto-generated method stub
 		
 		mail.enviarMail(pedido.getClienteEmail(), 

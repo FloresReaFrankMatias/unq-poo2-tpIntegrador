@@ -18,12 +18,14 @@ class EstadoEnviadoTest{
     Pedido pedido;
     EstadoEnviado estado;
     Item item;
+  
 
     @BeforeEach
     void setUp(){
         pedido = mock(Pedido.class);
         item = mock(Item.class);
         estado = new EstadoEnviado();
+       
     }
 
     @Test
@@ -75,7 +77,7 @@ class EstadoEnviadoTest{
     @Test
     void alNotificarTransicionSeLlamaAAlEnviarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock,pedido.getEstadoAnterior());
-        verify(observadorMock).alEnviar(pedido,pedido.getEstadoActual(),pedido.getEstadoAnterior());
+        estado.notificarTransicion(pedido, observadorMock);
+        verify(observadorMock).alEnviar(pedido);
     }
 }

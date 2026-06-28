@@ -19,7 +19,7 @@ public class EstadoConfirmado extends EstadoPedido{
     }
 
     @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador,EstadoPedido estadoAnterior){
-        observador.alConfirmar(pedido,estadoAnterior ,this);
+    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
+        observador.alConfirmar(pedido);
     }
 }

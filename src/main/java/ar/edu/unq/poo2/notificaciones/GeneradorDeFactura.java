@@ -11,7 +11,7 @@ public class GeneradorDeFactura implements ObservadorPedido {
 		this.comprobante =comprobante ;
 	}
 	@Override
-	public void alEntregar(Pedido pedido,EstadoPedido estAnterior,EstadoPedido estActual) {
+	public void alEntregar(Pedido pedido) {
 		comprobante.generarComprobante(pedido); 
 	}
 	
