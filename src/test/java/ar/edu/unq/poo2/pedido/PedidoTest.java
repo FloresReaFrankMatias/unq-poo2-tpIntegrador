@@ -1,8 +1,15 @@
 package ar.edu.unq.poo2.pedido;
 
+import ar.edu.unq.poo2.envio.Direccion;
+import ar.edu.unq.poo2.envio.EnvioEstandar;
 import ar.edu.unq.poo2.envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.notificaciones.Fidelizacion;
+import ar.edu.unq.poo2.notificaciones.GeneradorDeFactura;
+import ar.edu.unq.poo2.notificaciones.NotificadorEmail;
 import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
+import ar.edu.unq.poo2.pago.MedioPago;
+import ar.edu.unq.poo2.pedido.estado.EstadoEntregado;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
 
@@ -23,7 +30,7 @@ public class PedidoTest {
     Item itemMockUno;
     Item itemMockDos;
     ObservadorPedido observadorMock;
-
+    Cliente cliente;
     @BeforeEach
     void setUp(){
         estadoMock = mock(EstadoPedido.class);
@@ -33,13 +40,79 @@ public class PedidoTest {
         inventarioMock = mock(Inventario.class);
         gestorMock = mock(GestorNotasDeCredito.class);
         observadorMock = mock(ObservadorPedido.class);
-        pedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
+         cliente = mock(Cliente.class);
+        pedido = new Pedido(inventarioMock, gestorMock, envioMock, new HashSet<>(Set.of(observadorMock)),cliente);
         pedido.setEstadoActual(estadoMock);
     }
 
     @Test
+    void test_accesors_Envio_Pago_Pedido() {
+        
+        assertEquals(pedido.getEnvio(), envioMock);
+        
+        MedioPago pago = mock( MedioPago.class);
+        pedido.setMedioPago(pago);
+        assertEquals(pedido.getMedioPago(), pago);
+        
+        assertEquals(estadoMock, pedido.getEstadoActual());
+        EnvioEstandar envioEstandar =mock( EnvioEstandar.class);
+        pedido.setMetodoEnvio(envioEstandar);
+        assertEquals(envioEstandar , pedido.getEnvio());
+    }
+    @Test
+    void test_getCostoEnvio_Pedido() {
+        
+        when(envioMock.calcularCosto(pedido)).thenReturn(100.0);
+        assertEquals(100.0, pedido.getCostoEnvio());
+        
+        
+    }
+    @Test
+    void test_clientePedido() {
+        
+        Direccion dir = mock(Direccion.class);
+        
+        when(cliente.getDireccion()).thenReturn(dir);
+        when(cliente.getEmail()).thenReturn("cliente@gmail.com");
+       
+        assertEquals(dir, pedido.getDireccionEntrega());
+        assertEquals("cliente@gmail.com", pedido.getClienteEmail());
+   
+       
+    }
+    
+    @Test
+    void test_notificarObservers_Pedido() {
+        EstadoEntregado estEntregado = mock(EstadoEntregado.class);
+        NotificadorEmail notificadorEmail = mock(NotificadorEmail.class);
+        Fidelizacion fidelizacion = mock(Fidelizacion.class);
+        GeneradorDeFactura generadorDeFactura = mock(GeneradorDeFactura.class);
+
+        // nnotifica a email y fidelizacion
+        pedido.setEstadoActual(estEntregado);
+        pedido.suscribir(fidelizacion);
+        pedido.suscribir(notificadorEmail);
+        pedido.suscribir(generadorDeFactura);
+        pedido.notificarObservadores();
+
+        verify(estEntregado, times(1)).notificarTransicion(pedido, notificadorEmail);
+        verify(estEntregado, times(1)).notificarTransicion(pedido, fidelizacion);
+        verify(estEntregado, times(1)).notificarTransicion(pedido, fidelizacion);
+
+       
+        pedido.desuscribir(fidelizacion);
+        pedido.notificarObservadores();
+
+        verify(estEntregado, times(2)).notificarTransicion(pedido, notificadorEmail);
+        verify(estEntregado, times(1)).notificarTransicion(pedido, fidelizacion);
+        verify(estEntregado, times(2)).notificarTransicion(pedido, generadorDeFactura);
+    }
+ 
+    
+    
+    @Test
     void unPedidoSeCreaEnEstadoBorrador() {
-        Pedido nuevoPedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock));
+        Pedido nuevoPedido = new Pedido(inventarioMock, gestorMock, envioMock, Set.of(observadorMock),cliente);
         assertDoesNotThrow(() -> nuevoPedido.agregarItem(itemMockUno));
     }
 
@@ -182,6 +255,23 @@ public class PedidoTest {
         assertThrows(UnsupportedOperationException.class, () -> listaObtenida.add(itemMockDos));
         assertThrows(UnsupportedOperationException.class, () -> listaObtenida.remove(itemMockUno));
     }
+    @Test
+    void unPedidoDelegaLaValidacionASuEstadoAlQuitarUnItem() {
+        pedido.quitarItem(itemMockUno);
+
+        verify(estadoMock).verificarQuitarItem(pedido, itemMockUno);
+    }
+
+    @Test
+    void alQuitarUnItemEsteYaNoEstaEnElContenido() {
+        pedido.agregarItem(itemMockUno);
+        pedido.agregarItem(itemMockDos);
+
+        pedido.quitarItem(itemMockUno);
+
+        assertFalse(pedido.getContenido().contains(itemMockUno));
+        assertTrue(pedido.getContenido().contains(itemMockDos));
+    }
 
     @Test
     public void alReponerStockSeEnviaElResumenCorrectoDeSusItemsAlInventario() {
@@ -210,4 +300,5 @@ public class PedidoTest {
 
         verify(gestorMock).hacerNotaDeCredito(resumenEsperadoFinal);
     }
+   
 }

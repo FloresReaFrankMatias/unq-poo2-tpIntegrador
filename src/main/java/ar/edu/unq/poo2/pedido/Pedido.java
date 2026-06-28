@@ -21,11 +21,12 @@ public class Pedido {
     private Cliente cliente;
     private final Set<ObservadorPedido> observadores;
 
-    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio, Set<ObservadorPedido> observadores){
+    public Pedido(Inventario inventario, GestorNotasDeCredito gestorNotasDeCredito, MetodoDeEnvio envio, Set<ObservadorPedido> observadores,Cliente cliente){
         this.inventario = inventario;
         this.gestorNotasDeCredito = gestorNotasDeCredito;
         this.envio = envio;
         this.observadores = observadores;
+        this.cliente=cliente;
     }
     
     
