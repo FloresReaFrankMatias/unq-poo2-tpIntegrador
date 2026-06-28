@@ -1,5 +1,7 @@
 package ar.edu.unq.poo2.envio;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 import ar.edu.unq.poo2.pedido.Pedido;
 
 public class EnvioEstandar implements MetodoDeEnvio {
@@ -14,11 +16,11 @@ public class EnvioEstandar implements MetodoDeEnvio {
 		double pesoTotal = pedido.getPesoTotal(); 
         Direccion destino = pedido.getDireccionEntrega();
         
-        return correo.estimarEnvio(pesoTotal, destino);
+        return (double) correo.estimarEnvio(pesoTotal, destino);
 	}
 
 	@Override
 	public int calcularDiasDeEntrega(Pedido pedido ) {
-		return 7;
+		return ThreadLocalRandom.current().nextInt(5, 8);
 	}
 }

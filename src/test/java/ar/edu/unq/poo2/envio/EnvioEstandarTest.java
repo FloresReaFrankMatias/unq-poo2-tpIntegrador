@@ -29,7 +29,7 @@ class EnvioEstandarTest {
        when(pedido.getDireccionEntrega()).thenReturn(direccion);
       
        double costoEsperado= 150.0;
-		when(correoMock.estimarEnvio((float) 100, direccion)).thenReturn(costoEsperado);
+		when(correoMock.estimarEnvio((float) 100, direccion)).thenReturn((float) costoEsperado);
 		verify(correoMock, times(0)).estimarEnvio((float) 100, direccion);
 		assertEquals(costoEsperado, envioEstandar.calcularCosto(pedido));
 	}
@@ -53,6 +53,14 @@ class EnvioEstandarTest {
 	    // 3. Verify
 	    verify(correoMock, times(1)).estimarEnvio(pesoEsperadoPorCorreo, null);
 	}
-	
+	@Test
+    void test_CalcularDiasDeEntrega() {
+        int dias = envioEstandar.calcularDiasDeEntrega(pedido);
+       
+        assertTrue(dias >= 5 && dias <= 7);
+       
+       
+    }
+
 	
 }
