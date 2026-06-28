@@ -49,33 +49,33 @@ public class Pedido {
 		// TODO Auto-generated method stub
 		return cliente.getEmail();
 	}
-	  public MedioPago getMedioPago() {
+	public MedioPago getMedioPago() {
 	        return medioPago;
-	    }	
+	}	
 
-	  public List<Item> getContenido() {
+	public List<Item> getContenido() {
 	        return contenido.getItems();
-	  }
+	}
 
-	  public MetodoDeEnvio getEnvio() {
+    public MetodoDeEnvio getEnvio() {
 	        return envio;
-	  }	  
+    }
+    public double getCostoEnvio() {
+        return this.getEnvio().calcularCosto(this);
+    }
     
     
   //------------------  SETtters-------------------------------
 
-	  public void setEstadoActual(EstadoPedido estadoPedido){
-	        estadoActual = estadoPedido;
-	    }
-
-	  
-
-	    public void setMedioPago(MedioPago medioPago) {
-	        this.medioPago = medioPago;
-	    }	  
-	  
-	  
-	  
+  public void setEstadoActual(EstadoPedido estado) {
+        estadoActual= estado;
+   }
+   public void setMedioPago(MedioPago medioDePago) {
+       this.medioPago = medioDePago;
+   }
+   public void setMetodoEnvio(MetodoDeEnvio envio) {
+       this.envio = envio;
+   } 
 //-------------------------------------------------
 
     public void agregarItem(Item item){
