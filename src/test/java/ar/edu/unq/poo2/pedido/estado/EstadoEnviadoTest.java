@@ -5,8 +5,9 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.*;
 
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +18,14 @@ class EstadoEnviadoTest{
     Pedido pedido;
     EstadoEnviado estado;
     Item item;
+  
 
     @BeforeEach
     void setUp(){
         pedido = mock(Pedido.class);
         item = mock(Item.class);
         estado = new EstadoEnviado();
+       
     }
 
     @Test

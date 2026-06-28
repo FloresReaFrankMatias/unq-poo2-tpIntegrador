@@ -1,7 +1,7 @@
 package ar.edu.unq.poo2.pedido.estado;
 
+import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 
 public class EstadoEnviado extends EstadoReembolsador{
     @Override

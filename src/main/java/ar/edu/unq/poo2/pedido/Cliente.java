@@ -22,4 +22,9 @@ public class Cliente {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+
+	public String getEmail() {
+		// TODO Auto-generated method stub
+		return mail;
+	}
 }

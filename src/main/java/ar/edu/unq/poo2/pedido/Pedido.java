@@ -3,11 +3,11 @@ package ar.edu.unq.poo2.pedido;
 import ar.edu.unq.poo2.envio.Direccion;
 import ar.edu.unq.poo2.envio.MetodoDeEnvio;
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
 import ar.edu.unq.poo2.pago.MedioPago;
 import ar.edu.unq.poo2.pedido.estado.EstadoBorrador;
 import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.pedido.notadecredito.GestorNotasDeCredito;
-import ar.edu.unq.poo2.pedido.observadores.ObservadorPedido;
 
 import java.util.*;
 
@@ -27,6 +27,56 @@ public class Pedido {
         this.envio = envio;
         this.observadores = observadores;
     }
+    
+    
+    //-------------- 	GETTERS ------------------------------------
+    public EstadoPedido getEstadoActual() {
+    	return estadoActual;
+    }
+    public double getPesoTotal() {
+		return contenido.getPesoTotal();
+	}
+
+    public Direccion getDireccionEntrega() {
+		return cliente.getDireccion();
+    }
+
+	public Double getValorTotal() {
+		return contenido.getValorTotal();
+	}
+
+	public String getClienteEmail() {
+		// TODO Auto-generated method stub
+		return cliente.getEmail();
+	}
+	  public MedioPago getMedioPago() {
+	        return medioPago;
+	    }	
+
+	  public List<Item> getContenido() {
+	        return contenido.getItems();
+	  }
+
+	  public MetodoDeEnvio getEnvio() {
+	        return envio;
+	  }	  
+    
+    
+  //------------------  SETtters-------------------------------
+
+	  public void setEstadoActual(EstadoPedido estadoPedido){
+	        estadoActual = estadoPedido;
+	    }
+
+	  
+
+	    public void setMedioPago(MedioPago medioPago) {
+	        this.medioPago = medioPago;
+	    }	  
+	  
+	  
+	  
+//-------------------------------------------------
 
     public void agregarItem(Item item){
         estadoActual.verificarAgregarItem(this, item);
@@ -63,9 +113,7 @@ public class Pedido {
         notificarObservadores();
     }
 
-    private void notificarObservadores() {
-        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
-    }
+    
 
     public void descontarStock() {
         this.inventario.decrementarStock(contenido.getResumenDeSkus());
@@ -85,35 +133,18 @@ public class Pedido {
         return contenido.tieneItems();
     }
 
-    public List<Item> getContenido() {
-        return contenido.getItems();
+    
+//-------- notificaciones    --------------------------------        
+    public void notificarObservadores() {
+        observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
     }
-
-    public MetodoDeEnvio getEnvio() {
-        return envio;
+    public void suscribir(ObservadorPedido obs) {
+    	this.observadores.add(obs);
     }
-
-    public void setEstadoActual(EstadoPedido estadoPedido){
-        estadoActual = estadoPedido;
+    public void desuscribir(ObservadorPedido obs) {
+    	this.observadores.remove(obs);
     }
+   
 
-    public MedioPago getMedioPago() {
-        return medioPago;
-    }
-
-    public void setMedioPago(MedioPago medioPago) {
-        this.medioPago = medioPago;
-    }
-
-    public double getPesoTotal() {
-		return contenido.getPesoTotal();
-	}
-
-    public Direccion getDireccionEntrega() {
-		return cliente.getDireccion();
-    }
-
-	public Double getValorTotal() {
-		return contenido.getValorTotal();
-	}
+    
 }

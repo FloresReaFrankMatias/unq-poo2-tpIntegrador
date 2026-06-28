@@ -1,6 +1,7 @@
-package ar.edu.unq.poo2.pedido.observadores;
+package ar.edu.unq.poo2.notificaciones;
 
 import ar.edu.unq.poo2.item.Item;
+import ar.edu.unq.poo2.notificaciones.ObservadorHistorialDeVentas;
 import ar.edu.unq.poo2.pedido.Pedido;
 import ar.edu.unq.poo2.venta.HistorialDeVentas;
 import org.junit.jupiter.api.BeforeEach;
