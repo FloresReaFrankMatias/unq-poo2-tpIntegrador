@@ -2,7 +2,6 @@ package ar.edu.unq.poo2.notificaciones;
 
 
 public class Cupon {
-
 	private  String mailCliente;
     private  double porcentaje;
 

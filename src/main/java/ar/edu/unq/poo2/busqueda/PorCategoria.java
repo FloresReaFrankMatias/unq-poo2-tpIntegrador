@@ -4,7 +4,6 @@ import ar.edu.unq.poo2.item.Categoria;
 import ar.edu.unq.poo2.item.Item;
 
 public class PorCategoria implements CriterioBusqueda {
-
     private Categoria categoria;
 
     public PorCategoria(Categoria categoria) {

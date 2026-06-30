@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Catalogo {
-
     private List<Item> items;
 
     public Catalogo() {
@@ -18,7 +17,6 @@ public class Catalogo {
     }
 
     public List<Item> buscar(CriterioBusqueda criterio) {
-
         return this.items.stream()
                          .filter(item ->
                                  criterio.cumple(item))

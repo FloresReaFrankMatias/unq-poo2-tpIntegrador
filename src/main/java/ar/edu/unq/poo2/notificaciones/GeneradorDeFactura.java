@@ -9,11 +9,9 @@ public class GeneradorDeFactura implements ObservadorPedido {
 	public GeneradorDeFactura(ComprobanteFiscal comprobante ) {
 		this.comprobante =comprobante ;
 	}
+
 	@Override
 	public void alEntregar(Pedido pedido) {
 		comprobante.generarComprobante(pedido); 
 	}
-	
-	  
-
 }

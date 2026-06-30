@@ -7,18 +7,12 @@ public class Cliente {
 	private Direccion direccion;
 
 	public Cliente(String mail, Direccion direccion) {
-		this.setMail(mail);
+		this.mail = mail;
 		this.direccion = direccion;
 	}
 	
 	public Direccion getDireccion() {
 		return direccion;
-	}
-
-	
-
-	public void setMail(String mail) {
-		this.mail = mail;
 	}
 
 	public String getEmail() {

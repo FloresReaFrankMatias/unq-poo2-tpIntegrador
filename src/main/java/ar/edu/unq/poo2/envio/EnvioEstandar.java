@@ -16,7 +16,7 @@ public class EnvioEstandar implements MetodoDeEnvio {
 		double pesoTotal = pedido.getPesoTotal(); 
         Direccion destino = pedido.getDireccionEntrega();
         
-        return (double) correo.estimarEnvio(pesoTotal, destino);
+        return correo.estimarEnvio(pesoTotal, destino);
 	}
 
 	@Override

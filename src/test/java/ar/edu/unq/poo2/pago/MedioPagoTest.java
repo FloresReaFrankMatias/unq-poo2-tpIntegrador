@@ -29,7 +29,7 @@ class MedioPagoTest {
         assertTrue(pago.getCodigoTransaccion() > 0);
     }
 
-    private class MedioPagoStub extends MedioPago {
+    private class MedioPagoStub extends MedioPago { // Clase utilizada para testear clase abstracta.
 
         boolean validado = false;
         boolean reservado = false;
@@ -44,6 +44,16 @@ class MedioPagoTest {
         @Override
         protected void reservarFondos() {
             reservado = true;
+        }
+
+        @Override
+        protected boolean cumpleValidacion() {
+            return true;
+        }
+
+        @Override
+        protected String getMensajeErrorValidacion() {
+            return "";
         }
 
         @Override

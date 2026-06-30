@@ -97,9 +97,11 @@ public class Pedido {
     }
 
     //-------------- 	GETTERS ------------------------------------
+
     public EstadoPedido getEstadoActual() {
         return estadoActual;
     }
+
     public double getPesoTotal() {
         return contenido.getPesoTotal();
     }
@@ -126,10 +128,10 @@ public class Pedido {
     public MetodoDeEnvio getEnvio() {
         return envio;
     }
+
     public double getCostoEnvio() {
         return this.getEnvio().calcularCosto(this);
     }
-
 
     //------------------  SETTERS -------------------------------
 
@@ -142,5 +144,4 @@ public class Pedido {
     public void setMetodoEnvio(MetodoDeEnvio envio) {
         this.envio = envio;
     }
-
 }
