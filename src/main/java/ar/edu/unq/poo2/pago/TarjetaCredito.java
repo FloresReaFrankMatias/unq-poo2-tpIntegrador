@@ -18,16 +18,13 @@ public class TarjetaCredito extends MedioPago {
 	}
 
 	@Override
-	protected void validarDatos() {
-		boolean esValida = apiTarjeta.validarTarjeta(
-				numeroTarjeta,
-				cvv,
-				fechaVencimiento);
+	protected boolean cumpleValidacion() {
+		return apiTarjeta.validarTarjeta(numeroTarjeta, cvv, fechaVencimiento);
+	}
 
-		if (!esValida) {
-			throw new PagoInvalidoException(
-					"La tarjeta de crédito no es válida");
-		}
+	@Override
+	protected String getMensajeErrorValidacion() {
+		return "La tarjeta de crédito no es válida";
 	}
 
 	@Override

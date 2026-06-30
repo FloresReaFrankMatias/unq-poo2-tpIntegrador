@@ -10,15 +10,13 @@ public class BilleteraVirtual extends MedioPago {
 	}
 
 	@Override
-	protected void validarDatos() {
+	protected boolean cumpleValidacion() {
+		return apiBilletera.validarSaldo();
+	}
 
-		boolean saldoValido =
-				apiBilletera.validarSaldo();
-
-		if (!saldoValido) {
-			throw new PagoInvalidoException(
-					"Saldo insuficiente");
-		}
+	@Override
+	protected String getMensajeErrorValidacion() {
+		return "Saldo insuficiente";
 	}
 
 	@Override

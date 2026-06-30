@@ -11,7 +11,14 @@ public abstract class MedioPago {
         notificarResultado();
     }
 
-    protected abstract void validarDatos();
+    protected void validarDatos() {
+        if (!cumpleValidacion()) {
+            throw new PagoInvalidoException(getMensajeErrorValidacion());
+        }
+    }
+
+    protected abstract boolean cumpleValidacion();
+    protected abstract String getMensajeErrorValidacion();
     protected abstract void reservarFondos();
     protected abstract void ejecutarTransaccion();
 

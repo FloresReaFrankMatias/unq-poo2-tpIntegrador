@@ -19,17 +19,13 @@ public class TransferenciaBancaria extends MedioPago {
 	}
 
 	@Override
-	protected void validarDatos() {
+	protected boolean cumpleValidacion() {
+		return apiTransferencia.validarCuenta(cbu, alias);
+	}
 
-		boolean cuentaValida =
-				apiTransferencia.validarCuenta(
-						cbu,
-						alias);
-
-		if (!cuentaValida) {
-			throw new PagoInvalidoException(
-					"La cuenta bancaria no es válida");
-		}
+	@Override
+	protected String getMensajeErrorValidacion() {
+		return "La cuenta bancaria no es válida";
 	}
 
 	@Override
