@@ -59,7 +59,7 @@ class EstadoEnPreparacionTest{
 
     @Test
     void transicionarAEstadoCanceladoDesdeEstadoEnPreparacionReembolsaProductoYEnvio(){
-        when(envio.calcularCosto(pedido)).thenReturn(500.0);
+        when(pedido.getCostoEnvio()).thenReturn(500.0);
         Map<String, Double> extrasEsperados = new HashMap<>();
         extrasEsperados.put("Envió", 500.0);
         estado.cancelar(pedido);

@@ -6,7 +6,7 @@ import ar.edu.unq.poo2.pedido.Pedido;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EstadoEnPreparacion extends EstadoReembolsador{
+public class EstadoEnPreparacion extends EstadoPedido{
     @Override
     public void preparar(Pedido pedido){}
 
@@ -18,14 +18,9 @@ public class EstadoEnPreparacion extends EstadoReembolsador{
     @Override
     public void cancelar(Pedido pedido){
         pedido.reponerStock();
-        super.cancelar(pedido);
-    }
-
-    @Override
-    protected Map<String, Double> extrasAReembolsar(Pedido pedido) {
-        Map <String, Double> extras = new HashMap<>();
-        extras.put("Envió", pedido.getEnvio().calcularCosto(pedido));
-        return extras;
+        Map<String, Double> extras = Map.of("Envió", pedido.getCostoEnvio());
+        pedido.generarNotaDeCredito(extras);
+        pedido.setEstadoActual(new EstadoCancelado());
     }
 
     @Override
