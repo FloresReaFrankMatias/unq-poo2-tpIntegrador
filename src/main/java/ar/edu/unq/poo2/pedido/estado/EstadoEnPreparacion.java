@@ -1,9 +1,6 @@
 package ar.edu.unq.poo2.pedido.estado;
 
-import ar.edu.unq.poo2.notificaciones.ObservadorPedido;
 import ar.edu.unq.poo2.pedido.Pedido;
-
-import java.util.HashMap;
 import java.util.Map;
 
 public class EstadoEnPreparacion extends EstadoPedido{

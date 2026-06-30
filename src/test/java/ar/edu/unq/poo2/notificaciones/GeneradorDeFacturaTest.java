@@ -1,13 +1,8 @@
 package ar.edu.unq.poo2.notificaciones;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
-
 import static org.mockito.Mockito.*;
 
 
@@ -21,8 +16,7 @@ class GeneradorDeFacturaTest {
 	
 
 	@BeforeEach
-	void setUp() throws Exception {
-		
+	void setUp(){
 		pedido = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
 		comprobante = mock(ComprobanteFiscal.class);

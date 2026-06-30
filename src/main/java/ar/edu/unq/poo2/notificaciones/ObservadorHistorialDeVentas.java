@@ -1,12 +1,11 @@
 package ar.edu.unq.poo2.notificaciones;
 
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.venta.HistorialDeVentas;
 import java.time.LocalDate;
 
 public class ObservadorHistorialDeVentas extends ObservadorPedido {
-    private HistorialDeVentas historial;
+    private final HistorialDeVentas historial;
 
     public ObservadorHistorialDeVentas(HistorialDeVentas historial) {
         this.historial = historial;

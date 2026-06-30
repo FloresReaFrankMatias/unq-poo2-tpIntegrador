@@ -1,14 +1,9 @@
 package ar.edu.unq.poo2.notificaciones;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*; 
-
-
+import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 
 class FidelizacionTest {
 	Pedido pedido;
@@ -17,17 +12,13 @@ class FidelizacionTest {
 	Cupon cupon;
 	
 	@BeforeEach
-	void setUp() throws Exception {
-		
+	void setUp(){
 		pedido = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
 		
-		
-		
 		cupon = new Cupon( "cliente@mail.com",0.5);
 		fidelizacion = new Fidelizacion(mailSender,cupon);
-		
-		
+
 	    when(pedido.getClienteEmail()).thenReturn("cliente@mail.com");
 	   }
 
@@ -42,7 +33,6 @@ class FidelizacionTest {
 	   
 	@Test
 	void alConfirmar_NoEnviaMail() {
-	    	
 		fidelizacion.alConfirmar(pedido);
 
 	    verifyNoInteractions(mailSender);

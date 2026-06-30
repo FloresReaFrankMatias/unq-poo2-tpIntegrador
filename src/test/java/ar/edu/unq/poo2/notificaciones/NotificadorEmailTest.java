@@ -1,13 +1,9 @@
 package ar.edu.unq.poo2.notificaciones;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.mockito.Mockito.*; 
-
+import static org.mockito.Mockito.*;
 import ar.edu.unq.poo2.pedido.Pedido;
-import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 
 class NotificadorEmailTest {
 	Pedido pedidoMock;
@@ -16,7 +12,7 @@ class NotificadorEmailTest {
 	NotificadorEmail obsNotificador;
 	
 	@BeforeEach
-	void setUp() throws Exception {
+	void setUp(){
 		pedidoMock = mock(Pedido.class);
 		mailSender = mock(MailSender.class);
 		
