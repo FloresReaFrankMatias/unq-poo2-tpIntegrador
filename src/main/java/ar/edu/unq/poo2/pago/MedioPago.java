@@ -17,9 +17,12 @@ public abstract class MedioPago {
         }
     }
 
+    protected void reservarFondos(){
+        // Metodo hook
+    }
+
     protected abstract boolean cumpleValidacion();
     protected abstract String getMensajeErrorValidacion();
-    protected abstract void reservarFondos();
     protected abstract void ejecutarTransaccion();
 
     protected void notificarResultado() {

@@ -29,11 +29,6 @@ public class TransferenciaBancaria extends MedioPago {
 	}
 
 	@Override
-	protected void reservarFondos() {
-		// No aplica para transferencias bancarias
-	}
-
-	@Override
 	protected void ejecutarTransaccion() {
 		apiTransferencia.ejecutarTransferencia();
 	}
