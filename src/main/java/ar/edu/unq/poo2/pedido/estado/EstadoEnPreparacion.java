@@ -22,9 +22,4 @@ public class EstadoEnPreparacion extends EstadoPedido{
         pedido.generarNotaDeCredito(extras);
         pedido.setEstadoActual(new EstadoCancelado());
     }
-
-    @Override
-    public void notificarTransicion(Pedido pedido, ObservadorPedido observador){
-        observador.alPreparar(pedido);
-    }
 }

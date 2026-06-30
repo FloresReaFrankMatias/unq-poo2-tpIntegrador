@@ -2,7 +2,7 @@ package ar.edu.unq.poo2.notificaciones;
 
 import ar.edu.unq.poo2.pedido.Pedido;
 
-public class NotificadorEmail implements ObservadorPedido {
+public class NotificadorEmail extends ObservadorPedido {
 	private MailSender mail;
 
 	public NotificadorEmail(MailSender mail) {

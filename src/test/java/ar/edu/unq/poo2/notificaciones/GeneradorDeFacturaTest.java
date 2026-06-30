@@ -50,15 +50,6 @@ class GeneradorDeFacturaTest {
 
 	    verifyNoInteractions(pedido);
 	}
-
-    @Test 
-    void alPreparar_NoGeneraFactura(){
-    	generadorFactura.alPreparar(pedido);
-    	
-    	verifyNoInteractions(pedido);
-    	
-    }	    
-
 }
 
 

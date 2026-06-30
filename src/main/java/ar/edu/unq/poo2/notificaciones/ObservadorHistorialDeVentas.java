@@ -5,7 +5,7 @@ import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 import ar.edu.unq.poo2.venta.HistorialDeVentas;
 import java.time.LocalDate;
 
-public class ObservadorHistorialDeVentas implements ObservadorPedido{
+public class ObservadorHistorialDeVentas extends ObservadorPedido {
     private HistorialDeVentas historial;
 
     public ObservadorHistorialDeVentas(HistorialDeVentas historial) {

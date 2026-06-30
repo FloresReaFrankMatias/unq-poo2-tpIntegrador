@@ -54,12 +54,4 @@ class FidelizacionTest {
 
 	    verifyNoInteractions(mailSender);
 	}
-	@Test
-	void alPreparar_NoEnviaMail() {
-		fidelizacion.alPreparar(pedido);
-
-	    verifyNoInteractions(mailSender);
-	}
-	   
-	    
 }

@@ -38,7 +38,6 @@ public class ObservadorHistorialDeVentasTest {
     @Test
     public void noSeReaccionaAOtrosEventosDePedidoQueNoSeanEntregar() {
         observador.alConfirmar(pedidoMock);
-        observador.alPreparar(pedidoMock);
         observador.alEnviar(pedidoMock);
         observador.alCancelar(pedidoMock);
         verifyNoInteractions(historialMock);

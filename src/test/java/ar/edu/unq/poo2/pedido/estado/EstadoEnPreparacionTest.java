@@ -84,9 +84,9 @@ class EstadoEnPreparacionTest{
     }
 
     @Test
-    void alNotificarTransicionSeLlamaAAlPrepararDelObservadorDado() {
+    void alNotificarTransicionNoSeEnviaMensajeAlObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
         estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alPreparar(pedido);
+        verifyNoInteractions(observadorMock);
     }
 }

@@ -58,13 +58,6 @@ class NotificadorEmailTest {
 
         verifyNoInteractions(mailSender);
     }
-
-    @Test
-    void alPreparar_NoEnviaMail() {
-    	
-    	obsNotificador.alPreparar(pedidoMock );
-        verifyNoInteractions(mailSender);
-    }
 }
 
 
