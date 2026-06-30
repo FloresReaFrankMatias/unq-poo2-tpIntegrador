@@ -8,15 +8,12 @@ public class Fidelizacion implements ObservadorPedido {
 	private Cupon cupon;
 	
 	public Fidelizacion(MailSender mail,Cupon cupon) {
-		// TODO Auto-generated constructor stub
 		this.mail=mail;
 		this.cupon=cupon;
 	}
 
 	@Override
 	public void alCancelar(Pedido pedido) {
-		// TODO Auto-generated method stub
-		
 		mail.enviarMail(pedido.getClienteEmail(), 
 				        "Cancelacion de Compra", 
 				        "Debido a la cancelacion te enviamos un cupo de descuento para tu proxima compra",

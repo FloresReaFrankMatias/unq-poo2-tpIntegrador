@@ -7,7 +7,6 @@ public class GeneradorDeFactura implements ObservadorPedido {
 	private ComprobanteFiscal comprobante ;
 
 	public GeneradorDeFactura(ComprobanteFiscal comprobante ) {
-		// TODO Auto-generated constructor stub
 		this.comprobante =comprobante ;
 	}
 	@Override

@@ -7,7 +7,6 @@ import ar.edu.unq.poo2.pedido.estado.EstadoPedido;
 public class NotificadorEmail implements ObservadorPedido {
 	private MailSender mail;
 	public NotificadorEmail(MailSender mail) {
-		// TODO Auto-generated constructor stub
 		this.mail=mail;
 	}
 	

@@ -28,56 +28,6 @@ public class Pedido {
         this.observadores = observadores;
         this.cliente=cliente;
     }
-    
-    
-    //-------------- 	GETTERS ------------------------------------
-    public EstadoPedido getEstadoActual() {
-    	return estadoActual;
-    }
-    public double getPesoTotal() {
-		return contenido.getPesoTotal();
-	}
-
-    public Direccion getDireccionEntrega() {
-		return cliente.getDireccion();
-    }
-
-	public Double getValorTotal() {
-		return contenido.getValorTotal();
-	}
-
-	public String getClienteEmail() {
-		// TODO Auto-generated method stub
-		return cliente.getEmail();
-	}
-	public MedioPago getMedioPago() {
-	        return medioPago;
-	}	
-
-	public List<Item> getContenido() {
-	        return contenido.getItems();
-	}
-
-    public MetodoDeEnvio getEnvio() {
-	        return envio;
-    }
-    public double getCostoEnvio() {
-        return this.getEnvio().calcularCosto(this);
-    }
-    
-    
-  //------------------  SETtters-------------------------------
-
-  public void setEstadoActual(EstadoPedido estado) {
-        estadoActual= estado;
-   }
-   public void setMedioPago(MedioPago medioDePago) {
-       this.medioPago = medioDePago;
-   }
-   public void setMetodoEnvio(MetodoDeEnvio envio) {
-       this.envio = envio;
-   } 
-//-------------------------------------------------
 
     public void agregarItem(Item item){
         estadoActual.verificarAgregarItem(this, item);
@@ -114,8 +64,6 @@ public class Pedido {
         notificarObservadores();
     }
 
-    
-
     public void descontarStock() {
         this.inventario.decrementarStock(contenido.getResumenDeSkus());
     }
@@ -133,19 +81,66 @@ public class Pedido {
     public boolean tieneItems() {
         return contenido.tieneItems();
     }
-
     
-//-------- notificaciones    --------------------------------        
+    //-------- NOTIFICACIONES --------------------------------
+
     public void notificarObservadores() {
         observadores.forEach(observador -> estadoActual.notificarTransicion(this, observador));
     }
+
     public void suscribir(ObservadorPedido obs) {
     	this.observadores.add(obs);
     }
+
     public void desuscribir(ObservadorPedido obs) {
     	this.observadores.remove(obs);
     }
-   
 
-    
+    //-------------- 	GETTERS ------------------------------------
+    public EstadoPedido getEstadoActual() {
+        return estadoActual;
+    }
+    public double getPesoTotal() {
+        return contenido.getPesoTotal();
+    }
+
+    public Direccion getDireccionEntrega() {
+        return cliente.getDireccion();
+    }
+
+    public Double getValorTotal() {
+        return contenido.getValorTotal();
+    }
+
+    public String getClienteEmail() {
+        return cliente.getEmail();
+    }
+    public MedioPago getMedioPago() {
+        return medioPago;
+    }
+
+    public List<Item> getContenido() {
+        return contenido.getItems();
+    }
+
+    public MetodoDeEnvio getEnvio() {
+        return envio;
+    }
+    public double getCostoEnvio() {
+        return this.getEnvio().calcularCosto(this);
+    }
+
+
+    //------------------  SETTERS -------------------------------
+
+    public void setEstadoActual(EstadoPedido estado) {
+        estadoActual= estado;
+    }
+    public void setMedioPago(MedioPago medioDePago) {
+        this.medioPago = medioDePago;
+    }
+    public void setMetodoEnvio(MetodoDeEnvio envio) {
+        this.envio = envio;
+    }
+
 }

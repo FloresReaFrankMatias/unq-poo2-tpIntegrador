@@ -22,7 +22,7 @@ public class EstadoBorrador extends EstadoPedido {
     @Override
     public void verificarQuitarItem(Pedido pedido, Item item){}
 
-    public void validarPedidoTieneItems(Pedido pedido){
+    private void validarPedidoTieneItems(Pedido pedido){
         if (!pedido.tieneItems()){
             throw new RuntimeException();
         }
