@@ -36,8 +36,6 @@ public class BilleteraVirtual extends MedioPago {
 		apiBilletera.enviarPush(
 				"Pago realizado. Código: "
 				+ getCodigoTransaccion());
-
-		// Aplicar cashback si corresponde
 	}
 
 	public APIBilleteraVirtual getApiBilletera() {
