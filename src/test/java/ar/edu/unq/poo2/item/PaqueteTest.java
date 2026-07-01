@@ -63,7 +63,8 @@ class PaqueteTest {
     @Test
     void test_Remove_EliminaUnItemExistente() {
         paquete.add(itemMock1);
-        assertEquals(1, paquete.getItems().size());
+        paquete.remove(itemMock1);
+        assertEquals(0, paquete.getItems().size());
     }
 
     @Test
@@ -155,6 +156,10 @@ class PaqueteTest {
         assertTrue(paquete.coincideNombre("Mouse"));
     }
 
+    @Test
+    void test_CoincideConNombrePropio(){
+        assertTrue(paquete.coincideNombre("Combo gamer"));
+    }
 
 
 }

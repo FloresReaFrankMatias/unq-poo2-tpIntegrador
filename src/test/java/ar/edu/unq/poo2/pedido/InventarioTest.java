@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class InventarioTest {
     Inventario inventario;
@@ -60,5 +59,18 @@ public class InventarioTest {
     public void noSePuedeDecrementarEnCantidadCeroElStockDeUnProducto(){
         Map<String, Integer> productoYCantidadNegativa = Map.of("Producto", 0);
         assertThrows(RuntimeException.class, () -> inventario.decrementarStock(productoYCantidadNegativa));
+    }
+
+    @Test
+    public void cuandoInventarioNoTieneStockDeUnSkuDevuelveFalso(){
+        assertFalse(inventario.tieneStock("Producto"));
+    }
+
+    @Test
+    public void cuandoInventarioTieneStockDeUnSkuDevuelveVerdadero(){
+        String nombreProducto = "Producto";
+        inventario.incrementarStock(Map.of(nombreProducto, 1));
+
+        assertTrue(inventario.tieneStock(nombreProducto));
     }
 }

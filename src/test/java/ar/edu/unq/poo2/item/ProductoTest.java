@@ -50,8 +50,27 @@ class ProductoTest {
 		
 		
 	}
+
 	@Test
-	void test_AtributosSonInValidos_Por_Setear_StringVacio() {
+	void test_AtributosSonInvalidos_Por_Setear_NullComoSKU() {
+		Producto productoTest = new Producto(null, "Notebook", "Notebook 16GB", 500, "Asus", Categoria.ELECTRONICA, 15000.0, 0.10);
+		assertFalse(productoTest.atributosSonValidos());
+	}
+
+	@Test
+	void test_AtributosSonInvalidos_Por_Setear_NullComoNombre() {
+		Producto productoTest = new Producto("SKU_NGA", null, "Notebook 16GB", 500, "Asus", Categoria.ELECTRONICA, 15000.0, 0.10);
+		assertFalse(productoTest.atributosSonValidos());
+	}
+
+	@Test
+	void test_AtributosSonInValidos_Por_Setear_NullComoValorEnAtributoDinamico() {
+		pr1.setAtributoDinamico("Color", (Boolean) null);
+		assertFalse(pr1.atributosSonValidos());
+	}
+
+	@Test
+	void test_AtributosDinamicosSonInValidos_Por_Setear_StringVacioComoValor() {
 		assertTrue(pr1.atributosSonValidos());
 		
 		
@@ -65,6 +84,7 @@ class ProductoTest {
 		
 		
 	}
+
 	@Test
 	void test_resumenDeSku_producto() {
 		assertEquals(1, pr1.getResumenDeSku().size());
