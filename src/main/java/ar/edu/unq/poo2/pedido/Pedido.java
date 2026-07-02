@@ -102,10 +102,6 @@ public class Pedido {
 
     //-------------- 	GETTERS ------------------------------------
 
-    public EstadoPedido getEstadoActual() {
-        return estadoActual;
-    }
-
     public double getPesoTotal() {
         return contenido.getPesoTotal();
     }
@@ -121,9 +117,6 @@ public class Pedido {
     public String getClienteEmail() {
         return cliente.getEmail();
     }
-    public MedioPago getMedioPago() {
-        return medioPago;
-    }
 
     public List<Item> getContenido() {
         return contenido.getItems();
@@ -134,7 +127,7 @@ public class Pedido {
     }
 
     public double getCostoEnvio() {
-        return this.getEnvio().calcularCosto(this);
+        return envio.calcularCosto(this);
     }
 
     //------------------  SETTERS -------------------------------

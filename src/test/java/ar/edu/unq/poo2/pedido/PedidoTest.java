@@ -48,13 +48,9 @@ public class PedidoTest {
 
     @Test
     void test_accesors_Envio_Pago_Pedido() {
-        assertEquals(pedido.getEnvio(), envioMock);
-        
         MedioPago pago = mock( MedioPago.class);
         pedido.setMedioPago(pago);
-        assertEquals(pedido.getMedioPago(), pago);
-        
-        assertEquals(estadoMock, pedido.getEstadoActual());
+
         EnvioEstandar envioEstandar =mock( EnvioEstandar.class);
         pedido.setMetodoEnvio(envioEstandar);
         assertEquals(envioEstandar , pedido.getEnvio());
