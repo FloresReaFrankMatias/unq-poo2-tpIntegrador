@@ -11,6 +11,10 @@ public class Inventario {
         stockDeInventario = new HashMap<>();
     }
 
+    public boolean tieneStock(String sku) {
+        return getCantidadDisponible(sku) > 0;
+    }
+
     public void decrementarStock(Map<String, Integer> articulos) {
         validarDecrementoDeStock(articulos);
         articulos.forEach((sku, cantidad)-> modificarStock(sku, -cantidad));
@@ -52,9 +56,5 @@ public class Inventario {
 
     private Integer getCantidadDisponible(String sku){
         return stockDeInventario.getOrDefault(sku, 0);
-    }
-    
-    public boolean tieneStock(String sku) {
-        return getCantidadDisponible(sku) > 0;
     }
 }

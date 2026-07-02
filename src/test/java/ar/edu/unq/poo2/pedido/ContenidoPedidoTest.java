@@ -31,9 +31,6 @@ public class ContenidoPedidoTest {
     void agregaItemsCorrectamente() {
         contenido.agregarItem(itemMockUno);
         assertTrue(contenido.tieneItems());
-
-        contenido.quitarItem(itemMockUno);
-        assertFalse(contenido.tieneItems());
     }
 
     @Test

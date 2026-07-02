@@ -26,7 +26,6 @@ public class ConsultaDisponibilidadInventarioTest {
         when(inventarioMock.tieneStock("SKU1")).thenReturn(true);
 
         assertTrue(consulta.tieneStock("SKU1"));
-
         verify(inventarioMock).tieneStock("SKU1");
     }
 
@@ -35,7 +34,6 @@ public class ConsultaDisponibilidadInventarioTest {
         when(inventarioMock.tieneStock("SKU1")).thenReturn(false);
 
         assertFalse(consulta.tieneStock("SKU1"));
-
         verify(inventarioMock).tieneStock("SKU1");
     }
 }

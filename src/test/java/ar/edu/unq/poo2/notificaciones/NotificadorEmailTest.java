@@ -7,52 +7,46 @@ import ar.edu.unq.poo2.pedido.Pedido;
 
 class NotificadorEmailTest {
 	Pedido pedidoMock;
-	MailSender mailSender;
-	
+	MailSender mailSenderMock;
 	NotificadorEmail obsNotificador;
 	
 	@BeforeEach
 	void setUp(){
 		pedidoMock = mock(Pedido.class);
-		mailSender = mock(MailSender.class);
+		mailSenderMock = mock(MailSender.class);
 		
-		
-		obsNotificador = new NotificadorEmail(mailSender);
-		
+		obsNotificador = new NotificadorEmail(mailSenderMock);
+
 		when(pedidoMock.getClienteEmail()).thenReturn("cliente@mail.com");
 		
 	}
 
 	@Test
     void alConfirmar_EnviaMailAlCliente() {
-		
 		obsNotificador.alConfirmar(pedidoMock);
 		
-        verify(mailSender).enviarMail("cliente@mail.com", "Pedido confirmado", "Tu pedido fue confirmado", null);
+        verify(mailSenderMock).enviarMail("cliente@mail.com", "Pedido confirmado", "Tu pedido fue confirmado", null);
     }
 
     @Test
     void alEnviar_EnviaMailAlCliente() {
-    	
     	obsNotificador.alEnviar(pedidoMock);
 
-        verify(mailSender).enviarMail("cliente@mail.com", "Pedido enviado", "Tu pedido está en camino", null);
+        verify(mailSenderMock).enviarMail("cliente@mail.com", "Pedido enviado", "Tu pedido está en camino", null);
     }
 
     @Test
     void alEntregar_EnviaMailAlCliente() {
-    	
     	obsNotificador.alEntregar(pedidoMock);
 
-        verify(mailSender).enviarMail("cliente@mail.com", "Pedido entregado", "Tu pedido fue entregado", null);
+        verify(mailSenderMock).enviarMail("cliente@mail.com", "Pedido entregado", "Tu pedido fue entregado", null);
     }
 
     @Test
     void alCancelar_NoEnviaMail() {
-    
     	obsNotificador.alCancelar(pedidoMock);
 
-        verifyNoInteractions(mailSender);
+        verifyNoInteractions(mailSenderMock);
     }
 }
 

@@ -12,57 +12,61 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class EstadoEntregadoTest{
-    Pedido pedido;
+    Pedido pedidoMock;
+    Item itemMock;
     EstadoEntregado estado;
-    Item item;
 
     @BeforeEach
     void setUp(){
-        pedido = mock(Pedido.class);
-        item = mock(Item.class);
+        pedidoMock = mock(Pedido.class);
+        itemMock = mock(Item.class);
+
         estado = new EstadoEntregado();
     }
 
     @Test
     void noPuedenAgregarseItemsEnEstadoEntregado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedidoMock, itemMock));
     }
 
     @Test
     void noPuedenQuitarseItemsEnEstadoEntregado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedidoMock, itemMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoConfirmadoDesdeEstadoEntregado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.confirmar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.confirmar(pedidoMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoCanceladoDesdeEstadoEntregado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.cancelar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.cancelar(pedidoMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoEnPreparacionDesdeEstadoEntregado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.preparar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.preparar(pedidoMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoEnviadoDesdeEstadoEntregado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.enviar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.enviar(pedidoMock));
     }
 
     @Test
     void intentarTransicionarAEstadoEntregadoDesdeEstadoEntregadoNoCambiaEstadoActual(){
-        estado.entregar(pedido);
-        verify(pedido, never()).setEstadoActual(any());
+        estado.entregar(pedidoMock);
+
+        verify(pedidoMock, never()).setEstadoActual(any());
     }
 
     @Test
     void alNotificarTransicionSeLlamaAAlEntregarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alEntregar(pedido);
+
+        estado.notificarTransicion(pedidoMock, observadorMock);
+
+        verify(observadorMock).alEntregar(pedidoMock);
     }
 }

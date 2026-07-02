@@ -6,42 +6,42 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.poo2.pedido.Pedido;
 
 class FidelizacionTest {
-	Pedido pedido;
+	Pedido pedidoMock;
 	Fidelizacion fidelizacion;
-	MailSender mailSender;
+	MailSender mailSenderMock;
 	Cupon cupon;
 	
 	@BeforeEach
 	void setUp(){
-		pedido = mock(Pedido.class);
-		mailSender = mock(MailSender.class);
+		pedidoMock = mock(Pedido.class);
+		mailSenderMock = mock(MailSender.class);
 		
 		cupon = new Cupon( "cliente@mail.com",0.5);
-		fidelizacion = new Fidelizacion(mailSender,cupon);
+		fidelizacion = new Fidelizacion(mailSenderMock,cupon);
 
-	    when(pedido.getClienteEmail()).thenReturn("cliente@mail.com");
+	    when(pedidoMock.getClienteEmail()).thenReturn("cliente@mail.com");
 	   }
 
 	@Test
 	void alCancelar_EnviaMailConCupon() {
-	    fidelizacion.alCancelar(pedido);
+	    fidelizacion.alCancelar(pedidoMock);
 
-	    verify(mailSender).enviarMail("cliente@mail.com","Cancelacion de Compra", 
+	    verify(mailSenderMock).enviarMail("cliente@mail.com","Cancelacion de Compra",
 		        "Debido a la cancelacion te enviamos un cupo de descuento para tu proxima compra", cupon);
 	}
 
 	   
 	@Test
 	void alConfirmar_NoEnviaMail() {
-		fidelizacion.alConfirmar(pedido);
+		fidelizacion.alConfirmar(pedidoMock);
 
-	    verifyNoInteractions(mailSender);
+	    verifyNoInteractions(mailSenderMock);
     }
 
 	@Test
 	void alEntregar_NoEnviaMail() {
-		fidelizacion.alEntregar(pedido);
+		fidelizacion.alEntregar(pedidoMock);
 
-	    verifyNoInteractions(mailSender);
+	    verifyNoInteractions(mailSenderMock);
 	}
 }

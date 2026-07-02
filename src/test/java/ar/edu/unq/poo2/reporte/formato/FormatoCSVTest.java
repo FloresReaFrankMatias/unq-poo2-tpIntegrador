@@ -34,18 +34,22 @@ public class FormatoCSVTest {
     @Test
     public void seGeneraCSVConDatosDelReporteDado() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of(linea1, linea2));
-        formatoCSV.visitar(reporteMock);
         String esperado = "Item,Cantidad Vendida,Precio Promedio Cobrado\n" +
-                          "Auriculares,10,2500.5\n" +
-                          "Mouse,5,1200.0\n";
+                "Auriculares,10,2500.5\n" +
+                "Mouse,5,1200.0\n";
+
+        formatoCSV.visitar(reporteMock);
+
         assertEquals(esperado, formatoCSV.getResultadoGenerado());
     }
 
     @Test
     public void alGenerarCSVConReporteVacioSeCreaCSVSoloConEncabezado() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of());
-        formatoCSV.visitar(reporteMock);
         String esperado = "Item,Cantidad Vendida,Precio Promedio Cobrado\n";
+
+        formatoCSV.visitar(reporteMock);
+
         assertEquals(esperado, formatoCSV.getResultadoGenerado());
     }
 }

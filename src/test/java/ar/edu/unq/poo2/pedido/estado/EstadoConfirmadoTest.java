@@ -13,65 +13,72 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class EstadoConfirmadoTest{
-    Pedido pedido;
+    Pedido pedidoMock;
+    Item itemMock;
     EstadoConfirmado estado;
-    Item item;
 
     @BeforeEach
     void setUp(){
-        pedido = mock(Pedido.class);
-        item = mock(Item.class);
+        pedidoMock = mock(Pedido.class);
+        itemMock = mock(Item.class);
+
         estado = new EstadoConfirmado();
     }
 
     @Test
     void noPuedenAgregarseItemsEnEstadoConfirmado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedidoMock, itemMock));
     }
 
     @Test
     void noPuedenQuitarseItemsEnEstadoConfirmado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedidoMock, itemMock));
     }
 
     @Test
     void intentarTransicionarAEstadoConfirmadoDesdeEstadoConfirmadoNoCambiaEstadoActual(){
-        estado.confirmar(pedido);
-        verify(pedido, never()).setEstadoActual(any());
+        estado.confirmar(pedidoMock);
+
+        verify(pedidoMock, never()).setEstadoActual(any());
     }
 
     @Test
     void sePuedeTransicionarAEstadoCanceladoDesdeEstadoConfirmado(){
-        estado.cancelar(pedido);
-        verify(pedido).setEstadoActual(isA(EstadoCancelado.class));
+        estado.cancelar(pedidoMock);
+
+        verify(pedidoMock).setEstadoActual(isA(EstadoCancelado.class));
     }
 
     @Test
     void transicionarAEstadoCanceladoDesdeEstadoConfirmadoReponeStock(){
-        estado.cancelar(pedido);
-        verify(pedido).reponerStock();
+        estado.cancelar(pedidoMock);
+
+        verify(pedidoMock).reponerStock();
     }
 
     @Test
     void sePuedeTransicionarAEstadoEnPreparacionDesdeEstadoConfirmado(){
-        estado.preparar(pedido);
-        verify(pedido).setEstadoActual(isA(EstadoEnPreparacion.class));
+        estado.preparar(pedidoMock);
+
+        verify(pedidoMock).setEstadoActual(isA(EstadoEnPreparacion.class));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoEnviadoDesdeEstadoConfirmado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.enviar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.enviar(pedidoMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoEntregadoDesdeEstadoConfirmado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.entregar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.entregar(pedidoMock));
     }
 
     @Test
     void alNotificarTransicionSeLlamaAAlConfirmarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alConfirmar(pedido);
+
+        estado.notificarTransicion(pedidoMock, observadorMock);
+
+        verify(observadorMock).alConfirmar(pedidoMock);
     }
 }

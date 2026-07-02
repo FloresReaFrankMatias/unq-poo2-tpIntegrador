@@ -10,8 +10,7 @@ class EnvioExpressTest {
     LibEnvioExpress libEnvioExpressMock;
 
     @BeforeEach
-    void setUp() throws Exception {
-        // mocks
+    void setUp(){
         pedidoMock = mock(Pedido.class);
         libEnvioExpressMock = mock(LibEnvioExpress.class);
 
@@ -28,7 +27,6 @@ class EnvioExpressTest {
         double costoCalculado = envioExpress.calcularCosto(pedidoMock);
         assertEquals(750.0, costoCalculado);
 
-        // Verify (Verificación de interacciones)
         verify(pedidoMock, times(1)).getValorTotal();
         verify(libEnvioExpressMock, times(1)).calcularCosto(valorDelPedido);
     }
@@ -37,8 +35,7 @@ class EnvioExpressTest {
     @Test
     void testCalcularCosto_PedidoNulo_LanzaNullPointerException() {
 
-        assertThrows(NullPointerException.class, () -> {
-                                                       envioExpress.calcularCosto(null);});
+        assertThrows(NullPointerException.class, () -> {envioExpress.calcularCosto(null);});
 
 
         verifyNoInteractions(libEnvioExpressMock);

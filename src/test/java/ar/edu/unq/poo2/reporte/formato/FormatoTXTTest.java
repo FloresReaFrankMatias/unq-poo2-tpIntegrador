@@ -34,18 +34,22 @@ public class FormatoTXTTest {
     @Test
     public void testGenerarTXTConDatos() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of(linea1, linea2));
-        formatoTXT.visitar(reporteMock);
         String esperado = "REPORTE DE PRODUCTOS MÁS VENDIDOS\n" +
-                          "- Auriculares | Unidades: 10 | Promedio: $2500.5\n" +
-                          "- Mouse | Unidades: 5 | Promedio: $1200.0\n";
+                "- Auriculares | Unidades: 10 | Promedio: $2500.5\n" +
+                "- Mouse | Unidades: 5 | Promedio: $1200.0\n";
+
+        formatoTXT.visitar(reporteMock);
+
         assertEquals(esperado, formatoTXT.getResultadoGenerado());
     }
 
     @Test
     public void testGenerarTXTVacioImprimeEstructuraBase() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of());
-        formatoTXT.visitar(reporteMock);
         String esperado = "REPORTE DE PRODUCTOS MÁS VENDIDOS\n";
+
+        formatoTXT.visitar(reporteMock);
+
         assertEquals(esperado, formatoTXT.getResultadoGenerado());
     }
 }

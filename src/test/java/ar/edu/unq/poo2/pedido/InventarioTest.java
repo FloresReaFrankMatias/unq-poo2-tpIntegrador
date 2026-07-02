@@ -18,40 +18,49 @@ public class InventarioTest {
     @Test
     public void seIncrementaStockDeProducto(){
         Map<String, Integer> productoYCantidad = Map.of("Producto", 2);
+
         inventario.incrementarStock(productoYCantidad);
+
         assertDoesNotThrow(() -> inventario.decrementarStock(productoYCantidad));
     }
 
     @Test
     public void seDecrementaStockDeProducto(){
         Map<String, Integer> productoYCantidad = Map.of("Producto", 2);
+
         inventario.incrementarStock(productoYCantidad);
         inventario.decrementarStock(productoYCantidad);
+
         assertThrows(RuntimeException.class, () -> inventario.decrementarStock(Map.of("Producto", 1)));
     }
 
     @Test
     public void noSePuedeIncrementarEnCantidadNegativaElStockDeUnProducto(){
         Map<String, Integer> productoYCantidadNegativa = Map.of("Producto", -1);
+
         assertThrows(RuntimeException.class, () -> inventario.incrementarStock(productoYCantidadNegativa));
     }
 
     @Test
     public void noSePuedeIncrementarEnCantidadCeroElStockDeUnProducto(){
         Map<String, Integer> productoYCantidadNegativa = Map.of("Producto", 0);
+
         assertThrows(RuntimeException.class, () -> inventario.incrementarStock(productoYCantidadNegativa));
     }
 
     @Test
     public void noSePuedeDecrementarElStockDeUnProductoConCantidadMayorALaDisponible(){
         Map<String, Integer> productoYCantidad = Map.of("Producto", 2);
+
         inventario.incrementarStock(productoYCantidad);
+
         assertThrows(RuntimeException.class, () -> inventario.decrementarStock(Map.of("Producto", 3)));
     }
 
     @Test
     public void noSePuedeDecrementarEnCantidadNegativaElStockDeUnProducto(){
         Map<String, Integer> productoYCantidadNegativa = Map.of("Producto", -1);
+
         assertThrows(RuntimeException.class, () -> inventario.decrementarStock(productoYCantidadNegativa));
     }
 
@@ -69,6 +78,7 @@ public class InventarioTest {
     @Test
     public void cuandoInventarioTieneStockDeUnSkuDevuelveVerdadero(){
         String nombreProducto = "Producto";
+
         inventario.incrementarStock(Map.of(nombreProducto, 1));
 
         assertTrue(inventario.tieneStock(nombreProducto));

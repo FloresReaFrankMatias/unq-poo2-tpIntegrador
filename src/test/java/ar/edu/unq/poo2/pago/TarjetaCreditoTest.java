@@ -14,19 +14,18 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.poo2.pago.api.APITarjetaCredito;
 
 class TarjetaCreditoTest {
-
 	private TarjetaCredito tarjeta;
-	private APITarjetaCredito apiTarjeta;
+	private APITarjetaCredito apiTarjetaMock;
 
 	@BeforeEach
 	void setUp() {
-		apiTarjeta = mock(APITarjetaCredito.class);
+		apiTarjetaMock = mock(APITarjetaCredito.class);
 
 		tarjeta = new TarjetaCredito(
 				"123456789",
 				"123",
 				"12/30",
-				apiTarjeta);
+				apiTarjetaMock);
 	}
 
 	@Test
@@ -34,30 +33,22 @@ class TarjetaCreditoTest {
 		assertEquals("123456789", tarjeta.getNumeroTarjeta());
 		assertEquals("123", tarjeta.getCvv());
 		assertEquals("12/30", tarjeta.getFechaVencimiento());
-		assertEquals(apiTarjeta, tarjeta.getApiTarjeta());
+		assertEquals(apiTarjetaMock, tarjeta.getApiTarjeta());
 	}
 
 	@Test
 	void unaTarjetaValidaConsultaALaApi() {
-
-		when(apiTarjeta.validarTarjeta(
-				anyString(),
-				anyString(),
-				anyString()))
+		when(apiTarjetaMock.validarTarjeta(anyString(), anyString(), anyString()))
 				.thenReturn(true);
 
 		tarjeta.procesarPago();
 
-		verify(apiTarjeta).validarTarjeta("123456789","123","12/30");
+		verify(apiTarjetaMock).validarTarjeta("123456789","123","12/30");
 	}
 
 	@Test
 	void unaTarjetaInvalidaLanzaExcepcion() {
-
-		when(apiTarjeta.validarTarjeta(
-				anyString(),
-				anyString(),
-				anyString()))
+		when(apiTarjetaMock.validarTarjeta(anyString(), anyString(), anyString()))
 				.thenReturn(false);
 
 		assertThrows(PagoInvalidoException.class,() -> tarjeta.procesarPago());
@@ -65,12 +56,8 @@ class TarjetaCreditoTest {
 	
 	@Test
 	void unaTarjetaValidaGeneraUnCuponDePago() {
-
-	    when(apiTarjeta.validarTarjeta(
-	            anyString(),
-	            anyString(),
-	            anyString()))
-	            .thenReturn(true);
+	    when(apiTarjetaMock.validarTarjeta(anyString(), anyString(), anyString()))
+				.thenReturn(true);
 
 	    tarjeta.procesarPago();
 

@@ -1,8 +1,6 @@
 package ar.edu.unq.poo2.pago;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.isNull;
 import static org.mockito.Mockito.mock;
@@ -15,80 +13,60 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.poo2.pago.api.APITransferenciaBancaria;
 
 class TransferenciaBancariaTest {
-
     private TransferenciaBancaria transferencia;
-    private APITransferenciaBancaria apiTransferencia;
+    private APITransferenciaBancaria apiTransferenciaMock;
 
     @BeforeEach
     void setUp() {
-
-        apiTransferencia = mock(APITransferenciaBancaria.class);
+        apiTransferenciaMock = mock(APITransferenciaBancaria.class);
 
         transferencia = new TransferenciaBancaria(
                 "123456789",
                 null,
-                apiTransferencia);
+                apiTransferenciaMock);
     }
 
     @Test
     void unaTransferenciaSeCreaConTodosLosDatosEsperados() {
-
         assertEquals("123456789", transferencia.getCbu());
-        assertEquals(null, transferencia.getAlias());
-        assertEquals(apiTransferencia, transferencia.getApiTransferencia());
+        assertNull(null, transferencia.getAlias());
+        assertEquals(apiTransferenciaMock, transferencia.getApiTransferencia());
     }
 
     @Test
     void unaTransferenciaValidaConsultaALaApi() {
-
-        when(apiTransferencia.validarCuenta(
-                anyString(),
-                isNull()))
+        when(apiTransferenciaMock.validarCuenta(anyString(), isNull()))
                 .thenReturn(true);
 
         transferencia.procesarPago();
 
-        verify(apiTransferencia)
-                .validarCuenta("123456789", null);
+        verify(apiTransferenciaMock).validarCuenta("123456789", null);
     }
 
     @Test
     void unaTransferenciaInvalidaLanzaExcepcion() {
-
-        when(apiTransferencia.validarCuenta(
-                anyString(),
-                isNull()))
+        when(apiTransferenciaMock.validarCuenta(anyString(), isNull()))
                 .thenReturn(false);
 
-        assertThrows(
-                PagoInvalidoException.class,
-                () -> transferencia.procesarPago());
+        assertThrows(PagoInvalidoException.class, () -> transferencia.procesarPago());
     }
 
     @Test
     void unaTransferenciaValidaEjecutaLaTransferencia() {
-
-        when(apiTransferencia.validarCuenta(
-                anyString(),
-                isNull()))
+        when(apiTransferenciaMock.validarCuenta(anyString(), isNull()))
                 .thenReturn(true);
 
         transferencia.procesarPago();
 
-        verify(apiTransferencia)
-                .ejecutarTransferencia();
+        verify(apiTransferenciaMock).ejecutarTransferencia();
     }
     @Test
     void unaTransferenciaValidaGeneraUnComprobante() {
-
-        when(apiTransferencia.validarCuenta(
-                anyString(),
-                isNull()))
+        when(apiTransferenciaMock.validarCuenta(anyString(), isNull()))
                 .thenReturn(true);
 
         transferencia.procesarPago();
 
-        assertNotNull(
-                transferencia.getComprobante());
+        assertNotNull(transferencia.getComprobante());
     }
 }

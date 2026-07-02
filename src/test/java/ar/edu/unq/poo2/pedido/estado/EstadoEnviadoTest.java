@@ -15,69 +15,75 @@ import java.util.HashMap;
 import java.util.Map;
 
 class EstadoEnviadoTest{
-    Pedido pedido;
+    Pedido pedidoMock;
+    Item itemMock;
     EstadoEnviado estado;
-    Item item;
-  
 
     @BeforeEach
     void setUp(){
-        pedido = mock(Pedido.class);
-        item = mock(Item.class);
+        pedidoMock = mock(Pedido.class);
+        itemMock = mock(Item.class);
+
         estado = new EstadoEnviado();
-       
     }
 
     @Test
     void noPuedenAgregarseItemsEnEstadoEnviado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarAgregarItem(pedidoMock, itemMock));
     }
 
     @Test
     void noPuedenQuitarseItemsEnEstadoEnviado() {
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedido, item));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.verificarQuitarItem(pedidoMock, itemMock));
     }
 
     @Test
     void noSePuedeTransicionarAEstadoConfirmadoDesdeEstadoEnviado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.confirmar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.confirmar(pedidoMock));
     }
 
     @Test
     void sePuedeTransicionarAEstadoCanceladoDesdeEstadoEnviado(){
-        estado.cancelar(pedido);
-        verify(pedido).setEstadoActual(isA(EstadoCancelado.class));
+        estado.cancelar(pedidoMock);
+
+        verify(pedidoMock).setEstadoActual(isA(EstadoCancelado.class));
     }
 
     @Test
     void transicionarAEstadoCanceladoDesdeEstadoEnviadoNoReembolsaEnvio(){
         Map<String, Double> sinExtras = new HashMap<>();
-        estado.cancelar(pedido);
-        verify(pedido).generarNotaDeCredito(sinExtras);
+
+        estado.cancelar(pedidoMock);
+
+        verify(pedidoMock).generarNotaDeCredito(sinExtras);
     }
 
     @Test
     void noSePuedeTransicionarAEstadoEnPreparacionDesdeEstadoEnviado(){
-        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.preparar(pedido));
+        assertThrows(OperacionInvalidaParaEstadoException.class, () -> estado.preparar(pedidoMock));
     }
 
     @Test
     void intentarTransicionarAEstadoEnviadoDesdeEstadoEnviadoNoCambiaEstadoActual(){
-        estado.enviar(pedido);
-        verify(pedido, never()).setEstadoActual(any());
+        estado.enviar(pedidoMock);
+
+        verify(pedidoMock, never()).setEstadoActual(any());
     }
 
 
     @Test
     void sePuedeTransicionarAEstadoEntregadoDesdeEstadoEnviado(){
-        estado.entregar(pedido);
-        verify(pedido).setEstadoActual(isA(EstadoEntregado.class));
+        estado.entregar(pedidoMock);
+
+        verify(pedidoMock).setEstadoActual(isA(EstadoEntregado.class));
     }
 
     @Test
     void alNotificarTransicionSeLlamaAAlEnviarDelObservadorDado() {
         ObservadorPedido observadorMock = mock(ObservadorPedido.class);
-        estado.notificarTransicion(pedido, observadorMock);
-        verify(observadorMock).alEnviar(pedido);
+
+        estado.notificarTransicion(pedidoMock, observadorMock);
+
+        verify(observadorMock).alEnviar(pedidoMock);
     }
 }

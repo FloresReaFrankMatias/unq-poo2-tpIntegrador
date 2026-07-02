@@ -28,7 +28,6 @@ public class PorDisponibilidadTest {
     @Test
     void cumpleCuandoHayStockDeTodosLosSkusDelItem() {
         when(itemMock.getResumenDeSku()).thenReturn(Map.of("SKU1", 1, "SKU2", 1));
-
         when(consultaInventarioMock.tieneStock("SKU1")).thenReturn(true);
         when(consultaInventarioMock.tieneStock("SKU2")).thenReturn(true);
 
@@ -38,7 +37,6 @@ public class PorDisponibilidadTest {
     @Test
     void noCumpleCuandoFaltaStockDeAlMenosUnSkuDelItem() {
         when(itemMock.getResumenDeSku()).thenReturn(Map.of("SKU1", 1, "SKU2", 1));
-
         when(consultaInventarioMock.tieneStock("SKU1")).thenReturn(true);
         when(consultaInventarioMock.tieneStock("SKU2")).thenReturn(false);
 

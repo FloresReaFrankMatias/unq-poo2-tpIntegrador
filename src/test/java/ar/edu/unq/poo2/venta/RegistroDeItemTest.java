@@ -14,6 +14,7 @@ public class RegistroDeItemTest {
     @BeforeEach
     public void setUp() {
         itemMock = mock(Item.class);
+
         registro = new RegistroDeItem(itemMock, 1.0);
     }
 

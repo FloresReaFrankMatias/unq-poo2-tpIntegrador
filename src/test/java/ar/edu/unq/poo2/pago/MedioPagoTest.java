@@ -2,17 +2,20 @@ package ar.edu.unq.poo2.pago;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class MedioPagoTest {
+    MedioPagoStub pago;
+
+    @BeforeEach
+    void setUp(){
+        pago = new MedioPagoStub();
+        pago.procesarPago();
+    }
 
     @Test
     void procesarPagoEjecutaTodosLosPasosDelTemplateMethod() {
-
-        MedioPagoStub pago = new MedioPagoStub();
-
-        pago.procesarPago();
-
         assertTrue(pago.validado);
         assertTrue(pago.reservado);
         assertTrue(pago.ejecutado);
@@ -21,11 +24,6 @@ class MedioPagoTest {
 
     @Test
     void alProcesarUnPagoSeGeneraUnCodigoDeTransaccion() {
-
-        MedioPagoStub pago = new MedioPagoStub();
-
-        pago.procesarPago();
-
         assertTrue(pago.getCodigoTransaccion() > 0);
     }
 

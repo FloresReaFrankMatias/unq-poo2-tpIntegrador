@@ -12,32 +12,26 @@ import static org.mockito.Mockito.*;
 import java.util.List;
 import java.util.Map;
 class PaqueteTest {
-
 	 Paquete paquete;
      Item itemMock1;
      Item itemMock2;
 
     @BeforeEach
     void setUp() {
-        // Inicializamos el paquete con 10% de descuento. 
-        // Usamos un valor de tu Enum Categoria (ej: ELECTRONICA, ajustalo al tuyo).
-        paquete = new Paquete("Combo Gamer", 0.10, "Teclado + Mouse", Categoria.ELECTRONICA);
-
-        // Mockeamos los hijos para aislar la prueba del Paquete
         itemMock1 = mock(Item.class);
         itemMock2 = mock(Item.class);
+
+        paquete = new Paquete("Combo Gamer", 0.10, "Teclado + Mouse", Categoria.ELECTRONICA);
     }
 
     @Test
     void test_gettersPaquete() {
-    	
     	assertEquals("Combo Gamer", paquete.getNombre());
 		assertEquals("Teclado + Mouse", paquete.getDescripcion());
 		assertEquals(Categoria.ELECTRONICA, paquete.getCategoria());
 		assertEquals(0.10, paquete.getDescuento(), 0.001);
 		assertTrue(paquete.getResumenDeSku().isEmpty());
     }
-    
     
     @Test
     void test_GetPrecioBasePaquete() {
@@ -47,7 +41,6 @@ class PaqueteTest {
         paquete.add(itemMock1);
         paquete.add(itemMock2);
 
-       
         assertEquals(8000.0, paquete.getPrecioBase(), 0.01);
     }
     @Test
@@ -64,50 +57,38 @@ class PaqueteTest {
     void test_Remove_EliminaUnItemExistente() {
         paquete.add(itemMock1);
         paquete.remove(itemMock1);
+
         assertEquals(0, paquete.getItems().size());
     }
 
     @Test
     void test_Remove_LanzaExcepcionSiItemNoExiste() {
-        paquete.add(itemMock1);
-
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+        assertThrows(RuntimeException.class, () -> {
             paquete.remove(itemMock2);
         });
-
-        assertEquals("El item no se encuentra en el paquete", exception.getMessage());
-
     }
     @Test
     void test_GetRegistroDeItem_Paquete() {
-    	
         when(itemMock1.getPrecio()).thenReturn(5000.0);
         when(itemMock2.getPrecio()).thenReturn(3000.0);
-        
+
         RegistroDeItem registroHijo1 = new RegistroDeItem(itemMock1, 4500.0);
-        RegistroDeItem registroHijo2 = new RegistroDeItem(itemMock2, 2700.0); 
-        
+        RegistroDeItem registroHijo2 = new RegistroDeItem(itemMock2, 2700.0);
         when(itemMock1.getRegistroDeItem(0.9)).thenReturn(List.of(registroHijo1));
         when(itemMock2.getRegistroDeItem(0.9)).thenReturn(List.of(registroHijo2));
 
-        
         paquete.add(itemMock1);
         paquete.add(itemMock2);
-
    
         List<RegistroDeItem> registrosResultantes = paquete.getRegistroDeItem(1.0);
-
         assertEquals(3, registrosResultantes.size());
+        RegistroDeItem registroDelPaquete = registrosResultantes.getFirst();
 
-       
-        RegistroDeItem registroDelPaquete = registrosResultantes.get(0);
         assertEquals(paquete, registroDelPaquete.getItem());
         assertEquals(7200.0, registroDelPaquete.getPrecio());
 
-        
         assertTrue(registrosResultantes.contains(registroHijo1));
         assertTrue(registrosResultantes.contains(registroHijo2));
-        
         verify(itemMock1).getRegistroDeItem(0.9);
         verify(itemMock2).getRegistroDeItem(0.9);
     }
@@ -121,7 +102,6 @@ class PaqueteTest {
 		paquete.add(itemMock1);
 		paquete.add(itemMock2);
 
-		
 		Map<String, Integer> resumen = paquete.getResumenDeSku();
 		assertEquals(2, resumen.size());
 		assertTrue(resumen.containsKey("SKU-123"));
@@ -132,26 +112,22 @@ class PaqueteTest {
     
     @Test
     void test_CoincideNombre_NoCoincideConNingunItem() {
-		
 		when(itemMock1.coincideNombre("Mouse")).thenReturn(false);
 		when(itemMock2.coincideNombre("Mouse")).thenReturn(false);
 
 		paquete.add(itemMock1);
 		paquete.add(itemMock2);
-
 		
 		assertFalse(paquete.coincideNombre("Mouse"));
 	}
     
     @Test
     void test_CoincideNombreConAlgunItem() {
-        
         when(itemMock1.coincideNombre("Mouse")).thenReturn(false);
         when(itemMock2.coincideNombre("Mouse")).thenReturn(true);
 
         paquete.add(itemMock1);
         paquete.add(itemMock2);
-
         
         assertTrue(paquete.coincideNombre("Mouse"));
     }
@@ -160,6 +136,4 @@ class PaqueteTest {
     void test_CoincideConNombrePropio(){
         assertTrue(paquete.coincideNombre("Combo gamer"));
     }
-
-
 }

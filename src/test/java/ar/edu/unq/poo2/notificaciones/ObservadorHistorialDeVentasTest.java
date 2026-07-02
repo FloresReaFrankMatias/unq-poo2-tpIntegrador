@@ -35,10 +35,23 @@ public class ObservadorHistorialDeVentasTest {
     }
 
     @Test
-    public void noSeReaccionaAOtrosEventosDePedidoQueNoSeanEntregar() {
+    public void noSeReaccionaAEventoAlConfirmar() {
         observador.alConfirmar(pedidoMock);
+
+        verifyNoInteractions(historialMock);
+    }
+
+    @Test
+    public void noSeReaccionaAEventoAlEnviar() {
         observador.alEnviar(pedidoMock);
+
+        verifyNoInteractions(historialMock);
+    }
+
+    @Test
+    public void noSeReaccionaAEventoAlCancelar() {
         observador.alCancelar(pedidoMock);
+
         verifyNoInteractions(historialMock);
     }
 }

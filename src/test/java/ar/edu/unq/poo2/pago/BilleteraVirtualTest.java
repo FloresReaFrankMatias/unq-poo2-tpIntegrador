@@ -13,69 +13,53 @@ import org.junit.jupiter.api.Test;
 import ar.edu.unq.poo2.pago.api.APIBilleteraVirtual;
 
 class BilleteraVirtualTest {
-
     private BilleteraVirtual billetera;
-    private APIBilleteraVirtual apiBilletera;
+    private APIBilleteraVirtual apiBilleteraMock;
 
     @BeforeEach
     void setUp() {
+        apiBilleteraMock = mock(APIBilleteraVirtual.class);
 
-        apiBilletera = mock(APIBilleteraVirtual.class);
-
-        billetera = new BilleteraVirtual(apiBilletera);
+        billetera = new BilleteraVirtual(apiBilleteraMock);
     }
 
     @Test
     void unaBilleteraSeCreaConLosDatosEsperados() {
-
-        assertEquals(
-                apiBilletera,
-                billetera.getApiBilletera());
+        assertEquals(apiBilleteraMock, billetera.getApiBilletera());
     }
 
     @Test
     void unaBilleteraValidaConsultaALaApi() {
-
-        when(apiBilletera.validarSaldo())
-                .thenReturn(true);
+        when(apiBilleteraMock.validarSaldo()).thenReturn(true);
 
         billetera.procesarPago();
 
-        verify(apiBilletera).validarSaldo();
+        verify(apiBilleteraMock).validarSaldo();
     }
 
     @Test
     void unaBilleteraSinSaldoValidoLanzaExcepcion() {
+        when(apiBilleteraMock.validarSaldo()).thenReturn(false);
 
-        when(apiBilletera.validarSaldo())
-                .thenReturn(false);
-
-        assertThrows(
-                PagoInvalidoException.class,
-                () -> billetera.procesarPago());
+        assertThrows(PagoInvalidoException.class, () -> billetera.procesarPago());
     }
 
     @Test
     void unaBilleteraValidaBloqueaSaldoYAcreditaFondos() {
-
-        when(apiBilletera.validarSaldo())
-                .thenReturn(true);
+        when(apiBilleteraMock.validarSaldo()).thenReturn(true);
 
         billetera.procesarPago();
 
-        verify(apiBilletera).bloquearSaldo();
-        verify(apiBilletera).acreditarFondos();
+        verify(apiBilleteraMock).bloquearSaldo();
+        verify(apiBilleteraMock).acreditarFondos();
     }
 
     @Test
     void unaBilleteraValidaEnviaNotificacionPush() {
-
-        when(apiBilletera.validarSaldo())
-                .thenReturn(true);
+        when(apiBilleteraMock.validarSaldo()).thenReturn(true);
 
         billetera.procesarPago();
 
-        verify(apiBilletera)
-                .enviarPush(contains("Pago realizado"));
+        verify(apiBilleteraMock).enviarPush(contains("Pago realizado"));
     }
 }

@@ -18,6 +18,7 @@ class HistorialDeVentasTest {
     @BeforeEach
     void setUp(){
         historial = new HistorialDeVentas();
+
         List<Item> itemsVacios = new ArrayList<>();
         primeraFecha = LocalDate.of(2026, 6, 1);
         segundaFecha = LocalDate.of(2026, 7, 1);

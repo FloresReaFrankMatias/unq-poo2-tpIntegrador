@@ -11,7 +11,9 @@ public class NotaDeCreditoTest {
     @Test
     void seCreaNotaDeCreditoConDatosEsperados(){
         Map<String, Double> datosEsperados = Map.of("Producto", 22.0);
+
         NotaDeCredito notaDeCredito = new NotaDeCredito(datosEsperados);
+        
         assertEquals(notaDeCredito.getReembolsado(), datosEsperados);
     }
 }

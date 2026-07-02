@@ -21,7 +21,9 @@ public class GestorNotasDeCreditoTest {
     void seAgreganNotasDeCreditoCorrectamente() {
         Map<String, Double> datosReembolso = new HashMap<>();
         datosReembolso.put("Item", 10.0);
+
         gestor.hacerNotaDeCredito(datosReembolso);
+        
         assertEquals(1, gestor.getNotas().size());
     }
 }

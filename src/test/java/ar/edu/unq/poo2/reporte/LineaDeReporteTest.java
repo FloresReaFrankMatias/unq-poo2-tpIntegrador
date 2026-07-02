@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LineaDeReporteTest {
-
     private LineaDeReporte lineaDeReporte;
 
     @BeforeEach
@@ -27,12 +26,14 @@ public class LineaDeReporteTest {
     @Test
     public void alAcumularSeSumaUnoACantidadVendida() {
         lineaDeReporte.acumular(1500.0);
+
         assertEquals(1, lineaDeReporte.getCantidadVendida());
     }
 
     @Test
     public void alAcumularSeSumaPrecioDado() {
         lineaDeReporte.acumular(1500.0);
+
         assertEquals(1500.0, lineaDeReporte.getPrecioPromedio());
     }
 
@@ -41,6 +42,7 @@ public class LineaDeReporteTest {
         lineaDeReporte.acumular(100.0);
         lineaDeReporte.acumular(200.0);
         lineaDeReporte.acumular(300.0);
+
         assertEquals(200.0, lineaDeReporte.getPrecioPromedio());
     }
 }

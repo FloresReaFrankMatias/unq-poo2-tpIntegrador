@@ -7,42 +7,39 @@ import static org.mockito.Mockito.*;
 
 
 class GeneradorDeFacturaTest {
-	Pedido pedido;
+	Pedido pedidoMock;
 	GeneradorDeFactura generadorFactura;
-	MailSender mailSender;
-
-	ComprobanteFiscal comprobante;
-	
-	
+	MailSender mailSenderMock;
+	ComprobanteFiscal comprobanteMock;
 
 	@BeforeEach
 	void setUp(){
-		pedido = mock(Pedido.class);
-		mailSender = mock(MailSender.class);
-		comprobante = mock(ComprobanteFiscal.class);
+		pedidoMock = mock(Pedido.class);
+		mailSenderMock = mock(MailSender.class);
+		comprobanteMock = mock(ComprobanteFiscal.class);
 		
-		generadorFactura = new GeneradorDeFactura(comprobante);
+		generadorFactura = new GeneradorDeFactura(comprobanteMock);
 	}
 	
     @Test
 	void alEntregar_GeneraFactura() {
-		generadorFactura.alEntregar(pedido);
+		generadorFactura.alEntregar(pedidoMock);
 
-	    verify(comprobante, times(1)).generarComprobante(pedido);
+	    verify(comprobanteMock, times(1)).generarComprobante(pedidoMock);
 	}
-	    
 
 	@Test
 	void alConfirmar_NoGeneraFactura() {
-	    generadorFactura.alConfirmar(pedido);
+	    generadorFactura.alConfirmar(pedidoMock);
 
-	    verifyNoInteractions(pedido);
+	    verifyNoInteractions(comprobanteMock);
 	}
+
     @Test
 	void alCancelar_NoGeneraFactura() {
-	    generadorFactura.alCancelar(pedido );
+	    generadorFactura.alCancelar(pedidoMock);
 
-	    verifyNoInteractions(pedido);
+	    verifyNoInteractions(comprobanteMock);
 	}
 }
 

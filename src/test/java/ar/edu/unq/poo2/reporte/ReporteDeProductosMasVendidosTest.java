@@ -50,6 +50,7 @@ public class ReporteDeProductosMasVendidosTest {
     public void seCreaReporteVacioSiSeCreaEnPeriodoSinVentas() {
         when(historialMock.getVentasEntre(fechaInicio, fechaFin)).thenReturn(List.of());
         ReporteDeProductosMasVendidos reporte = new ReporteDeProductosMasVendidos(fechaInicio, fechaFin, historialMock);
+
         assertTrue(reporte.getLineasProcesadas().isEmpty());
     }
 
@@ -57,7 +58,9 @@ public class ReporteDeProductosMasVendidosTest {
     public void seCreaLaCantidadCorrectaDeLineasDelReporte() {
         when(historialMock.getVentasEntre(fechaInicio, fechaFin)).thenReturn(List.of(venta1Mock, venta2Mock));
         ReporteDeProductosMasVendidos reporte = new ReporteDeProductosMasVendidos(fechaInicio, fechaFin, historialMock);
+
         List<LineaDeReporte> lineas = reporte.getLineasProcesadas();
+
         assertEquals(2, lineas.size());
     }
 
@@ -65,6 +68,7 @@ public class ReporteDeProductosMasVendidosTest {
     public void seOrdenanCorrectamenteLasLineasDelReporte() {
         when(historialMock.getVentasEntre(fechaInicio, fechaFin)).thenReturn(List.of(venta1Mock, venta2Mock));
         ReporteDeProductosMasVendidos reporte = new ReporteDeProductosMasVendidos(fechaInicio, fechaFin, historialMock);
+
         List<LineaDeReporte> lineas = reporte.getLineasProcesadas();
         assertEquals("Teclado", lineas.get(0).getNombreItem());
         assertEquals("Mouse", lineas.get(1).getNombreItem());
@@ -74,7 +78,9 @@ public class ReporteDeProductosMasVendidosTest {
     public void seDelegaCuandoSeAceptaAVisitante() {
         when(historialMock.getVentasEntre(fechaInicio, fechaFin)).thenReturn(List.of());
         ReporteDeProductosMasVendidos reporte = new ReporteDeProductosMasVendidos(fechaInicio, fechaFin, historialMock);
+
         reporte.aceptar(visitanteMock);
+
         verify(visitanteMock).visitar(reporte);
     }
 }

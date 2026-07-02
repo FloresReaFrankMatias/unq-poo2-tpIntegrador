@@ -25,11 +25,13 @@ public class VentaTest {
     void setUp(){
         itemMockUno = mock(Item.class);
         itemMockDos = mock(Item.class);
-        registroDeItemMockUno = mock(RegistroDeItem.class);;
-        registroDeItemMockDos = mock(RegistroDeItem.class);;
+        registroDeItemMockUno = mock(RegistroDeItem.class);
+        registroDeItemMockDos = mock(RegistroDeItem.class);
         registroDeItemMockTres = mock(RegistroDeItem.class);
+        
         when(itemMockUno.getRegistroDeItem(anyDouble())).thenReturn(List.of(registroDeItemMockUno, registroDeItemMockDos));
         when(itemMockDos.getRegistroDeItem(anyDouble())).thenReturn(List.of(registroDeItemMockTres));
+
         fechaDeVenta = LocalDate.of(2025, 6, 6);
         ventaTest = new Venta(List.of(itemMockUno, itemMockDos), fechaDeVenta);
     }
@@ -37,6 +39,7 @@ public class VentaTest {
     @Test
     void seCreaConRegistroDeItemsCorrectos(){
         List<RegistroDeItem> registrosEsperados = List.of(registroDeItemMockUno, registroDeItemMockDos, registroDeItemMockTres);
+
         assertEquals(ventaTest.getRegistroDeItems(), registrosEsperados);
     }
 

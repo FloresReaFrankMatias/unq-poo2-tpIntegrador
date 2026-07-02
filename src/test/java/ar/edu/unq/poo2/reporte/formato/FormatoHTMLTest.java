@@ -34,18 +34,22 @@ public class FormatoHTMLTest {
     @Test
     public void seGeneraHTMLConDatosDelReporteDado() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of(linea1, linea2));
-        formatoHTML.visitar(reporteMock);
         String esperado = "<h1>Reporte de Productos Más Vendidos</h1>\n" +
-               "<ul>\n" +"<li>Auriculares: 10 unidades (Promedio: $2500.5)</li>\n" +
-                         "<li>Mouse: 5 unidades (Promedio: $1200.0)</li>\n" + "</ul>\n";
+                "<ul>\n" +"<li>Auriculares: 10 unidades (Promedio: $2500.5)</li>\n" +
+                "<li>Mouse: 5 unidades (Promedio: $1200.0)</li>\n" + "</ul>\n";
+
+        formatoHTML.visitar(reporteMock);
+
         assertEquals(esperado, formatoHTML.getResultadoGenerado());
     }
 
     @Test
     public void alGenerarHTMLConReporteVacioSeCreaCSVSoloConEncabezado() {
         when(reporteMock.getLineasProcesadas()).thenReturn(List.of());
-        formatoHTML.visitar(reporteMock);
         String esperado = "<h1>Reporte de Productos Más Vendidos</h1>\n<ul>\n</ul>\n";
+
+        formatoHTML.visitar(reporteMock);
+
         assertEquals(esperado, formatoHTML.getResultadoGenerado());
     }
 }
