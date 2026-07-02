@@ -81,6 +81,10 @@ public class Pedido {
     public boolean tieneItems() {
         return contenido.tieneItems();
     }
+
+    public void procesarPago() {
+        medioPago.procesarPago();
+    }
     
     //-------- NOTIFICACIONES --------------------------------
 

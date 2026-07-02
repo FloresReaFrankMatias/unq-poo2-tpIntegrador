@@ -7,6 +7,7 @@ public class EstadoBorrador extends EstadoPedido {
     @Override
     public void confirmar(Pedido pedido){
         validarPedidoTieneItems(pedido);
+        pedido.procesarPago();
         pedido.setEstadoActual(new EstadoConfirmado());
         pedido.descontarStock();
     }
