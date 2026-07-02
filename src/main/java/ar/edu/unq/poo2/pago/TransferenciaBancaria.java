@@ -19,6 +19,9 @@ public class TransferenciaBancaria extends MedioPago {
 	}
 
 	@Override
+	protected void reservarFondos() {}
+
+	@Override
 	protected boolean cumpleValidacion() {
 		return apiTransferencia.validarCuenta(cbu, alias);
 	}
